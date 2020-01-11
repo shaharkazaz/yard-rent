@@ -42,5 +42,29 @@ module.exports = {
                 error
             })
         })
+    },
+    updateShop: (req, res) => {
+        const shopId = req.params.shopId;
+        Shop.update({_id: shopId}, req.body).then(() =>{
+            res.status(200).json({
+                message: "shop update"
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        })
+    },
+    deleteShop: (req, res) => {
+        const shopId = req.params.shopId;
+        Shop.remove({_id: shopId}).then(() =>{
+            res.status(200).json({
+                message: "the shop was removed"
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        })
     }
 };

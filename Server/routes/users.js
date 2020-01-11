@@ -1,21 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { signup } = require('../controllers/users')
+
+const { signup, login } = require('../controllers/users')
 //users /*
-router.get('/', (req, res) => {
-    res.status(200).json({
-        message: 'get'
-    })
-});
-
-router.post('/', signup);
-
-
-router.patch('/:userId', (req, res) => {
-    const articleId = req.params.userId
-    res.status(200).json({
-        message: 'get'
-    })
-});
+//router.get('/', getAllUsers);
+router.post('/login', login);
+router.post('/signup', signup);
+// router.patch('/:shopId', updateShop);
+// router.delete('/:shopId', deleteShop);
 
 module.exports = router;

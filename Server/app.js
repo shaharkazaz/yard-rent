@@ -1,9 +1,5 @@
-//const createError = require('http-errors');
-//const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-//var db = require('./model/db');
-
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
@@ -19,18 +15,14 @@ mongoose.connection.on('connected', () => {
   console.log('MongoDB connected')
 });
 
-
-
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const shopsRouter = require('./routes/shops');
-
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -52,7 +44,6 @@ app.use((req, res, next) => {
   error.status = 404;
   next(error);
 });
-
 
 // error handler
 app.use((error, req, res, next) => {

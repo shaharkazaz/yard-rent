@@ -1,5 +1,6 @@
 const User = require('../model/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
 module.exports={
@@ -38,5 +39,44 @@ module.exports={
                 })
             });
         });
+    },
+    login: (req, res) =>{
+        const { email, password } = req.body;
+
+        User.find({ email }).then((users) => {
+            if(users.length === 0){
+                //401 authorization failure
+                res.status(401).json({
+                    message: 'user not found'
+                })
+            }
+            const [ user ] = users;
+            bcrypt.compare(password, user.password, (error, result) =>{
+                if(error){
+                    return res.status(401).json({
+                        message: 'Auth failed'
+                    })
+                }
+
+                if(result){
+
+                    const token = jwt.sign({
+                        id: user._id,
+                        email: user.email
+                    },'yard-rent',
+                        {
+                            expiresIn: "24H"
+                        });
+                    return res.status(200).json({
+                        user,
+                        token
+                    })
+                }
+                res.status(401).json({
+                    message: 'Auth failed'
+                })
+            })
+        })
+
     }
 };
