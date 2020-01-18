@@ -18,6 +18,7 @@ mongoose.connection.on('connected', () => {
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const shopsRouter = require('./routes/shops');
+const ordersRouter = require('./routes/orders');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/shops', shopsRouter);
+app.use('/orders', ordersRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

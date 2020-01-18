@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema({
     address: { type: String, required: true },
     rewards: { type: Number, required: true },
     product: { type: [], required: false },
-    order: { type: [], required: false }
+    orderId: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false }]
 });
 
 module.exports = mongoose.model('User', userSchema);
