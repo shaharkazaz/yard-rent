@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
     role: { type: String, required: true },
     address: { type: String, required: true },
     rewards: { type: Number, required: true },
-    product: { type: [], required: false },
+    product: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false }],
     orderId: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false }]
 });
 
