@@ -8,7 +8,7 @@ const productSchema = mongoose.Schema({
     category: {type: String, required: true},
     subCategory: {type: String, required: true},
     rewards: {type: Number, required: true},
-    address: {type: String, required: false}, // write in the UI if its a different address if not we will take the address of the user
+    address: {type: String, required: true}, // write in the UI if its a different address if not we will take the address of the user
     deposit: {type: Number, required: false},
     durationInDays: {type: Date, required: true}
 });
