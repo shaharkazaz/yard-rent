@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-const Product = require('../model/product');
+const Products = require('../model/product');
 const User = require('../model/user');
 
 module.exports = {
     getAllProducts: (req, res) => {
-        Product.find({}).then((products) => {
+        Products.find({}).then((products) => {
             res.status(200).json({
                 products: products
             })
@@ -16,7 +16,7 @@ module.exports = {
     },
     //TODO: cant trow res.status twice check for solution for problem with updating the user (if we want to notify the user and fail the request)
     addProduct: (req, res) => {
-        const {name, email, category, subCategory, reward, address, deposit, durationInDays} = req.body;
+        const {name, email, category, subCategory, rewards, address, deposit, durationInDays} = req.body;
         User.find({email}).then((users) => {
             if (users.length === 0) {
                 //401 authorization failure
@@ -25,13 +25,13 @@ module.exports = {
                 })
             }
             const [user] = users;
-            const product = new Product({
+            const product = new Products({
                 _id: new mongoose.Types.ObjectId(),
                 name,
                 user: email,
                 category,
                 subCategory,
-                reward,
+                rewards,
                 address, //check it address is empty put user.address
                 deposit,
                 durationInDays
@@ -54,7 +54,7 @@ module.exports = {
     },
     getProduct: (req, res) => {
         const productId = req.params.productId;
-        Product.findById(productId).then((product) => {
+        Products.findById(productId).then((product) => {
             res.status(200).json({
                 product: product
             })
@@ -66,7 +66,7 @@ module.exports = {
     },
     updateProduct: (req, res) => {
         const productId = req.params.productId;
-        Product.update({_id: productId}, req.body).then(() => {
+        Products.update({_id: productId}, req.body).then(() => {
             res.status(200).json({
                 message: "product update"
             })
@@ -78,7 +78,7 @@ module.exports = {
     },
     deleteProduct: (req, res) => {
         const productId = req.params.productId;
-        Product.remove({_id: productId}).then(() => {
+        Products.remove({_id: productId}).then(() => {
             res.status(200).json({
                 message: "the product was removed"
             })
