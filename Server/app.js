@@ -21,6 +21,9 @@ const shopsRouter = require('./routes/shops');
 const ordersRouter = require('./routes/orders');
 const productsRouter = require('./routes/products');
 const recommendationsRouter = require('./routes/recommendations');
+const isAliveRouter = require('./routes/Alive');
+const categoriesRouter = require('./routes/categories');
+const subCategoriesRouter = require('./routes/subCategories');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -43,6 +46,9 @@ app.use('/shops', shopsRouter);
 app.use('/orders', ordersRouter);
 app.use('/products', productsRouter);
 app.use('/recommendations', recommendationsRouter);
+app.use('/isAlive', isAliveRouter);
+app.use('/categories', categoriesRouter);
+app.use('/subCategories', subCategoriesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 
-const orderSchema = mongoose.Schema({
+const categorySchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectID,
-    date: {type: Date, default: Date.now(), required: true},
-    user: {type: String, required: true},
-    product: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: true }]
-
+    name: {type: String, required: true},
+    subCategories: [{ type: mongoose.Schema.Types.ObjectID, ref: 'SubCategory', required: false }]
 });
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model('Category', categorySchema);

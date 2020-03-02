@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
+const SubCategory = require('../model/subCategory');
 const Category = require('../model/category');
 
-
 module.exports = {
-    getAllCategories: (req, res) => {
-        Category.find({}).then((categories) => {
+    getAllSubCategories: (req, res) => {
+        SubCategory.find({}).then((subCategories) => {
             res.status(200).json({
-                categories: categories
+                subCategories: subCategories
             })
         }).catch((error) => {
             res.status(500).json({
@@ -14,16 +14,23 @@ module.exports = {
             })
         })
     },
-    addCategory: (req, res) => {
-        const { name } = req.body;
+    addSubCategory: (req, res) => {
+        const { subCategoryName,parentCategoryId } = req.body;
 
-        const category = new Category({
+        const subCategory = new SubCategory({
             _id: new mongoose.Types.ObjectId(),
-            name
+            subCategoryName,
+            parentCategoryId
         });
-        category.save().then(() => {
-            res.status(200).json({
-                message: 'new category was added'
+        subCategory.save().then(() => {
+            Category.findOneAndUpdate({_id: parentCategoryId}, {$push: {subCategories: subCategory._id}}).then(() => {
+                res.status(200).json({
+                    message: 'new sub category was added'
+                })
+            }).catch(error => {
+                res.status(500).json({
+                    error
+                })
             })
         }).catch(error => {
             res.status(500).json({
@@ -31,15 +38,23 @@ module.exports = {
             })
         })
     },
-    deleteCategory: (req, res) => {
-        const categoryId = req.params.categoryId;
-        Category.remove({_id: categoryId}).then(() => {
-            res.status(200).json({
-                message: "the category was removed"
-            })
-        }).catch(error => {
-            res.status(500).json({
-                error
+    deleteSubCategory: (req, res) => {
+        const subCategoryId = req.params.subCategoryId;
+        SubCategory.findById({subCategoryId}).then((subCategory)=>{
+            SubCategory.remove({_id: subCategoryId}).then(() => {
+                Category.findOneAndUpdate({_id: subCategory.parentCategoryId}, {$pull: {subCategories: subCategoryId}}).then(() => {
+                    res.status(200).json({
+                        message: 'the suc category was deleted'
+                    })
+                }).catch(error => {
+                    res.status(500).json({
+                        error
+                    })
+                })
+            }).catch(error => {
+                res.status(500).json({
+                    error
+                })
             })
         })
     }
