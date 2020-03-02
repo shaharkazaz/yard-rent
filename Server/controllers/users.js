@@ -59,10 +59,10 @@ module.exports={
                 }
 
                 if(result){
-
                     const token = jwt.sign({
                         id: user._id,
-                        email: user.email
+                        email: user.email,
+                        role: user.role // when changing the user role need to delete the token or relogin
                     },'yard-rent',
                         {
                             expiresIn: "24H"
