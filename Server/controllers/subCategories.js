@@ -1,0 +1,46 @@
+const mongoose = require('mongoose');
+const Category = require('../model/category');
+
+
+module.exports = {
+    getAllCategories: (req, res) => {
+        Category.find({}).then((categories) => {
+            res.status(200).json({
+                categories: categories
+            })
+        }).catch((error) => {
+            res.status(500).json({
+                error
+            })
+        })
+    },
+    addCategory: (req, res) => {
+        const { name } = req.body;
+
+        const category = new Category({
+            _id: new mongoose.Types.ObjectId(),
+            name
+        });
+        category.save().then(() => {
+            res.status(200).json({
+                message: 'new category was added'
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        })
+    },
+    deleteCategory: (req, res) => {
+        const categoryId = req.params.categoryId;
+        Category.remove({_id: categoryId}).then(() => {
+            res.status(200).json({
+                message: "the category was removed"
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        })
+    }
+};
