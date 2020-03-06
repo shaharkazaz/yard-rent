@@ -1,41 +1,44 @@
-const {Apriori, Itemset, IAprioriResults} = require('node-apriori')
 const mongoose = require('mongoose');
 const Product = require('../model/product');
 const User = require('../model/user');
 const Order = require('../model/order');
+const ContentBasedRecommender = require('content-based-recommender')
 
-const apriori = new Apriori(.4);
+const recommender = new ContentBasedRecommender({
+    minScore: 0,
+    maxSimilarDocuments: 1000,
+    debug: true
+});
 
 module.exports = {
     getRecommendation: (req, res) => {
-        Order.find({}).select({product: 1}).then(productsIds => {
-            const transactions = productsIds.map(p => p.product);
-            apriori.on('data', itemset => {
-                let support = itemset.support;
-                let items = itemset.items;
-            });
-            apriori.exec(transactions)
-                .then(recommendation => {
-                    let recommendedProducts = recommendation.itemsets.map(item => item.items);
-                    let result = async () => {
-                        const a = await recommendedProducts.map(p => p.map(id => getProduct(id)))
-                        res.status(200).json({
-                            recommendation: a
-                        })
-                    }
 
-                    result()
-                });
+        const documents = [
+            { id: '1000001', content: {
+                    name: "prom",
+                    user: "chen@gmail.com"
+                }},
+            { id: '1000002', content: {
+                    name: "fish",
+                    user: "chen@gmail.com"
+                } },
+            { id: '1000003', content: {
+                    name: "shoes",
+                    user: "ayelet@gmail.com"
+                } },
+            { id: '1000004', content: {
+                    name: "dress",
+                    user: "ayelet@gmail.com"
+                } }
+        ];
 
-                }).catch((error) => {
-                res.status(500).json({
-                    error
-                })
-            })
-        }
+        recommender.train(documents);
+
+        const similarDocuments = recommender.getSimilarDocuments('1000002', 0, 1);
+
+        res.status(200).json({
+            similarDocuments
+        })
+
+        },
     };
-
-
-let getProduct = async (id) => {
-    return await Product.findById(id);
-};

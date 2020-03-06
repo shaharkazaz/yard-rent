@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { role } = require('../utils/role');
 
 const userSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectID,
