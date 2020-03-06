@@ -6,9 +6,9 @@ const checkAuth = require('../middlewares/checkAuth');
 
 router.get('/', getAllProducts);
 router.get('/:productId', getProduct);
-router.post('/', checkAuth, addProduct);
-router.patch('/:productId', checkAuth, updateProduct);
-router.delete('/:productId', checkAuth, deleteProduct);
+router.post('/', checkAuth(), addProduct);
+router.patch('/:productId', checkAuth(), updateProduct);
+router.delete('/:productId', checkAuth(), deleteProduct);
 
 
 module.exports = router;
