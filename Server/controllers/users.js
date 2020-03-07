@@ -45,8 +45,7 @@ module.exports={
 
         User.find({ email }).then((users) => {
             if(users.length === 0){
-                //401 authorization failure
-                res.status(401).json({
+                return res.status(200).json({
                     message: 'user not found'
                 })
             }
