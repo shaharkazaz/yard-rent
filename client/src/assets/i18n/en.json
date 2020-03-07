@@ -1,6 +1,8 @@
 {
   "cart": "Cart",
+  "address": "Address",
   "marketplace": "Marketplace",
+  "home-page": "Home page",
   "login": "Login",
   "sign-up": "Sign up",
   "post-something": "Post something",
@@ -17,5 +19,8 @@
   "already-a-member": "Already a member?",
   "how-to-post": "How to post?",
   "how-to-rent": "How to rent?",
-  "what-would-you-like-to-rent": "what would you like to rent?"
+  "what-would-you-like-to-rent": "what would you like to rent?",
+  "hello": "Hello, {{name}}",
+  "logout": "Logout",
+  "login-to-continue": "Login to continue"
 }
