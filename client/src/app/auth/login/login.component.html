@@ -10,21 +10,29 @@
     >
       <div class="d-flex-column width-100 mb-20 full-name">
         <div>{{ t('full-name') }}</div>
-        <dato-input></dato-input>
+        <dato-input formControlName="name" placeholder="Yard Rent"></dato-input>
       </div>
       <div class="d-flex-column width-100 mb-20">
-        <div>{{ t('username') }}</div>
-        <dato-input></dato-input>
+        <div>{{ t('email') }}</div>
+        <dato-input
+          formControlName="email"
+          placeholder="yard.rent@provider.com"
+        ></dato-input>
       </div>
       <div class="d-flex-column width-100 mb-20">
         <div>{{ t('password') }}</div>
-        <dato-input></dato-input>
+        <dato-input formControlName="password" type="password"></dato-input>
       </div>
       <div class="d-flex-column width-100 mb-20 re-type">
         <div>{{ t('retype-password') }}</div>
-        <dato-input></dato-input>
+        <dato-input
+          formControlName="retypePassword"
+          type="password"
+        ></dato-input>
       </div>
-      <dato-button class="mb-5">{{ t(view) }}</dato-button>
+      <dato-button class="mb-5" (click)="login()" [loading]="loading">{{
+        t(view)
+      }}</dato-button>
       <dato-button datoType="none" datoSize="sm" (click)="changeView()">{{
         t(isLogin() ? 'not-a-member-yet' : 'already-a-member')
       }}</dato-button>

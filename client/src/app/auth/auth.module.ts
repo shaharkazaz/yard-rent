@@ -3,7 +3,9 @@ import { TranslocoModule } from '@ngneat/transloco';
 import {
   DatoButtonModule,
   DatoDialogModule,
-  DatoInputModule
+  DatoInputModule,
+  DatoSnackbarComponent,
+  DatoSnackbarModule
 } from '@datorama/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,10 +18,11 @@ import { LoginComponent } from './login/login.component';
     CommonModule,
     ReactiveFormsModule,
     DatoButtonModule,
-    DatoDialogModule
+    DatoDialogModule,
+    DatoSnackbarModule
   ],
   declarations: [LoginComponent],
-  entryComponents: [LoginComponent],
+  entryComponents: [LoginComponent, DatoSnackbarComponent],
   exports: [LoginComponent]
 })
 export class AuthModule {}

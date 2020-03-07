@@ -46,15 +46,17 @@ module.exports={
         User.find({ email }).then((users) => {
             if(users.length === 0){
                 //401 authorization failure
-                res.status(401).json({
-                    message: 'user not found'
-                })
+                return res.status(200).json({
+                    success: false,
+                    message: 'Username or password are incorrect'
+                });
             }
             const [ user ] = users;
             bcrypt.compare(password, user.password, (error, result) =>{
                 if(error){
                     return res.status(401).json({
-                        message: 'Auth failed'
+                        success: false,
+                        message: 'Username or password are incorrect'
                     })
                 }
 
@@ -68,12 +70,13 @@ module.exports={
                             expiresIn: "24H"
                         });
                     return res.status(200).json({
+                        success: true,
                         user,
                         token
                     })
                 }
-                res.status(401).json({
-                    message: 'Auth failed'
+                return res.status(401).json({
+                    message: 'Internal error, try again'
                 })
             })
         })
