@@ -1,6 +1,7 @@
 export const URI_CONSTANTS = {
   auth: {
     login: 'users/login',
-    signup: 'users/signup'
+    signup: 'users/signup',
+    getUser: 'users/getuser'
   }
 };

@@ -6,6 +6,7 @@ import { Credentials, SignupParams } from '../auth.types';
 import { tap } from 'rxjs/operators';
 import { AuthStore, clearStorage, saveInStorage } from './auth.store';
 import { createEmptyUser } from './auth.model';
+import { inStorage } from './auth.query';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,7 +16,16 @@ export class AuthService {
     private snackbar: DatoSnackbar,
     private authStore: AuthStore
   ) {
-    //TODO check if I have a valid token in cache and get the user
+    if (inStorage()) {
+      this.authDataService.getUserByToken().subscribe(user => {
+        this.authStore.update({
+          id: user.id,
+          name: user.name,
+          user,
+          token: user.token
+        });
+      });
+    }
   }
 
   openDialog(view: 'login' | 'sign-up'): DatoDialogRef {

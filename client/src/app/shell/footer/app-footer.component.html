@@ -1,20 +1,19 @@
 <footer class="primary-100-background-color d-flex" *transloco="let t">
   <div class="d-flex d-flex-grow align-center p-10">
     <img
-      class="logo"
-      width="40"
-      src="../../../assets/images/static/logo.jpeg"
+      class="logo mr-10"
+      height="80"
+      src="../../../assets/images/static/logo.png"
     />
     <a
-      aria-label="YardRent on twitter"
+      [datoTooltip]="t('visit-us', { name: 'Twitter' })"
       target="_blank"
       rel="noopener"
       href="https://twitter.com/angular"
-      title="Twitter"
     >
       <svg
         id="twitter-logo"
-        height="24"
+        height="35"
         data-name="Logo — FIXED"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 400 400"

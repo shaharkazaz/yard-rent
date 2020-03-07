@@ -13,11 +13,19 @@ export class AuthQuery extends Query<User> {
     super(store);
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     return !!this.getValue().token || inStorage();
+  }
+
+  getToken(): string {
+    return this.getValue().token || getStorageToken();
   }
 }
 
+export function getStorageToken() {
+  return localStorage.getItem('token');
+}
+
 export function inStorage() {
-  return !!localStorage.getItem('token');
+  return !!getStorageToken();
 }

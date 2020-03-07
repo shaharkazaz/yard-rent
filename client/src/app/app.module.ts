@@ -19,12 +19,14 @@ import {
 } from '@datorama/core';
 import { TranslatePipe } from './shared/pipes/translate.pipe';
 import { ShellModule } from './shell/shell.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent, TranslatePipe],
   imports: [
     HomeModule,
     ShellModule,
+    AuthModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

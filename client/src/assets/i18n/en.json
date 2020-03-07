@@ -7,7 +7,7 @@
   "sign-up": "Sign up",
   "post-something": "Post something",
   "about-us": "About us",
-  "contact": "Contact",
+  "contact-us": "Contact us",
   "getting-started": "Getting started",
   "back-to-top": "Back to top",
   "full-name": "Full name",
@@ -22,5 +22,6 @@
   "what-would-you-like-to-rent": "what would you like to rent?",
   "hello": "Hello, {{name}}",
   "logout": "Logout",
-  "login-to-continue": "Login to continue"
+  "login-to-continue": "Login to continue",
+  "visit-us": "Visit us on {{name}}"
 }
