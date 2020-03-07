@@ -59,6 +59,7 @@
 
   dato-button {
     &.link {
+      transition: border-bottom-color 0.4s ease-in-out;
       border-bottom: 2px solid transparent;
     }
     &.active-page {
