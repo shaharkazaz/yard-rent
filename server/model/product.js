@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const productSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectID,
     name: {type: String, required: true},
-    user: {type: String, required: true}, //I add not sure
+    user: { type: mongoose.Schema.Types.ObjectID, ref: 'User', required: true },
     category: {type: mongoose.Schema.Types.ObjectID, ref: 'Category', required: true},
     subCategory: {type: mongoose.Schema.Types.ObjectID, ref: 'SubCategory', required: true},
     rewards: {type: Number, required: true},

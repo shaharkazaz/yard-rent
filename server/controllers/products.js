@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Products = require('../model/product');
 const User = require('../model/user');
+const getUserId = require('../utils/getUserId');
 
 module.exports = {
     getAllProducts: (req, res) => {
@@ -14,29 +15,22 @@ module.exports = {
             })
         })
     },
-    //TODO: cant trow res.status twice check for solution for problem with updating the user (if we want to notify the user and fail the request)
-    addProduct: (req, res) => {
-        const {name, email, category, subCategory, rewards, address, deposit, durationInDays} = req.body;
-        User.find({email}).then((users) => {
-            if (users.length === 0) {
-                //401 authorization failure
-                return res.status(401).json({
-                    message: 'user not found'
-                })
-            }
-            const [user] = users;
-            const product = new Products({
-                _id: new mongoose.Types.ObjectId(),
-                name,
-                user: email,
-                category,
-                subCategory,
-                rewards,
-                address, //check it address is empty put user.address
-                deposit,
-                durationInDays
-            });
-            product.save().then(() => {
+    addProduct: async (req, res) => {
+        const {name, category, subCategory, rewards, address, deposit, durationInDays} = req.body;
+        const userId = await getUserId(req);
+        const product = new Products({
+            _id: new mongoose.Types.ObjectId(),
+            name,
+            user: userId,
+            category,
+            subCategory,
+            rewards,
+            address, //check it address is empty put user.address
+            deposit,
+            durationInDays
+        });
+        product.save().then(() => {
+            User.findByIdAndUpdate({_id: userId}, {$push: {product: product._id}}).then(() => {
                 res.status(200).json({
                     message: 'new product was added'
                 })
@@ -44,11 +38,10 @@ module.exports = {
                 return res.status(500).json({
                     error
                 })
-            });
-            User.findOneAndUpdate({_id: user._id}, {$push: {productId: product._id}}).then(() => {
-                console.log("user was updated")
-            }).catch(error => {
-                console.log(error)
+            })
+        }).catch(error => {
+            return res.status(500).json({
+                error
             })
         });
     },
@@ -78,9 +71,21 @@ module.exports = {
     },
     deleteProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.remove({_id: productId}).then(() => {
-            res.status(200).json({
-                message: "the product was removed"
+        Products.findById(productId).then((product)=>{
+            Products.findByIdAndRemove( productId).then(() => {
+                User.findByIdAndUpdate(product.user,{$pull:{product: productId}}).then(()=>{
+                    res.status(200).json({
+                        message: "the product was removed"
+                    })
+                    }).catch(error => {
+                        res.status(500).json({
+                            error
+                        })
+                    })
+            }).catch(error => {
+                res.status(500).json({
+                    error
+                })
             })
         }).catch(error => {
             res.status(500).json({
