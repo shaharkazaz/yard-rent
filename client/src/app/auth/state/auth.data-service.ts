@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URI_CONSTANTS } from '../shared/constants/uri.contants';
-import { LoginParams, LoginResponse, SignupParams } from './auth.types';
-import { parseUrl } from '../shared/utils';
+import { URI_CONSTANTS } from '../../shared/constants/uri.contants';
+import { Credentials, LoginResponse, SignupParams } from '../auth.types';
+import { parseUrl } from '../../shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class AuthDataService {
   constructor(private http: HttpClient) {}
 
-  login(params: LoginParams) {
+  login(params: Credentials) {
     return this.http.post<LoginResponse>(
       parseUrl(URI_CONSTANTS.auth.login),
       params
@@ -16,8 +16,9 @@ export class AuthDataService {
   }
 
   signup(params: SignupParams) {
-    return this.http.post(parseUrl(URI_CONSTANTS.auth.signup), params, {
-      withCredentials: true
-    });
+    return this.http.post<LoginResponse>(
+      parseUrl(URI_CONSTANTS.auth.signup),
+      params
+    );
   }
 }

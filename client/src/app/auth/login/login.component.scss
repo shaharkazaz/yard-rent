@@ -8,9 +8,10 @@
   .content {
     overflow: hidden;
     transition: height 0.2s ease-in-out;
-    height: 340px;
+    height: 405px;
     &.login {
       height: 202px;
+      .address,
       .re-type,
       .full-name {
         display: none;

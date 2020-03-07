@@ -5,9 +5,9 @@ import {
   OnInit
 } from '@angular/core';
 import { DatoDialogRef, DatoSnackbar } from '@datorama/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { finalize } from 'rxjs/operators';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../state/auth.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +20,12 @@ export class LoginComponent implements OnInit {
   loading = false;
   form = this.fb.group({
     name: '',
+    address: '',
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     retypePassword: ['', Validators.minLength(6)]
   });
+
   constructor(
     private ref: DatoDialogRef,
     private fb: FormBuilder,
@@ -34,6 +36,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.view = this.ref.data.view;
+    if (!this.isLogin()) {
+      this.setSignupValidators('add');
+    }
   }
 
   isLogin(): boolean {
@@ -42,26 +47,62 @@ export class LoginComponent implements OnInit {
 
   changeView() {
     this.view = this.isLogin() ? 'sign-up' : 'login';
+    this.setSignupValidators(this.isLogin() ? 'remove' : 'add');
   }
 
-  login() {
+  submitForm() {
     if (this.form.valid) {
-      const { email, password } = this.form.value;
       this.loading = true;
-      this.authService
-        .login({ email, password })
-        .pipe(
-          finalize(() => {
-            this.loading = false;
-            this.cdr.detectChanges();
-          })
-        )
-        .subscribe(({ success, message }) => {
-          if (success) {
-          } else {
-            this.snackbar.error(message);
-          }
-        });
+      this.isLogin() ? this.login() : this.signup();
     }
+  }
+
+  private login() {
+    const { email, password } = this.form.value;
+    this.authService
+      .login({ email, password })
+      .pipe(filter(({ success }) => success))
+      .subscribe(
+        () => this.ref.close(),
+        () => this.handleError()
+      );
+  }
+
+  private signup() {
+    this.authService
+      .signup(this.form.value)
+      .pipe(filter(({ success }) => success))
+      .subscribe(
+        () => this.ref.close(),
+        () => this.handleError()
+      );
+  }
+
+  private setSignupValidators(action: 'add' | 'remove') {
+    const [name, address, retype] = [
+      'name',
+      'address',
+      'retypePassword'
+    ].map(control => this.form.get(control));
+    if (action === 'add') {
+      name.setValidators([Validators.required, this.nameValidator]);
+      address.setValidators(Validators.required);
+      retype.setValidators([Validators.required, Validators.minLength(6)]);
+    } else {
+      [name, address, retype].forEach(control => control.clearValidators());
+    }
+    this.form.updateValueAndValidity();
+  }
+
+  private nameValidator(
+    control: AbstractControl
+  ): { [key: string]: any } | null {
+    const valid = /\w+\s\w+/.test(control.value);
+    return valid ? null : { fullName: { value: control.value } };
+  }
+
+  private handleError() {
+    this.loading = false;
+    this.cdr.detectChanges();
   }
 }

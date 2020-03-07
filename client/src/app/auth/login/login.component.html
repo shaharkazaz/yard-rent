@@ -12,6 +12,13 @@
         <div>{{ t('full-name') }}</div>
         <dato-input formControlName="name" placeholder="Yard Rent"></dato-input>
       </div>
+      <div class="d-flex-column width-100 mb-20 address">
+        <div>{{ t('address') }}</div>
+        <dato-input
+          formControlName="address"
+          placeholder="address"
+        ></dato-input>
+      </div>
       <div class="d-flex-column width-100 mb-20">
         <div>{{ t('email') }}</div>
         <dato-input
@@ -21,7 +28,11 @@
       </div>
       <div class="d-flex-column width-100 mb-20">
         <div>{{ t('password') }}</div>
-        <dato-input formControlName="password" type="password"></dato-input>
+        <dato-input
+          formControlName="password"
+          type="password"
+          (keydown.enter)="submitForm()"
+        ></dato-input>
       </div>
       <div class="d-flex-column width-100 mb-20 re-type">
         <div>{{ t('retype-password') }}</div>
@@ -30,7 +41,7 @@
           type="password"
         ></dato-input>
       </div>
-      <dato-button class="mb-5" (click)="login()" [loading]="loading">{{
+      <dato-button class="mb-5" (click)="submitForm()" [loading]="loading">{{
         t(view)
       }}</dato-button>
       <dato-button datoType="none" datoSize="sm" (click)="changeView()">{{
