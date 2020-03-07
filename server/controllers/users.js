@@ -59,7 +59,6 @@ module.exports={
     },
     login: (req, res) =>{
         const { email, password } = req.body;
-
         User.find({ email }).then((users) => {
             if(users.length === 0){
                 //401 authorization failure
@@ -102,5 +101,26 @@ module.exports={
                 error
             })
         })
+    },
+    getUserByToken: (req, res) => {
+        const token = req.headers.authorization.split(' ')[1];
+        jwt.verify(token, 'yard-rent', (err, decodedToken) => {
+            if (err) {
+                return res.status(401).json({
+                    message: 'Auth failed'
+                })
+            }
+            const userId = decodedToken.id;
+            User.findOne({_id: userId }).then(user => {
+                res.status(200).json({
+                    user
+                })
+            }).catch((error) => {
+                res.status(500).json({
+                    error
+                })
+            })
+
+        });
     }
 };
