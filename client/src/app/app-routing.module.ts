@@ -9,8 +9,29 @@ const routes: Routes = [
   },
   {
     path: 'about',
-    loadChildren: './about/page/about-page.module#AboutPageModule',
-    pathMatch: 'full'
+    loadChildren: () =>
+      import('./about/page/about-page.module').then(
+        ({ AboutPageModule }) => AboutPageModule
+      )
+  },
+  {
+    path: 'marketplace',
+    loadChildren: () =>
+      import('./marketplace/marketplace.module').then(
+        ({ MarketplaceModule }) => MarketplaceModule
+      )
+  },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('./user/user.module').then(({ UserModule }) => UserModule)
+  },
+  {
+    path: 'contact',
+    loadChildren: () =>
+      import('./contact/page/contact-page.module').then(
+        ({ ContactPageModule }) => ContactPageModule
+      )
   },
   {
     path: '',

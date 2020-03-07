@@ -52,8 +52,18 @@
     outline: none;
   }
 
-  dato-button.active-page {
-    // TODO why is this color not effecting the color because of the encapsulation?
-    border-bottom: 2px solid #00b7ff;
+  dato-link {
+    // TODO not working
+    outline: none;
+  }
+
+  dato-button {
+    &.link {
+      border-bottom: 2px solid transparent;
+    }
+    &.active-page {
+      // TODO why is this color not effecting the color because of the encapsulation?
+      border-color: #00b7ff;
+    }
   }
 }

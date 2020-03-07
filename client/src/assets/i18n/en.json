@@ -23,5 +23,10 @@
   "hello": "Hello, {{name}}",
   "logout": "Logout",
   "login-to-continue": "Login to continue",
-  "visit-us": "Visit us on {{name}}"
+  "visit-us": "Visit us on {{name}}",
+  "my-products": "My products",
+  "my-orders": "My orders",
+  "my-profile": "My profile",
+  "rent-anything": "Rent anything",
+  "from-anyone": "from anyone in Israel"
 }

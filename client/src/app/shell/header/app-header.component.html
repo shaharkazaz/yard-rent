@@ -2,7 +2,7 @@
   <div class="upper d-flex align-center">
     <img
       class="logo pointer"
-      height="80"
+      height="70"
       src="../../../assets/images/static/logo.png"
       routerLink=""
     />
@@ -25,6 +25,7 @@
         datoTooltipType="long"
         datoTooltipPosition="bottom"
         datoTooltipTrigger="click"
+        #tooltip="datoTooltip"
       >
         <!--      <dato-icon datoIcon="user"></dato-icon>-->
         <svg
@@ -41,12 +42,36 @@
       </div>
       <ng-template #userMenu>
         <div class="d-flex-column">
-          <div class="dato-sub-headline">
+          <div class="dato-sub-headline mb-10">
             {{ t('hello', { name: user.name }) }}
           </div>
-          <dato-button datoType="secondary" (click)="logout()">{{
-            t('logout')
-          }}</dato-button>
+          <dato-link
+            class="my-5"
+            datoType="secondary"
+            routerLink="user/my-products"
+            (click)="tooltip.hide()"
+            >{{ t('my-products') }}</dato-link
+          >
+          <dato-link
+            class="my-5"
+            datoType="secondary"
+            routerLink="user/my-orders"
+            (click)="tooltip.hide()"
+            >{{ t('my-orders') }}</dato-link
+          >
+          <dato-link
+            class="my-5"
+            datoType="secondary"
+            routerLink="user/profile"
+            (click)="tooltip.hide()"
+            >{{ t('my-profile') }}</dato-link
+          >
+          <dato-button
+            class="mt-10"
+            datoType="secondary"
+            (click)="logout() && tooltip.hide()"
+            >{{ t('logout') }}</dato-button
+          >
         </div>
       </ng-template>
     </ng-template>
@@ -62,24 +87,12 @@
   </div>
   <div class="lower d-flex align-center">
     <dato-button
+      class="link"
       datoType="none"
       routerLink="home"
       routerLinkActive="active-page"
     >
       <div>{{ t('home-page') }}</div>
-    </dato-button>
-    <dato-button datoType="none" routerLink="" routerLinkActive="active-page">
-      <div>{{ t('marketplace') }}</div>
-    </dato-button>
-    <dato-button
-      datoType="none"
-      routerLink="about"
-      routerLinkActive="active-page"
-    >
-      <div>{{ t('about-us') }}</div>
-    </dato-button>
-    <dato-button datoType="none" routerLink="" routerLinkActive="active-page">
-      <div>{{ t('contact-us') }}</div>
     </dato-button>
     <dato-button datoType="none" [datoMenuTriggerFor]="gettingStarted">
       <div class="mr-3">{{ t('getting-started') }}</div>
@@ -95,6 +108,30 @@
           d="M9.392.92a.513.513 0 0 0-.923-.348l-3.59 3.733L1.29.572a.515.515 0 0 0-.738.718l4 4.102a.513.513 0 0 0 .738 0l4-4.102a.513.513 0 0 0 .103-.37z"
         />
       </svg>
+    </dato-button>
+    <dato-button
+      class="link"
+      datoType="none"
+      routerLink="marketplace"
+      routerLinkActive="active-page"
+    >
+      <div>{{ t('marketplace') }}</div>
+    </dato-button>
+    <dato-button
+      class="link"
+      datoType="none"
+      routerLink="about"
+      routerLinkActive="active-page"
+    >
+      <div>{{ t('about-us') }}</div>
+    </dato-button>
+    <dato-button
+      class="link"
+      datoType="none"
+      routerLink="contact"
+      routerLinkActive="active-page"
+    >
+      <div>{{ t('contact-us') }}</div>
     </dato-button>
   </div>
 

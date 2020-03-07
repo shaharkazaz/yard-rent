@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { AuthService } from '../../auth/state/auth.service';
 import { AuthQuery } from '../../auth/state/auth.query';
-import { tap } from 'rxjs/operators';
 import { User } from '../../auth/state/auth.model';
-import { DatoSnackbar, filterDialogSuccess } from '@datorama/core';
+import { DatoDialog, DatoSnackbar, filterDialogSuccess } from '@datorama/core';
+import { LoginComponent } from '../../auth/login/login.component';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +20,7 @@ export class AppHeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private authQuery: AuthQuery,
+    private dialog: DatoDialog,
     private snackbar: DatoSnackbar
   ) {}
 
@@ -32,7 +33,10 @@ export class AppHeaderComponent implements OnInit {
   }
 
   openLoginDialog(view: 'login' | 'sign-up') {
-    return this.authService.openDialog(view);
+    return this.dialog.open(LoginComponent, {
+      data: { view },
+      enableClose: true
+    });
   }
 
   logout() {
