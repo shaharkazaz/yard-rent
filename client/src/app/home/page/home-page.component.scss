@@ -1,0 +1,28 @@
+:host {
+  dato-carousel {
+    .carousel-item {
+      height: 600px;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+  .quick-search {
+    width: 430px;
+    height: 200px;
+    top: calc(50% - 100px);
+    left: calc(50% - 215px);
+    color: white;
+    z-index: 2;
+    .title {
+      font-size: 50px;
+    }
+    .search-box {
+      input {
+        border: none !important;
+      }
+    }
+  }
+  .content {
+    margin: 0 10%;
+  }
+}

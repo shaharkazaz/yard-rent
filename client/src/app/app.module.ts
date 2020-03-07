@@ -11,11 +11,30 @@ import {
   translocoConfig,
   TRANSLOCO_CONFIG
 } from '@ngneat/transloco';
+import { HomeModule } from './home/home.module';
+import {
+  APP_TRANSLATE,
+  DatoButtonModule,
+  DatoThemesModule
+} from '@datorama/core';
+import { TranslatePipe } from './shared/pipes/translate.pipe';
+import { ShellModule } from './shell/shell.module';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, TranslocoModule],
+  declarations: [AppComponent, TranslatePipe],
+  imports: [
+    HomeModule,
+    ShellModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    TranslocoModule,
+    DatoButtonModule,
+    DatoThemesModule
+  ],
   providers: [
+    TranslatePipe,
+    { provide: APP_TRANSLATE, useExisting: TranslatePipe },
     {
       provide: TRANSLOCO_CONFIG,
       useValue: translocoConfig({

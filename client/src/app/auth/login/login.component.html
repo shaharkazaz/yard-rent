@@ -1,0 +1,33 @@
+<ng-container *transloco="let t">
+  <dato-dialog-header>
+    <div class="d-flex align-center title">{{ t('welcome') }}</div>
+  </dato-dialog-header>
+  <dato-dialog-content>
+    <div
+      class="content d-flex-column d-flex-grow align-start-center"
+      [class.login]="isLogin()"
+      [formGroup]="form"
+    >
+      <div class="d-flex-column width-100 mb-20 full-name">
+        <div>{{ t('full-name') }}</div>
+        <dato-input></dato-input>
+      </div>
+      <div class="d-flex-column width-100 mb-20">
+        <div>{{ t('username') }}</div>
+        <dato-input></dato-input>
+      </div>
+      <div class="d-flex-column width-100 mb-20">
+        <div>{{ t('password') }}</div>
+        <dato-input></dato-input>
+      </div>
+      <div class="d-flex-column width-100 mb-20 re-type">
+        <div>{{ t('retype-password') }}</div>
+        <dato-input></dato-input>
+      </div>
+      <dato-button class="mb-5">{{ t(view) }}</dato-button>
+      <dato-button datoType="none" datoSize="sm" (click)="changeView()">{{
+        t(isLogin() ? 'not-a-member-yet' : 'already-a-member')
+      }}</dato-button>
+    </div>
+  </dato-dialog-content>
+</ng-container>

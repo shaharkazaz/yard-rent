@@ -1,1 +1,21 @@
-{}
+{
+  "cart": "Cart",
+  "marketplace": "Marketplace",
+  "login": "Login",
+  "sign-up": "Sign up",
+  "post-something": "Post something",
+  "about-us": "About us",
+  "contact": "Contact",
+  "getting-started": "Getting started",
+  "back-to-top": "Back to top",
+  "full-name": "Full name",
+  "username": "Username",
+  "password": "Password",
+  "retype-password": "Retype password",
+  "welcome": "Welcome",
+  "not-a-member-yet": "Not a member yet?",
+  "already-a-member": "Already a member?",
+  "how-to-post": "How to post?",
+  "how-to-rent": "How to rent?",
+  "what-would-you-like-to-rent": "what would you like to rent?"
+}

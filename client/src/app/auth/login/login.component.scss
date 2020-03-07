@@ -1,0 +1,20 @@
+:host {
+  padding: 10px;
+  display: flex;
+  .title {
+    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+  }
+  .content {
+    overflow: hidden;
+    transition: height 0.2s ease-in-out;
+    height: 340px;
+    &.login {
+      height: 202px;
+      .re-type,
+      .full-name {
+        display: none;
+      }
+    }
+  }
+}
