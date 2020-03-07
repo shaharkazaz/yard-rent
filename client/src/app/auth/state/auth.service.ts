@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DatoDialog, DatoDialogRef, DatoSnackbar } from '@datorama/core';
-import { LoginComponent } from '../login/login.component';
+import { DatoSnackbar } from '@datorama/core';
 import { AuthDataService } from './auth.data-service';
 import { Credentials, SignupParams } from '../auth.types';
 import { tap } from 'rxjs/operators';
@@ -11,7 +10,6 @@ import { inStorage } from './auth.query';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(
-    private dialog: DatoDialog,
     private authDataService: AuthDataService,
     private snackbar: DatoSnackbar,
     private authStore: AuthStore
@@ -26,13 +24,6 @@ export class AuthService {
         });
       });
     }
-  }
-
-  openDialog(view: 'login' | 'sign-up'): DatoDialogRef {
-    return this.dialog.open(LoginComponent, {
-      data: { view },
-      enableClose: true
-    });
   }
 
   login(params: Credentials) {

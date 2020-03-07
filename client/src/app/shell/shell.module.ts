@@ -5,6 +5,7 @@ import {
   DatoDialogModule,
   DatoDirectivesModule,
   DatoIconModule,
+  DatoLinkButtonModule,
   DatoMenuModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     DatoButtonModule,
     DatoMenuModule,
-    RouterModule
+    RouterModule,
+    DatoLinkButtonModule
   ],
   declarations: [AppHeaderComponent, AppFooterComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
