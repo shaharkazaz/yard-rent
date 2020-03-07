@@ -1,0 +1,49 @@
+:host {
+  header {
+    border-bottom: 1px solid #ccced3;
+  }
+  .toolbar {
+    height: 120px;
+    font-weight: 600;
+  }
+
+  .upper {
+    height: 80px;
+    border-bottom: 1px solid #ccced3;
+  }
+  .lower {
+    height: 40px;
+  }
+
+  .cart {
+    position: relative;
+    height: 40px;
+    svg {
+      height: 40px;
+    }
+    .items-count {
+      font-size: 20px;
+      top: 5px;
+      left: 8px;
+      &.single-digit {
+        font-size: 20px;
+        left: 13px;
+      }
+      &.triple-digit {
+        font-size: 15px;
+      }
+    }
+    .title {
+      font-size: 16px;
+    }
+  }
+
+  .toolbar #twitter-logo {
+    height: 40px;
+    margin: 0 16px;
+  }
+
+  .toolbar #twitter-logo:hover {
+    opacity: 0.8;
+  }
+}
