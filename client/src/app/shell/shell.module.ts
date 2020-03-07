@@ -9,13 +9,11 @@ import {
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
-import { AuthModule } from '../auth/auth.module';
 import { AppFooterComponent } from './footer/app-footer.component';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
-    AuthModule,
     DatoDialogModule,
     DatoIconModule,
     TranslocoModule,

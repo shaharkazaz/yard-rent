@@ -21,4 +21,8 @@ export class AuthDataService {
       params
     );
   }
+
+  getUserByToken() {
+    return this.http.get<any>(parseUrl(URI_CONSTANTS.auth.getUser));
+  }
 }

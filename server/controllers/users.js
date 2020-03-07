@@ -107,14 +107,12 @@ module.exports={
         jwt.verify(token, 'yard-rent', (err, decodedToken) => {
             if (err) {
                 return res.status(401).json({
-                    message: 'Auth failed'
+                    message: 'Unauthenticated'
                 })
             }
             const userId = decodedToken.id;
             User.findOne({_id: userId }).then(user => {
-                res.status(200).json({
-                    user
-                })
+                res.status(200).json(user);
             }).catch((error) => {
                 res.status(500).json({
                     error

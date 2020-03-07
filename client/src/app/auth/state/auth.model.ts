@@ -9,12 +9,14 @@ export type User = {
   id: ID;
   name: string;
   token: string;
+  user: any;
 };
 
 export function createEmptyUser() {
   return {
     id: null,
     name: '',
-    token: ''
+    token: '',
+    user: {}
   } as User;
 }

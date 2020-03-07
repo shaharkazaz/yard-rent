@@ -47,6 +47,11 @@
     opacity: 0.8;
   }
 
+  .logo {
+    border: none;
+    outline: none;
+  }
+
   dato-button.active-page {
     // TODO why is this color not effecting the color because of the encapsulation?
     border-bottom: 2px solid #00b7ff;

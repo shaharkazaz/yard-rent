@@ -1,11 +1,11 @@
 <header class="toolbar d-flex-column p-10" *transloco="let t">
   <div class="upper d-flex align-center">
     <img
-      class="logo"
-      height="50"
-      src="../../../assets/images/static/logo.jpeg"
+      class="logo pointer"
+      height="80"
+      src="../../../assets/images/static/logo.png"
+      routerLink=""
     />
-    <a class="ml-10" routerLink="">YardRent</a>
     <div class="d-flex-grow"></div>
     <ng-container *ngIf="!(isLoggedIn$ | async); else userProfile">
       <dato-button
@@ -79,7 +79,7 @@
       <div>{{ t('about-us') }}</div>
     </dato-button>
     <dato-button datoType="none" routerLink="" routerLinkActive="active-page">
-      <div>{{ t('contact') }}</div>
+      <div>{{ t('contact-us') }}</div>
     </dato-button>
     <dato-button datoType="none" [datoMenuTriggerFor]="gettingStarted">
       <div class="mr-3">{{ t('getting-started') }}</div>

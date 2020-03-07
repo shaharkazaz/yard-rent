@@ -15,11 +15,7 @@ export class AppHeaderComponent implements OnInit {
   // TODO connect to cart store
   itemsCount$ = of(0);
   user: User;
-  isLoggedIn$ = this.authQuery.isLoggedIn$.pipe(
-    tap(() => {
-      this.user = this.authQuery.getValue();
-    })
-  );
+  isLoggedIn$ = this.authQuery.isLoggedIn$;
 
   constructor(
     private authService: AuthService,
@@ -27,7 +23,13 @@ export class AppHeaderComponent implements OnInit {
     private snackbar: DatoSnackbar
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authQuery
+      .select(state => state.user)
+      .subscribe(user => {
+        this.user = user;
+      });
+  }
 
   openLoginDialog(view: 'login' | 'sign-up') {
     return this.authService.openDialog(view);
