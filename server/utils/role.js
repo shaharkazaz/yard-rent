@@ -1,9 +1,9 @@
 const role = {
-    Admin: 'Admin',
-    Viewer: 'Viewer',
-    Operator: 'Operator'
+    Admin: 'admin',
+    User: 'user'
 }
-const roles = ['Viewer', 'Operator','Admin']
+
+const roles = ['user', 'admin']
 
 module.exports.role = role;
 module.exports.roles = roles;

@@ -61,7 +61,6 @@ module.exports={
         const { email, password } = req.body;
         User.find({ email }).then((users) => {
             if(users.length === 0){
-                //401 authorization failure
                 return res.status(200).json({
                     success: false,
                     message: 'Username or password are incorrect'
@@ -91,7 +90,6 @@ module.exports={
 
     },
     getAllUsers:(req, res) => {
-        //User.find({}).populate('orderId','date').then((users) => { #it will show only the date
         User.find({}).populate('orderId').then((users) => {
             res.status(200).json({
                 users
