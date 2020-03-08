@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,13 @@ import {
 import { TranslatePipe } from './shared/pipes/translate.pipe';
 import { ShellModule } from './shell/shell.module';
 import { AuthModule } from './auth/auth.module';
+import { AppInitService } from './app-init.service';
+
+export function initApp(appInitService: AppInitService) {
+  return () => {
+    return appInitService.init();
+  };
+}
 
 @NgModule({
   declarations: [AppComponent, TranslatePipe],
@@ -35,7 +42,14 @@ import { AuthModule } from './auth/auth.module';
     DatoThemesModule
   ],
   providers: [
+    AppInitService,
     TranslatePipe,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initApp,
+      deps: [AppInitService],
+      multi: true
+    },
     { provide: APP_TRANSLATE, useExisting: TranslatePipe },
     {
       provide: TRANSLOCO_CONFIG,
