@@ -1,5 +1,5 @@
 module.exports = {
-    graf1: (req, res) => {
+    graph1: (req, res) => {
         const response = [{
             day: "Sunday",
             orders: 50,
@@ -17,12 +17,10 @@ module.exports = {
             orders: 78,
             rewards: 150
         }]
-        res.status(200).json({
-            data: response
-        })
+        res.status(200).json(response)
     }
     ,
-    graf2: (req, res) => {
+    graph2: (req, res) => {
         const response = [{
             category: "Furnitire",
             orders: 50
@@ -36,8 +34,6 @@ module.exports = {
             category: "Garden",
             count: 12
         }]
-        res.status(200).json({
-            data: response
-        })
+        res.status(200).json(response)
     }
 };
