@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Order = require('../model/order');
 const User = require('../model/user');
+const getUserId = require('../utils/getUserId');
 
 module.exports = {
     getAllOrders: (req, res) => {
@@ -14,8 +15,10 @@ module.exports = {
             })
         })
     },
-    addOrder: (req, res) => {
-        const {userId, products} = req.body;
+    addOrder: async (req, res) => {
+        const { products } = req.body;
+        const userId = await getUserId(req);
+
         User.findById(userId).then((user) => {
             const order = new Order({
                 _id: new mongoose.Types.ObjectId(),
