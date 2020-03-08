@@ -25,6 +25,7 @@ const isAliveRouter = require('./routes/Alive');
 const categoriesRouter = require('./routes/categories');
 const subCategoriesRouter = require('./routes/subCategories');
 const twitterRouter = require('./routes/twitter')
+const statisticsRouter =  require('./routes/statistics')
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -52,6 +53,7 @@ app.use('/isAlive', isAliveRouter);
 app.use('/categories', categoriesRouter);
 app.use('/subCategories', subCategoriesRouter);
 app.use('/twitter', twitterRouter);
+app.use('/statistics', statisticsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
