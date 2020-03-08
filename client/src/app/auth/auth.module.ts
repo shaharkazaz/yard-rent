@@ -12,6 +12,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JWTInterceptor } from './auth.interceptor';
+import { AuthService } from './state/auth.service';
+import { IsLoggedInDirective } from './directives/isLoggedIn.directive';
+import { HasRoleDirective } from './directives/hasRole.directive';
+
+const api = [LoginComponent, IsLoggedInDirective, HasRoleDirective];
 
 @NgModule({
   imports: [
@@ -23,10 +28,10 @@ import { JWTInterceptor } from './auth.interceptor';
     DatoDialogModule,
     DatoSnackbarModule
   ],
-  declarations: [LoginComponent],
+  declarations: api,
   entryComponents: [LoginComponent, DatoSnackbarComponent],
-  exports: [LoginComponent],
-  providers: []
+  exports: api,
+  providers: [AuthService]
 })
 export class AuthModule {
   static forRoot(): ModuleWithProviders {

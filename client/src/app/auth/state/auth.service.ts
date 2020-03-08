@@ -13,25 +13,14 @@ export class AuthService {
     private authDataService: AuthDataService,
     private snackbar: DatoSnackbar,
     private authStore: AuthStore
-  ) {
-    if (inStorage()) {
-      this.authDataService.getUserByToken().subscribe(user => {
-        this.authStore.update({
-          id: user.id,
-          name: user.name,
-          user,
-          token: user.token
-        });
-      });
-    }
-  }
+  ) {}
 
   login(params: Credentials) {
     return this.authDataService.login(params).pipe(
       tap(({ success, message, token, user }) => {
         if (success) {
           saveInStorage(token);
-          this.authStore.update(user);
+          this.updateStoreFromUser(user);
         } else {
           this.snackbar.error(message);
         }
@@ -44,7 +33,7 @@ export class AuthService {
       tap(({ success, message, token, user }) => {
         if (success) {
           saveInStorage(token);
-          this.authStore.update(user);
+          this.updateStoreFromUser(user);
         } else {
           this.snackbar.error(message);
         }
@@ -55,5 +44,18 @@ export class AuthService {
   logout() {
     clearStorage();
     this.authStore.update(createEmptyUser());
+  }
+
+  getUserByToken() {
+    return this.authDataService.getUserByToken();
+  }
+
+  updateStoreFromUser(user) {
+    this.authStore.update({
+      id: user.id,
+      name: user.name,
+      user,
+      token: user.token
+    });
   }
 }

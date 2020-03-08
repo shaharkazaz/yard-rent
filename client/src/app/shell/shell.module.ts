@@ -12,6 +12,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
 import { AppFooterComponent } from './footer/app-footer.component';
 import { RouterModule } from '@angular/router';
+import { AuthModule } from '../auth/auth.module';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { RouterModule } from '@angular/router';
     DatoButtonModule,
     DatoMenuModule,
     RouterModule,
-    DatoLinkButtonModule
+    DatoLinkButtonModule,
+    AuthModule
   ],
   declarations: [AppHeaderComponent, AppFooterComponent],
   exports: [AppHeaderComponent, AppFooterComponent]

@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "commit": "git-cz"
   },
   "dependencies": {
     "bcrypt": "3.0.6",
@@ -23,5 +24,8 @@
     "nodemon": "^2.0.2",
     "socket.io": "^2.3.0",
     "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "git-cz": "^3.3.0"
   }
 }
