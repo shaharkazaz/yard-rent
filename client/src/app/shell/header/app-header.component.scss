@@ -52,17 +52,22 @@
     outline: none;
   }
 
-  dato-link {
-    // TODO not working
+  ::ng-deep dato-link {
     outline: none;
   }
 
-  dato-button {
+  ::ng-deep dato-button {
     &.link {
+      transition: border-bottom-color 0.4s ease-in-out;
       border-bottom: 2px solid transparent;
+      div {
+        transition: color 0.4s ease-in-out;
+      }
     }
     &.active-page {
-      // TODO why is this color not effecting the color because of the encapsulation?
+      div {
+        color: #00b7ff;
+      }
       border-color: #00b7ff;
     }
   }

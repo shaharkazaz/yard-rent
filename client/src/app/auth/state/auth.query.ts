@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthStore } from './auth.store';
 import { User } from './auth.model';
 import { Query } from '@datorama/akita';
+import { UserRole } from '../auth.types';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class AuthQuery extends Query<User> {
 
   getToken(): string {
     return this.getValue().token || getStorageToken();
+  }
+
+  getUserRole(): UserRole {
+    return this.getValue().user.role;
   }
 }
 

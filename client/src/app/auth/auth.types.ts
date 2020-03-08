@@ -6,3 +6,9 @@ export type LoginResponse = {
   token?: string;
   user?: any;
 };
+
+export type UserRole = 'user' | 'admin';
+export const USER_ROLES = {
+  user: 0,
+  admin: 1
+};
