@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Products = require('../model/product');
 const User = require('../model/user');
 const getUserId = require('../utils/getUserId');
+const uploadToGCP = require('../utils/uploadToGCP');
 
 module.exports = {
     getAllProducts: (req, res) => {
@@ -18,6 +19,7 @@ module.exports = {
     addProduct: async (req, res) => {
         const {name, category, subCategory, rewards, address, deposit, durationInDays} = req.body;
         const userId = await getUserId(req);
+        const imageUrl = await uploadToGCP(req);
         const product = new Products({
             _id: new mongoose.Types.ObjectId(),
             name,
@@ -27,7 +29,8 @@ module.exports = {
             rewards,
             address, //check it address is empty put user.address
             deposit,
-            durationInDays
+            durationInDays,
+            image: imageUrl
         });
         product.save().then(() => {
             User.findByIdAndUpdate({_id: userId}, {$push: {product: product._id}}).then(() => {

@@ -9,7 +9,8 @@ const productSchema = mongoose.Schema({
     rewards: {type: Number, required: true},
     address: {type: String, required: true}, // write in the UI if its a different address if not we will take the address of the user
     deposit: {type: Number, required: false},
-    durationInDays: {type: Date, required: true}
+    durationInDays: {type: Date, required: true},
+    image: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Product', productSchema);
