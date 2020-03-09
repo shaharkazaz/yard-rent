@@ -90,26 +90,5 @@ module.exports = {
                 error
             })
         })
-
-
-
-        const response = [{
-            day: "Sunday",
-            orders: 50,
-            rewards: 20
-        } ,{
-            day: "Monday",
-            orders: 30,
-            rewards: 10
-        } ,{
-            day: "Tuesday",
-            orders: 19,
-            rewards: 15
-        }, {
-            day: "Wednesday",
-            orders: 78,
-            rewards: 150
-        }]
-        res.status(200).json(response)
     }
 };
