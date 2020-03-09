@@ -1,0 +1,12 @@
+module.exports = {
+    type: "service_account",
+    project_id: "yard-rent",
+    private_key_id: "3e6b50e1be31e8185d6691ed6c034006d25cef7e",
+    private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDCMzoNRklvRf/i\nsSrQVVVmvXwZXcGbpmZ1+pa+ZTH2m2y7xDGTYESGEfvvskpfSu72AikwLt9aggUb\nKSbrAPeKqb0BFAesajhMHX4vdm4gZmps6RL+9S2E7/UwUm+VFnHSM5gNFOJHHx1h\n9nJhuY39hWH+9nxsMEFNIdFvd/7oLuufhRbxGa7VvLuBhjfOTp7+/4jXK8IQffOm\ndQnk2bpDZP366ykGWMlBWlEvCY+YpbDf3cM49jwQwl2xrIan0H4NeL5+zrVOYwM4\nHkb0G4hVNmG0x0uuUYeQ2OE3VuzX1SudF8twU2Iv94dFniVbLg7u74zaKKhJS/Xu\nLrtWwo/vAgMBAAECggEALF6i5VSJQ6ylHain5QiSJhKl72+94++dWlhCJ8ccJsF1\nEuNtBkSI827ZdnbwShxnQ3rT6UfUTSwGuaFp3GiQpjRI1B288RYlvbJBWdu/ppRv\nvWl1Jx5iY4ylowA6sT/7CnEyTM7YMjK4NmEl2hEYkXNvo96yJ8/Qo6xV2xd5/JcR\nyvHIoehM23LCSjigNM9WWrIjBBZY7D5D9fkfhSYLSKF4zpYR9f7cE67oByHL2yf7\nzx9qLAx+Ht3YU9FdPE73T7AyBXDcQ5qB8gHiPJLg45bqpIvvhpSdXQ2e+k7fLPCV\nraLaYPc7B6lghUQ/6X/2a6AjQzKTuoX3WCYIs55TfQKBgQDp2UsYekrwGzM1RDcl\nIzvr+hg13CB+shpW6wpEWf6JlgPuznykJeiH65vFSSQasHc50GQN1xpqMJjM5clY\nksQgTKRH9UEzzxzOmHxwRbFRYGAbl52jQbhQnLy21qTnqCglB3hPAx1ST7vTsiN2\nbXvGaoImNBu/OUFJq7yFP/mO1QKBgQDUmHlYWy4h66MuxbEq3rahPOMxDn54YnJH\nIe2w6Q8SXrzaeuH/wmTQ8HrW2Z1/AxPfGgU2xaIZD5TEqmIA8YsPf4ugdN4Y1Ksg\np3cpH4ac+4Z0Atc7j0KPZI5wxEmIc2ACxtGWkiFH5Ulz6dbmmaZ83/0X8i1Pa3+B\nsecYuydtswKBgQDZQ4pyxoRDSnIsRiGZ/n9YwjamK8uBCsZQBPW4BYjomZkz0WKa\nO6IsTimehVLm/Rb4fvXGqhgfmuEMVV3ZThqsC6kCNgoLMZ0JEUFkKkwRWCJS4G2U\nVaYCN21ZzljN5jzOEn+joTgn1m6iw7oQ+K1r7l7XUciJxI80/Dsd7g9VtQKBgQCI\nnEX1efoGAAZHKu/yzVRr/dU8E8U/FHu8q9eyQ8DUnB4dArOxBriD7tPwtbvX/yFI\nzs6k6JCGLBX73kTFuHEUj3AotpB1QkuI2zPeMAzvWU2HxL+L3T33KLXDTs61qPX8\nMshBSjuqmHL/0jauzfNG8SQQvCVTkI9JxwjqQnFOswKBgH2RVxC1mqPqcQJq3CM+\nA009xIJbhiytj1Q7A9l9/+I4i5rzfvDQY9Agm4uzNl/swKVBJBeQkX+Vv2Hi7Abj\nMCAIxNENuJtElT+r9iO8ppWqCfKIbC+ekWXqbA3VL0ERmXKWPm5P7dBnhz0/1MbE\nsfnq2VN7SJyrzZY1Ep2EV6/o\n-----END PRIVATE KEY-----\n",
+    client_email: "serviceaccountgcp@yard-rent.iam.gserviceaccount.com",
+    client_id: "118041652271917463088",
+    auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    token_uri: "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+    client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/serviceaccountgcp%40yard-rent.iam.gserviceaccount.com"
+}
