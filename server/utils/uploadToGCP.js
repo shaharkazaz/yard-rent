@@ -23,7 +23,6 @@ async function uploadImage(req){
         // Uploads a local file to the bucket
         storage.bucket(bucketName).upload(fullImagePath).then(data => {
             // Uploaded successfully + Delete local file from server
-            console.log("inside Data scope");
             fs.unlink(fullImagePath, (err) => {
                 if (err) {console.error(err)}
                 //file removed

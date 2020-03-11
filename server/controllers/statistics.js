@@ -19,27 +19,18 @@ class statObj {
 }
 
 module.exports = {
-    graph2: (req, res) => {
+    graph1: (req, res) => {
         const pipeline = [
             {
-                "$group": {
-                    "_id": "$category",
-                    "count": { "$sum": 1 }
+                "$lookup": {
+                    "from": "products",
+                    "localField": "products",
+                    "foreignField": "_id",
+                    "as": "product"
                 }
             }
         ];
-        Products.aggregate(pipeline).then((stats) =>{
-            res.status(200).json({
-                stats: stats
-            })
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
-    graph1: (req, res) => {
-        var res = [{
+        var results = [{
             day: "Sunday",
             orders: 0,
             rewards: 0
@@ -69,26 +60,55 @@ module.exports = {
             rewards: 0
         }]
 
-        Orders.find({}).populate("products").then((orders) => {
-            orders.foreach(order =>{
-                var dayIndex = order.date.getDay();
+        Orders.aggregate(pipeline).then((stats) =>{
+            console.log(stats);
+            stats.forEach(o =>{
+                console.log(o.products.length)
+                var currentOrder = o;
+                var dayIndex = currentOrder.date.getDay();
 
                 // sum products per order
-                res[dayIndex].orders = res[dayIndex].orders + order.products.length;
+                results[dayIndex].orders++;
 
                 // sum all rewards of products per order
                 var rewardsPerDay = 0;
-                order.products.foreach(p =>{
-                    rewardsPerDay += p.rewards;
-                })
-                res[dayIndex].rewards = res[dayIndex].rewards + rewardsPerDay;
-                // TODO: return the response as array
+                var productsArr = currentOrder.products
+                for (var j=0; j < productsArr.length; j++)
+                {
+                    var currentProduct = productsArr[j];
+                    console.log(currentProduct.id);
+                    Products.findOne({_id: currentProduct.id}).then(p => {
+                        console.log(p)
+                        rewardsPerDay += currentProduct.rewards;
+                    })
+                }
+                results[dayIndex].rewards = results[dayIndex].rewards + rewardsPerDay;
             })
-            res.status(200).json(res)
+            res.status(200).json(results);
+        }).catch((error) => {
+            res.status(500).json({
+                error
+            })
+        })
+    },
+    graph2: (req, res) => {
+        const pipeline = [
+            {
+                "$group": {
+                    "_id": "$category",
+                    "count": { "$sum": 1 }
+                }
+            }
+        ];
+        Products.aggregate(pipeline).then((stats) =>{
+            res.status(200).json({
+                stats: stats
+            })
         }).catch((error) => {
             res.status(500).json({
                 error
             })
         })
     }
+
 };
