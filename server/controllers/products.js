@@ -3,6 +3,7 @@ const Products = require('../model/product');
 const User = require('../model/user');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
+const updateDataSet = require('../utils/updateDataSet');
 
 module.exports = {
     getAllProducts: (req, res) => {
@@ -34,6 +35,7 @@ module.exports = {
         });
         product.save().then(() => {
             User.findByIdAndUpdate({_id: userId}, {$push: {product: product._id}}).then(() => {
+                updateDataSet();
                 res.status(200).json({
                     message: 'new product was added'
                 })

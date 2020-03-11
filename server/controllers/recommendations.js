@@ -1,44 +1,54 @@
 const mongoose = require('mongoose');
-const Product = require('../model/product');
-const User = require('../model/user');
-const Order = require('../model/order');
-const ContentBasedRecommender = require('content-based-recommender')
+const DataSet = require('../model/dataSet');
+const Recommendation = require('../model/recommendation');
 
+const ContentBasedRecommender = require('content-based-recommender');
+const RecommendationProductsNumber = 2;
 const recommender = new ContentBasedRecommender({
     minScore: 0,
-    maxSimilarDocuments: 1000,
+    maxSimilarDocuments: 100,
     debug: true
 });
 
 module.exports = {
-    getRecommendation: (req, res) => {
-
-        const documents = [
-            { id: '1000001', content: {
-                    name: "prom",
-                    user: "chen@gmail.com"
-                }},
-            { id: '1000002', content: {
-                    name: "fish",
-                    user: "chen@gmail.com"
-                } },
-            { id: '1000003', content: {
-                    name: "shoes",
-                    user: "ayelet@gmail.com"
-                } },
-            { id: '1000004', content: {
-                    name: "dress",
-                    user: "ayelet@gmail.com"
-                } }
-        ];
-
-        recommender.train(documents);
-
-        const similarDocuments = recommender.getSimilarDocuments('1000002', 0, 1);
-
-        res.status(200).json({
-            similarDocuments
-        })
-
-        },
-    };
+    getRecommendation: async (req, res) => {
+        const productId = req.params.productId;
+        Recommendation.findById(productId).populate('recommendedProducts').then((recommendation) => {
+            if(recommendation){
+                res.status(200).json({
+                    recommendation: recommendation.recommendedProducts
+                })
+            }
+            else{
+                DataSet.findOne({}).then((dataSet) => {
+                    recommender.train(dataSet.data.toObject({getters: true}));
+                    const similarDocuments = recommender.getSimilarDocuments(productId, 0, RecommendationProductsNumber);
+                    const ids = similarDocuments.map(l => l.id);
+                    const recommendation = new Recommendation({
+                        _id: mongoose.Types.ObjectId(productId),
+                        recommendedProducts: ids
+                    });
+                    recommendation.save().then(() => {
+                        Recommendation.findById(productId).populate('recommendedProducts').then((fullrecomend)=>{
+                            res.status(200).json({
+                                recommendation: fullrecomend.recommendedProducts
+                            })
+                        })
+                    }).catch(error => {
+                        return res.status(500).json({
+                            error
+                        })
+                    });
+                }).catch(error => {
+                    res.status(500).json({
+                        error
+                    })
+                })
+            }
+        }).catch((error) => {
+            res.status(500).json({
+                error
+            })
+        });
+    }
+};
