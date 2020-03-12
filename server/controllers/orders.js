@@ -16,14 +16,15 @@ module.exports = {
         })
     },
     addOrder: async (req, res) => {
-        const { products } = req.body;
+        const { products, rewards } = req.body;
         const userId = await getUserId(req);
 
         User.findById(userId).then((user) => {
             const order = new Order({
                 _id: new mongoose.Types.ObjectId(),
                 user: user._id,
-                products
+                products,
+                rewards
             });
             order.save().then(() => {
                 User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(() => {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Products = require('../model/product');
 const User = require('../model/user');
+const Category = require('../model/category')
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 
@@ -19,7 +20,7 @@ module.exports = {
     addProduct: async (req, res) => {
         const {name, category, subCategory, rewards, address, deposit, durationInDays} = req.body;
         const userId = await getUserId(req);
-        const imageUrl = await uploadToGCP(req)
+        const imageUrl = await uploadToGCP(req);
         const product = new Products({
             _id: new mongoose.Types.ObjectId(),
             name,
@@ -92,6 +93,36 @@ module.exports = {
             })
         }).catch(error => {
             res.status(500).json({
+                error
+            })
+        })
+    },
+    getProductByQuery: (req,res) => {
+        const query = req.params.query;
+        Products.aggregate([
+            { $lookup: {
+                    from: "categories",
+                    localField: "category" ,
+                    foreignField: "_id",
+                    as: "category"
+                }
+            },
+            { $unwind: "$category" },
+            { $lookup: {
+                    from: "subcategories",
+                    localField: "subCategory" ,
+                    foreignField: "_id",
+                    as: "subCategory"
+                }
+            },
+            { $unwind: "$subCategory" },
+            { $match: {name: { "$regex": query, "$options": "i" }} },
+            ]).then(products => {
+                res.status(200).json({
+                    products
+                })
+        }).catch(error => {
+            return res.status(500).json({
                 error
             })
         })
