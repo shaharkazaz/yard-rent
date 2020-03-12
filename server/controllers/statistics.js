@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 
 // helper Class
 class statObj {
-    constructor(day) {
+    constructor(day)
+    {
         this.day = day;
         this.orders = 0;
         this.rewards = 0;
@@ -105,11 +106,12 @@ module.exports = {
                     "from": "categories",
                     "localField": "name",
                     "foreignField": "_id",
-                    "as": "shouldBeNAme"
+                    "as": "categoryObj"
                 }
             },
-            { "$project": {
-                    "name": { "$arrayElemAt": [ "$shouldBeNAme.name", 0 ] } ,
+            {
+                "$project": {
+                    "name": { "$arrayElemAt": [ "$categoryObj.name", 0 ] } ,
                     "count": "$count",
                 }
             },
@@ -124,5 +126,4 @@ module.exports = {
             })
         })
     }
-
 };
