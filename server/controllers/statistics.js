@@ -22,7 +22,6 @@ class statObj {
 module.exports = {
     graph1: (req, res) => {
         const pipeline = [
-
             {
                 "$lookup": {
                     "from": "products",
@@ -63,9 +62,7 @@ module.exports = {
         }]
 
         Orders.aggregate(pipeline).then((stats) =>{
-            console.log(stats);
             stats.forEach(o =>{
-
                 var currentOrder = o;
                 var dayIndex = currentOrder.date.getDay();
 
@@ -95,7 +92,27 @@ module.exports = {
                     "_id": "$category",
                     "count": { "$sum": 1 }
                 }
-            }
+            },
+            { "$project": {
+                    "_id": 0,
+                    "name": "$_id",
+                    "count": 1,
+                    "sum": 1
+                }
+            },
+            {
+                "$lookup": {
+                    "from": "categories",
+                    "localField": "name",
+                    "foreignField": "_id",
+                    "as": "shouldBeNAme"
+                }
+            },
+            { "$project": {
+                    "name": { "$arrayElemAt": [ "$shouldBeNAme.name", 0 ] } ,
+                    "count": "$count",
+                }
+            },
         ];
         Products.aggregate(pipeline).then((stats) =>{
             res.status(200).json({
