@@ -20,7 +20,7 @@ class statObj {
 
 module.exports = {
     graph1: (req, res) => {
-        const pipeline = [
+/*        const pipeline = [
             {
                 "$lookup": {
                     "from": "products",
@@ -29,7 +29,18 @@ module.exports = {
                     "as": "product"
                 }
             }
-        ];
+        ];*/
+                const pipeline2 = [
+                    {
+                        "$lookup": {
+                            "from": "products",
+                            "localField": "products",
+                            "foreignField": "_id",
+                            "as": "product",
+
+                        }
+                    }
+                ];
         var results = [{
             day: "Sunday",
             orders: 0,
@@ -75,11 +86,11 @@ module.exports = {
                 var productsArr = currentOrder.products
                 for (var j=0; j < productsArr.length; j++)
                 {
-                    var currentProduct = productsArr[j];
-                    console.log(currentProduct.id);
-                    Products.findOne({_id: currentProduct.id}).then(p => {
+                    var productId = currentOrder.products[j].toString();
+                    console.log(currentOrder.products[j].toString());
+                    Products.find({_id: productId}).then(p => {
                         console.log(p)
-                        rewardsPerDay += currentProduct.rewards;
+                        rewardsPerDay += p.rewards;
                     })
                 }
                 results[dayIndex].rewards = results[dayIndex].rewards + rewardsPerDay;
