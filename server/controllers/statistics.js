@@ -1,5 +1,6 @@
 const Orders = require('../model/order');
 const Products = require('../model/product');
+const mongoose = require('mongoose');
 
 // helper Class
 class statObj {
@@ -20,27 +21,17 @@ class statObj {
 
 module.exports = {
     graph1: (req, res) => {
-/*        const pipeline = [
+        const pipeline = [
+
             {
                 "$lookup": {
                     "from": "products",
                     "localField": "products",
                     "foreignField": "_id",
-                    "as": "product"
+                    "as": "productObjects"
                 }
             }
-        ];*/
-                const pipeline2 = [
-                    {
-                        "$lookup": {
-                            "from": "products",
-                            "localField": "products",
-                            "foreignField": "_id",
-                            "as": "product",
-
-                        }
-                    }
-                ];
+        ];
         var results = [{
             day: "Sunday",
             orders: 0,
@@ -74,26 +65,21 @@ module.exports = {
         Orders.aggregate(pipeline).then((stats) =>{
             console.log(stats);
             stats.forEach(o =>{
-                console.log(o.products.length)
+
                 var currentOrder = o;
                 var dayIndex = currentOrder.date.getDay();
 
-                // sum products per order
-                results[dayIndex].orders++;
-
                 // sum all rewards of products per order
                 var rewardsPerDay = 0;
-                var productsArr = currentOrder.products
-                for (var j=0; j < productsArr.length; j++)
+                var productObjects = currentOrder.productObjects;
+
+                for (var i=0; i<productObjects.length;i++)
                 {
-                    var productId = currentOrder.products[j].toString();
-                    console.log(currentOrder.products[j].toString());
-                    Products.find({_id: productId}).then(p => {
-                        console.log(p)
-                        rewardsPerDay += p.rewards;
-                    })
+                    rewardsPerDay += productObjects[i].rewards;
                 }
+
                 results[dayIndex].rewards = results[dayIndex].rewards + rewardsPerDay;
+                results[dayIndex].orders++;
             })
             res.status(200).json(results);
         }).catch((error) => {
