@@ -1,0 +1,36 @@
+<ng-container *ngIf="usersLoaded$ | async">
+  <div class="d-flex-column align-center" *transloco="let t" [formGroup]="form">
+    <div class="d-flex-column mb-20">
+      <div class="d-flex-column mb-10">
+        <div>{{ t('user-name') }}</div>
+        <dato-input formControlName="name"></dato-input>
+      </div>
+      <div class="d-flex-column mb-10">
+        <div>{{ t('email') }}</div>
+        <dato-input formControlName="email"></dato-input>
+      </div>
+      <div class="d-flex-column mb-10">
+        <div>{{ t('address') }}</div>
+        <dato-input formControlName="address"></dato-input>
+      </div>
+      <div class="d-flex-column mb-10">
+        <div>{{ t('password') }}</div>
+        <dato-input type="password" formControlName="password"></dato-input>
+      </div>
+    </div>
+    <div class="d-flex align-center">
+      <dato-button
+        (click)="backToUserTable()"
+        class="mr-10"
+        datoType="secondary"
+        >{{ t('core.cancel') }}</dato-button
+      >
+      <dato-button
+        [loading]="loading"
+        [disabled]="form.pristine"
+        (click)="saveUser()"
+        >{{ t('core.save') }}</dato-button
+      >
+    </div>
+  </div>
+</ng-container>

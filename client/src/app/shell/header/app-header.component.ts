@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { AuthService } from '../../auth/state/auth.service';
 import { AuthQuery } from '../../auth/state/auth.query';
-import { User } from '../../auth/state/auth.model';
 import { DatoDialog, DatoSnackbar, filterDialogSuccess } from '@datorama/core';
 import { LoginComponent } from '../../auth/login/login.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,14 +14,16 @@ import { LoginComponent } from '../../auth/login/login.component';
 export class AppHeaderComponent implements OnInit {
   // TODO connect to cart store
   itemsCount$ = of(0);
-  user: User;
+  // TODO user interface
+  user: any;
   isLoggedIn$ = this.authQuery.isLoggedIn$;
 
   constructor(
     private authService: AuthService,
     private authQuery: AuthQuery,
     private dialog: DatoDialog,
-    private snackbar: DatoSnackbar
+    private snackbar: DatoSnackbar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,7 @@ export class AppHeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['home']);
   }
 
   addNewItem() {

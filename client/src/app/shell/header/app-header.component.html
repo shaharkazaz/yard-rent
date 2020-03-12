@@ -39,6 +39,9 @@
           <div class="dato-sub-headline mb-10">
             {{ t('hello', { name: user.name }) }}
           </div>
+          <div class="dato-simple-bold mb-10">
+            {{ t('you-have-rewards', { rewards: user.rewards || 0 }) }}
+          </div>
           <dato-link
             class="my-5"
             datoType="secondary"
@@ -64,7 +67,7 @@
             *hasRole="'admin'"
             class="my-5"
             datoType="secondary"
-            routerLink="user/management"
+            routerLink="admin"
             (click)="tooltip.hide()"
             >{{ t('management') }}</dato-link
           >
@@ -96,7 +99,11 @@
     >
       <div>{{ t('home-page') }}</div>
     </dato-button>
-    <dato-button datoType="none" [datoMenuTriggerFor]="gettingStarted">
+    <dato-button
+      class="link"
+      datoType="none"
+      [datoMenuTriggerFor]="gettingStarted"
+    >
       <div class="mr-3">{{ t('getting-started') }}</div>
       <dato-icon width="10px" height="17px" datoIcon="arrow-down"></dato-icon>
     </dato-button>
@@ -133,6 +140,9 @@
       </button>
       <button datoMenuItem routerLink="">
         <div>{{ t('how-to-rent') }}</div>
+      </button>
+      <button datoMenuItem routerLink="">
+        <div>{{ t('what-are-rewards') }}</div>
       </button>
     </ng-template>
   </dato-menu>

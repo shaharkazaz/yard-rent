@@ -28,15 +28,12 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    document.onload = () => {
-      debugger;
-    };
-    merge(timer(0), fromEvent(window, 'resize'))
+    merge(timer(100), fromEvent(window, 'resize'))
       .pipe(debounceTime(100), untilDestroyed(this))
       .subscribe(() => {
         this.carouselConfig = {
           ...this.carouselConfig,
-          itemWidth: document.documentElement.clientWidth
+          itemWidth: document.documentElement.clientWidth - 15
         };
         this.cdr.detectChanges();
       });

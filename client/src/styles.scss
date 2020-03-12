@@ -1,6 +1,11 @@
+// Vendors
 // failing due to @return unquote("themify(#{$props...})"); + I think missing colors config
 //@import "~@datorama/themify/themify";
 @import 'themes-bundle.css';
 //@import "~@datorama/core/bundle";
 @import '~@datorama/core/atomic-css/index';
+@import '~ag-grid-community/dist/styles/compiled-icons.css';
+@import '~ag-grid-community/dist/styles/ag-grid.css';
+@import '~ag-grid-community/dist/styles/ag-theme-fresh.css';
+// main
 @import 'main';
