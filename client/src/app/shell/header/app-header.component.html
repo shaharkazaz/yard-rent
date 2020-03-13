@@ -7,7 +7,7 @@
       routerLink=""
     />
     <div class="d-flex-grow"></div>
-    <ng-container *ngIf="!(isLoggedIn$ | async); else userProfile">
+    <ng-container *ngIf="!(isLoggedIn$ | async); else loggedIn">
       <dato-button
         class="mr-10"
         datoType="secondary"
@@ -18,7 +18,7 @@
         t('sign-up')
       }}</dato-button>
     </ng-container>
-    <ng-template #userProfile>
+    <ng-template #loggedIn>
       <div
         class="profile mr-20 pointer"
         [datoTooltip]="userMenu"
@@ -30,7 +30,7 @@
         <dato-icon
           height="40px"
           width="40px"
-          class="primary-300-color"
+          class="primary-400-color"
           datoIcon="user"
         ></dato-icon>
       </div>
@@ -63,14 +63,6 @@
             (click)="tooltip.hide()"
             >{{ t('my-profile') }}</dato-link
           >
-          <dato-link
-            *hasRole="'admin'"
-            class="my-5"
-            datoType="secondary"
-            routerLink="admin"
-            (click)="tooltip.hide()"
-            >{{ t('management') }}</dato-link
-          >
           <dato-button
             class="mt-10"
             datoType="secondary"
@@ -79,16 +71,30 @@
           >
         </div>
       </ng-template>
+      <div
+        class="cart d-flex align-center-end pointer mr-20"
+        *datoSubscribe="itemsCount$ as itemsCount"
+      >
+        <div
+          class="items-count absolute"
+          [ngClass]="{
+            'single-digit': itemsCount < 10,
+            'triple-digit': itemsCount > 99
+          }"
+        >
+          {{ itemsCount > 99 ? '99+' : itemsCount }}
+        </div>
+        <dato-icon
+          height="40px"
+          width="40px"
+          class="orange-400-color"
+          datoIcon="shopping-cart"
+        ></dato-icon>
+      </div>
     </ng-template>
     <dato-button class="mr-10" datoType="orange" (click)="addNewItem()"
       >+ {{ t('post-something') }}</dato-button
     >
-    <!--  <dato-icon datoIcon="shopping-cart"></dato-icon>-->
-    <!--    <div class="cart d-flex align-center-end pointer" *datoSubscribe="itemsCount$ as itemsCount">-->
-    <!--      <div class="items-count absolute" [ngClass]="{'single-digit': itemsCount < 10, 'triple-digit': itemsCount > 99}">{{itemsCount > 99 ? '99+' : itemsCount}}</div>-->
-    <!--      <svg fill="orange" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 19.5c0 .829-.672 1.5-1.5 1.5s-1.5-.671-1.5-1.5c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5zm3.5-1.5c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.305-15l-3.432 12h-10.428l-3.777-9h-2.168l4.615 11h13.239l3.474-12h1.929l.743-2h-4.195z"/></svg>-->
-    <!--      <div class="title">{{ 'cart' | transloco }}</div>-->
-    <!--    </div>-->
   </div>
   <div class="lower d-flex align-center">
     <dato-button
@@ -130,6 +136,15 @@
       routerLinkActive="active-page"
     >
       <div>{{ t('contact-us') }}</div>
+    </dato-button>
+    <dato-button
+      *hasRole="'admin'"
+      class="link"
+      datoType="none"
+      routerLink="admin"
+      routerLinkActive="active-page"
+    >
+      <div>{{ t('management') }}</div>
     </dato-button>
   </div>
 

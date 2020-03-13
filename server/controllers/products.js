@@ -9,9 +9,7 @@ const updateDataSet = require('../utils/updateDataSet');
 module.exports = {
     getAllProducts: (req, res) => {
         Products.find({}).populate('user').populate('category').populate('subCategory').then((products) => {
-            res.status(200).json({
-                products: products
-            })
+            res.status(200).json(products)
         }).catch((error) => {
             res.status(500).json({
                 error

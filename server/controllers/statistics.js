@@ -1,9 +1,9 @@
 const Orders = require('../model/order');
 const Products = require('../model/product');
-const mongoose = require('mongoose');
 
 module.exports = {
-    graph1: (req, res) => {
+    weeklyData: (req, res) => {
+        // TODO get only the orders of the past week
         const pipeline = [
             {
                 "$lookup": {
@@ -14,53 +14,19 @@ module.exports = {
                 }
             }
         ];
-        var results = [{
-            day: "Sunday",
-            orders: 0,
-            rewards: 0
-        },{
-            day: "Monday",
-            orders: 0,
-            rewards: 0
-        },{
-            day: "Tuesday",
-            orders: 0,
-            rewards: 0
-        },{
-            day: "Wednesday",
-            orders: 0,
-            rewards: 0
-        },{
-            day: "Thursday",
-            orders: 0,
-            rewards: 0
-        },{
-            day: "Friday",
-            orders: 0,
-            rewards: 0
-        },{
-            day: "Saturday",
-            orders: 0,
-            rewards: 0
-        }]
+        const results = [
+            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+        ].map(day => ({day, orders: 0, rewards: 0}));
 
-        Orders.aggregate(pipeline).then((stats) =>{
+        Orders.aggregate(pipeline).then((stats) => {
             stats.forEach(o =>{
-                var currentOrder = o;
-                var dayIndex = currentOrder.date.getDay();
-
+                const dayIndex = o.date.getDay();
                 // sum all rewards of products per order
-                var rewardsPerDay = 0;
-                var productObjects = currentOrder.productObjects;
-
-                for (var i=0; i<productObjects.length;i++)
-                {
-                    rewardsPerDay += productObjects[i].rewards;
-                }
-
-                results[dayIndex].rewards = results[dayIndex].rewards + rewardsPerDay;
-                results[dayIndex].orders++;
-            })
+                const rewardsPerDay = o.productObjects.reduce((acc, product) => (acc + product.rewards), 0);
+                const dayData = results[dayIndex];
+                dayData.rewards += rewardsPerDay;
+                dayData.orders++;
+            });
             res.status(200).json(results);
         }).catch((error) => {
             res.status(500).json({
@@ -68,7 +34,7 @@ module.exports = {
             })
         })
     },
-    graph2: (req, res) => {
+    ordersPerCategory: (req, res) => {
         const pipeline = [
             {
                 "$group": {
@@ -99,9 +65,7 @@ module.exports = {
             },
         ];
         Products.aggregate(pipeline).then((stats) =>{
-            res.status(200).json({
-                stats: stats
-            })
+            res.status(200).json(stats)
         }).catch((error) => {
             res.status(500).json({
                 error

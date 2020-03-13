@@ -1,0 +1,8 @@
+<marketplace-filters></marketplace-filters>
+<!-- TODO make the items container overflow-->
+<div class="d-flex align-space-around-center d-flex-wrap mt-20 overflow-auto">
+  <marketplace-item-card
+    *ngFor="let item of items | async"
+    [item]="item"
+  ></marketplace-item-card>
+</div>
