@@ -18,12 +18,9 @@
   .cart {
     position: relative;
     height: 40px;
-    svg {
-      height: 40px;
-    }
     .items-count {
       font-size: 20px;
-      top: 5px;
+      top: 3px;
       left: 8px;
       &.single-digit {
         font-size: 20px;

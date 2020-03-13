@@ -9,5 +9,9 @@ export const URI_CONSTANTS = {
     getAllUsers: 'users/getAll',
     deleteUser: 'users/deleteuser/{id}',
     updateUser: 'users/updateuser/{id}'
+  },
+  products: {
+    getAllProducts: 'products',
+    getProduct: 'products/{productId}'
   }
 };

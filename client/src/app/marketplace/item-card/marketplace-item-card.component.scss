@@ -1,0 +1,17 @@
+:host {
+  margin-bottom: 20px;
+  .container {
+    width: 280px;
+    border: 2px solid #f1f2f5;
+    transition: border 0.3s;
+    &:hover {
+      border-color: #09a0ff;
+    }
+  }
+  .image-container {
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
