@@ -14,8 +14,8 @@ const checkAuth = (role) => {
                     })
                 }
                 if(role){
-                    const givenUserRole = decodedToken.role;
-                    if (roles.indexOf(givenUserRole) < roles.indexOf(role)) {
+                    const userRole = decodedToken.role;
+                    if (roles.indexOf(userRole) < roles.indexOf(role)) {
                         return res.status(401).json({ message: 'Unauthorized'});
                     }
                 }

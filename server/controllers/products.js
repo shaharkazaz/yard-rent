@@ -8,7 +8,7 @@ const updateDataSet = require('../utils/updateDataSet');
 
 module.exports = {
     getAllProducts: (req, res) => {
-        Products.find({}).then((products) => {
+        Products.find({}).populate('user').populate('category').populate('subCategory').then((products) => {
             res.status(200).json({
                 products: products
             })
@@ -53,7 +53,7 @@ module.exports = {
     },
     getProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.findById(productId).then((product) => {
+        Products.findById(productId).populate('user').populate('category').populate('subCategory').then((product) => {
             res.status(200).json({
                 product: product
             })

@@ -5,7 +5,7 @@ const getUserId = require('../utils/getUserId');
 
 module.exports = {
     getAllOrders: (req, res) => {
-        Order.find({}).then((orders) => {
+        Order.find({}).populate('products').then((orders) => {
             res.status(200).json({
                 orders: orders
             })
