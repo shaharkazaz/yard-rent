@@ -15,9 +15,7 @@ module.exports = {
         const productId = req.params.productId;
         Recommendation.findById(productId).populate('recommendedProducts').then((recommendation) => {
             if(recommendation){
-                res.status(200).json({
-                    recommendation: recommendation.recommendedProducts
-                })
+                res.status(200).json(recommendation.recommendedProducts)
             }
             else{
                 DataSet.findOne({}).then((dataSet) => {
@@ -30,9 +28,7 @@ module.exports = {
                     });
                     recommendation.save().then(() => {
                         Recommendation.findById(productId).populate('recommendedProducts').then((fullrecomend)=>{
-                            res.status(200).json({
-                                recommendation: fullrecomend.recommendedProducts
-                            })
+                            res.status(200).json(fullrecomend.recommendedProducts)
                         })
                     }).catch(error => {
                         return res.status(500).json({

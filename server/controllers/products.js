@@ -52,9 +52,7 @@ module.exports = {
     getProduct: (req, res) => {
         const productId = req.params.productId;
         Products.findById(productId).populate('user').populate('category').populate('subCategory').then((product) => {
-            res.status(200).json({
-                product: product
-            })
+            res.status(200).json(product)
         }).catch(error => {
             res.status(500).json({
                 error

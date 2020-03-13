@@ -5,9 +5,7 @@ const Category = require('../model/category');
 module.exports = {
     getAllSubCategories: (req, res) => {
         SubCategory.find({}).then((subCategories) => {
-            res.status(200).json({
-                subCategories: subCategories
-            })
+            res.status(200).json(subCategories)
         }).catch((error) => {
             res.status(500).json({
                 error
