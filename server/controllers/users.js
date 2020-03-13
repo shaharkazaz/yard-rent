@@ -117,6 +117,20 @@ module.exports={
 
         });
     },
+    deleteUsers: (req, res) => {
+        const { users } = req.body;
+        const objectIdUsers = users.map(user => mongoose.Types.ObjectId(user));
+        User.remove({_id: {$in: objectIdUsers}}, (err, result) => {
+            if(err){
+                res.status(500).json({
+                    err
+                })
+            }
+            res.status(200).json({
+                message: "users deleted successfully"
+            })
+        })
+    },
     getUserByNameEmailAddress: (req,res)=>{
         const { name, email, address } = req.body;
         User.aggregate([
