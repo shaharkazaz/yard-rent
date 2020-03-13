@@ -73,9 +73,15 @@ module.exports = {
     },
     updateOrder: (req, res) => {
         const orderId = req.params.orderId;
-        Order.update({_id: orderId}, req.body).then(() => {
-            res.status(200).json({
-                message: "order update"
+        Order.updateOne({_id: orderId}, req.body).then(() => {
+            Order.findById({_id:orderId},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((order)=>{
+                res.status(200).json({
+                    order
+                })
+            }).catch(error=>{
+                res.status(500).json({
+                    error
+                })
             })
         }).catch(error => {
             res.status(500).json({
