@@ -5,8 +5,10 @@ const getUserId = require('../utils/getUserId');
 
 module.exports = {
     getAllOrders: (req, res) => {
-        Order.find({}).populate('products').then((orders) => {
-            res.status(200).json(orders)
+        Order.find({},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((orders) => {
+            res.status(200).json({
+                orders
+            })
         }).catch((error) => {
             res.status(500).json({
                 error
@@ -47,8 +49,22 @@ module.exports = {
     },
     getOrder: (req, res) => {
         const orderId = req.params.orderId;
-        Order.findById(orderId).populate('products').then((order) => {
-            res.status(200).json(order)
+        Order.findById({orderId},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((order) => {
+            res.status(200).json({
+                order
+            })
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        })
+    },
+    getOrderByUserId: (req, res) => {
+        const userId = req.params.userId;
+        User.findById({userId},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((order) => {
+            res.status(200).json({
+                order
+            })
         }).catch(error => {
             res.status(500).json({
                 error

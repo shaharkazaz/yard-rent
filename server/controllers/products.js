@@ -1,15 +1,19 @@
 const mongoose = require('mongoose');
 const Products = require('../model/product');
 const User = require('../model/user');
-const Category = require('../model/category')
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 const updateDataSet = require('../utils/updateDataSet');
 
 module.exports = {
     getAllProducts: (req, res) => {
-        Products.find({}).populate('user').populate('category').populate('subCategory').then((products) => {
-            res.status(200).json(products)
+        Products.find({}, {_id: 0}).populate('user', {name: 1, _id: 0}).populate('category', {
+            name: 1,
+            _id: 0
+        }).populate('subCategory', {subCategoryName: 1, _id: 0}).then((products) => {
+            res.status(200).json({
+                products
+            })
         }).catch((error) => {
             res.status(500).json({
                 error
@@ -17,7 +21,7 @@ module.exports = {
         })
     },
     addProduct: async (req, res) => {
-        const {name, category, subCategory, rewards, address, deposit, durationInDays} = req.body;
+        const {name, category, subCategory, rewards, address, deposit, durationInDays, description} = req.body;
         const userId = await getUserId(req);
         const imageUrl = await uploadToGCP(req);
         const product = new Products({
@@ -30,6 +34,7 @@ module.exports = {
             address, //check it address is empty put user.address
             deposit,
             durationInDays,
+            description,
             image: imageUrl
         });
         product.save().then(() => {
@@ -51,8 +56,13 @@ module.exports = {
     },
     getProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.findById(productId).populate('user').populate('category').populate('subCategory').then((product) => {
-            res.status(200).json(product)
+        Products.findById({productId}, {_id: 0}).populate('user', {name: 1, _id: 0}).populate('category', {
+            name: 1,
+            _id: 0
+        }).populate('subCategory', {subCategoryName: 1, _id: 0}).then((product) => {
+            res.status(200).json({
+                product
+            })
         }).catch(error => {
             res.status(500).json({
                 error
@@ -73,17 +83,17 @@ module.exports = {
     },
     deleteProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.findById(productId).then((product)=>{
-            Products.findByIdAndRemove( productId).then(() => {
-                User.findByIdAndUpdate(product.user,{$pull:{product: productId}}).then(()=>{
+        Products.findById(productId).then((product) => {
+            Products.findByIdAndRemove(productId).then(() => {
+                User.findByIdAndUpdate(product.user, {$pull: {product: productId}}).then(() => {
                     res.status(200).json({
                         message: "the product was removed"
                     })
-                    }).catch(error => {
-                        res.status(500).json({
-                            error
-                        })
+                }).catch(error => {
+                    res.status(500).json({
+                        error
                     })
+                })
             }).catch(error => {
                 res.status(500).json({
                     error
@@ -95,30 +105,32 @@ module.exports = {
             })
         })
     },
-    getProductByQuery: (req,res) => {
+    getProductByQuery: (req, res) => {
         const query = req.params.query;
         Products.aggregate([
-            { $lookup: {
+            {
+                $lookup: {
                     from: "categories",
-                    localField: "category" ,
+                    localField: "category",
                     foreignField: "_id",
                     as: "category"
                 }
             },
-            { $unwind: "$category" },
-            { $lookup: {
+            {$unwind: "$category"},
+            {
+                $lookup: {
                     from: "subcategories",
-                    localField: "subCategory" ,
+                    localField: "subCategory",
                     foreignField: "_id",
                     as: "subCategory"
                 }
             },
-            { $unwind: "$subCategory" },
-            { $match: {name: { "$regex": query, "$options": "i" }} },
-            ]).then(products => {
-                res.status(200).json({
-                    products
-                })
+            {$unwind: "$subCategory"},
+            {$match: {name: {"$regex": query, "$options": "i"}}},
+        ]).then(products => {
+            res.status(200).json({
+                products
+            })
         }).catch(error => {
             return res.status(500).json({
                 error
