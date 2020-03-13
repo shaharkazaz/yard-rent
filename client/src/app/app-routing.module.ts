@@ -27,6 +27,11 @@ const routes: Routes = [
       import('./user/user.module').then(({ UserModule }) => UserModule)
   },
   {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then(({ AdminModule }) => AdminModule)
+  },
+  {
     path: 'contact',
     loadChildren: () =>
       import('./contact/page/contact-page.module').then(

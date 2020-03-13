@@ -58,6 +58,7 @@
 
   ::ng-deep dato-button {
     &.link {
+      margin: 0 20px;
       transition: border-bottom-color 0.4s ease-in-out;
       border-bottom: 2px solid transparent;
       div {

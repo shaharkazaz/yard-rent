@@ -59,13 +59,10 @@ export class LoginComponent implements OnInit {
 
   private login() {
     const { email, password } = this.form.value;
-    this.authService
-      .login({ email, password })
-      .pipe(filter(({ success }) => success))
-      .subscribe(
-        () => this.ref.close(),
-        () => this.handleError()
-      );
+    this.authService.login({ email, password }).subscribe(
+      ({ success }) => (success ? this.ref.close() : this.hideLoader()),
+      () => this.hideLoader()
+    );
   }
 
   private signup() {
@@ -74,7 +71,7 @@ export class LoginComponent implements OnInit {
       .pipe(filter(({ success }) => success))
       .subscribe(
         () => this.ref.close(),
-        () => this.handleError()
+        () => this.hideLoader()
       );
   }
 
@@ -101,7 +98,7 @@ export class LoginComponent implements OnInit {
     return valid ? null : { fullName: { value: control.value } };
   }
 
-  private handleError() {
+  private hideLoader() {
     this.loading = false;
     this.cdr.detectChanges();
   }

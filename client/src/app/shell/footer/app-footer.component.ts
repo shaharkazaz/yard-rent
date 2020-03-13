@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { debounceTime, throttleTime } from 'rxjs/operators';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -8,9 +6,10 @@ import { debounceTime, throttleTime } from 'rxjs/operators';
   styleUrls: ['./app-footer.component.scss']
 })
 export class AppFooterComponent {
+  contentEl = document.querySelector('.content');
   constructor() {}
 
   scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.contentEl.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

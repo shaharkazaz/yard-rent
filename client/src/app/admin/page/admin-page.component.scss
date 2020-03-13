@@ -1,0 +1,55 @@
+:host {
+  .container {
+    height: calc(100% - 74px);
+  }
+
+  $tab-header-y-padding: 5px;
+  $tab-transition-interval: 0.3s;
+  display: block;
+  height: 100%;
+
+  ul {
+    position: relative;
+    display: flex;
+    flex-shrink: 0;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+    list-style: none;
+  }
+
+  li {
+    outline: none;
+    flex: 1;
+    cursor: pointer;
+    text-align: center;
+    padding: $tab-header-y-padding 0;
+    border-bottom: 2px solid #67696f;
+    transition: $tab-transition-interval border;
+
+    a {
+      color: #67696f;
+      transition: $tab-transition-interval color,
+        $tab-transition-interval font-weight;
+      text-decoration: none;
+    }
+
+    &:hover:not(.active) {
+      $hover-color: rgba(0, 183, 255, 0.4);
+      border-color: $hover-color;
+
+      a {
+        color: $hover-color;
+      }
+    }
+  }
+
+  .active {
+    border-color: #00b7ff;
+
+    a {
+      font-weight: 600;
+      color: #00b7ff;
+    }
+  }
+}
