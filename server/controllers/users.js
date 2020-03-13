@@ -116,5 +116,27 @@ module.exports={
             })
 
         });
+    },
+    getUserByNameEmailAddress: (req,res)=>{
+        const { name, email, address } = req.body;
+        User.aggregate([
+            { $match: {
+                    name: { "$regex": name, "$options": "i" }}
+            },
+            { $match: {
+                    email: { "$regex": email, "$options": "i" }}
+            },
+            { $match: {
+                    address: { "$regex": address, "$options": "i" }}
+            },
+        ]).then(users => {
+            res.status(200).json({
+                users
+            })
+        }).catch(error => {
+            return res.status(500).json({
+                error
+            })
+        })
     }
 };

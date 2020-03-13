@@ -1,7 +1,7 @@
 const role = {
     Admin: 'admin',
     User: 'user'
-}
+};
 
 const roles = ['user', 'admin']
 
