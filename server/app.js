@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
@@ -28,6 +29,8 @@ const subCategoriesRouter = require('./routes/subCategories');
 const twitterRouter = require('./routes/twitter')
 const statisticsRouter =  require('./routes/statistics')
 
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
