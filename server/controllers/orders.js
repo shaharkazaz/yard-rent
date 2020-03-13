@@ -49,7 +49,7 @@ module.exports = {
     },
     getOrder: (req, res) => {
         const orderId = req.params.orderId;
-        Order.findById(orderId).then((order) => {
+        Order.findById(orderId).populate('products').then((order) => {
             res.status(200).json({
                 order: order
             })
