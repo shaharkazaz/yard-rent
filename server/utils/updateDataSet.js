@@ -38,11 +38,12 @@ const initialUpdateSchema = () =>{
 };
 const updateDataSet = () => {
     //need to check if the collection update is exsist if not initial
-    // db.listCollections({name: UpdateData}).then((err,name)=>{
-    //     if(!name){
-    //         initialUpdateSchema();
-    //     }
-    // });
+    // mongoose.connection.db.listCollections({name: 'mycollectionname'})
+    //     .next(function(err, collinfo) {
+    //         if (collinfo) {
+    //             // The collection exists
+    //         }
+    //     });
     UpdateData.updateOne({$inc: {numOfNewProducts: 1}}).then((status)=>{
         if(status.ok!==1){
             console.log("couldn't increase the number of new product")

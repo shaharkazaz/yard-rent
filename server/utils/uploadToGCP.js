@@ -14,9 +14,9 @@ async function uploadImage(req){
         // Decode the image
         const generateId = uniqid();
         const filepath = base64Img.imgSync(encodedImage, '', generateId);
-        const fullImagePath = "./".concat(filepath)
+        const fullImagePath = "./".concat(filepath);
 
-        configGCP.project_id
+        configGCP.project_id;
         // Init the Google Cloud client library
         const storage = new Storage({credentials: configGCP});
 
