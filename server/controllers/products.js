@@ -71,9 +71,18 @@ module.exports = {
     },
     updateProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.update({_id: productId}, req.body).then(() => {
-            res.status(200).json({
-                message: "product update"
+        Products.updateOne({_id: productId}, req.body).then(() => {
+            Products.findById({_id:productId},{_id:0}).populate('user', {name: 1, _id: 0}).populate('category', {
+                name: 1,
+                _id: 0
+            }).populate('subCategory', {subCategoryName: 1, _id: 0}).then((product)=>{
+                res.status(200).json({
+                    product
+                })
+            }).catch(error=>{
+                res.status(500).json({
+                    error
+                })
             })
         }).catch(error => {
             res.status(500).json({
