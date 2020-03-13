@@ -2,24 +2,6 @@ const Orders = require('../model/order');
 const Products = require('../model/product');
 const mongoose = require('mongoose');
 
-// helper Class
-class statObj {
-    constructor(day)
-    {
-        this.day = day;
-        this.orders = 0;
-        this.rewards = 0;
-    }
-    incrementOrders(num)
-    {
-        this.orders += num;
-    }
-    incrementRewards(num)
-    {
-        this.rewards += num;
-    }
-}
-
 module.exports = {
     graph1: (req, res) => {
         const pipeline = [
