@@ -5,9 +5,7 @@ const Category = require('../model/category');
 module.exports = {
     getAllCategories: (req, res) => {
         Category.find({}).then((categories) => {
-            res.status(200).json({
-                categories: categories
-            })
+            res.status(200).json(categories)
         }).catch((error) => {
             res.status(500).json({
                 error
@@ -17,9 +15,7 @@ module.exports = {
     getAllSubCategoriesOfCategoryId: (req, res) => {
         const categoryId = req.params.categoryId;
         Category.findById(categoryId).populate('subCategories').then((subCategories) => {
-            res.status(200).json({
-                subCategories: subCategories.subCategories
-            })
+            res.status(200).json(subCategories.subCategories)
         }).catch((error) => {
             res.status(500).json({
                 error
