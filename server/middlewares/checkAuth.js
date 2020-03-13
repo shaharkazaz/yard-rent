@@ -9,7 +9,7 @@ const checkAuth = (role) => {
             const token = req.headers.authorization.split(' ')[1];
             jwt.verify(token, 'yard-rent', (err, decodedToken)=> {
                 if (err) {
-                    res.status(401).json({
+                    return res.status(401).json({
                         message: 'Auth failed'
                     })
                 }
