@@ -2,7 +2,8 @@ const UpdateData = require('../model/updateData');
 const formatData = require('../utils/contentProduct');
 const mongoose = require('mongoose');
 
-
+// TODO: delete the console log what to do with error handling instead maybe make sure that the schema isn't exist before
+// TODO: must check if the schema exist before deleting raise an error
 const clearDataSet = () =>{
     mongoose.connection.dropCollection("datasets",(error,result)=>{
         if(error){
@@ -38,12 +39,14 @@ const initialUpdateSchema = () =>{
 };
 const updateDataSet = () => {
     //need to check if the collection update is exsist if not initial
-    // mongoose.connection.db.listCollections({name: 'mycollectionname'})
-    //     .next(function(err, collinfo) {
-    //         if (collinfo) {
-    //             // The collection exists
-    //         }
-    //     });
+    mongoose.connection.db.listCollections({name: 'updatedatas'}).next(function(err, collinfo) {
+        if (collinfo) {
+            console.log("the collection is exist")
+        }
+        if(err){
+            console.log(err)
+        }
+    });
     UpdateData.updateOne({$inc: {numOfNewProducts: 1}}).then((status)=>{
         if(status.ok!==1){
             console.log("couldn't increase the number of new product")
