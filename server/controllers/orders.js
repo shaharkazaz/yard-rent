@@ -71,6 +71,7 @@ module.exports = {
             })
         })
     },
+    // TODO: remove when finish do we need the option to update an order?
     updateOrder: (req, res) => {
         const orderId = req.params.orderId;
         Order.updateOne({_id: orderId}, req.body).then(() => {

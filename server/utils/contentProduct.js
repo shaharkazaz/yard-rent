@@ -16,7 +16,7 @@ const DataToString = data => {
     return formatted;
 };
 const formatData = async () => {
-    Product.find({}, {
+    Product.find({isDeleted: false}, {
         name: 1,
         category: 1,
         subCategory: 1,
