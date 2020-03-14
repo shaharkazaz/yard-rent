@@ -11,9 +11,7 @@ module.exports = {
             name: 1,
             _id: 0
         }).populate('subCategory', {subCategoryName: 1, _id: 0}).then((products) => {
-            res.status(200).json({
-                products
-            })
+            res.status(200).json(products)
         }).catch((error) => {
             res.status(500).json({
                 error
