@@ -9,7 +9,7 @@ router.get('/search/:query', getProductByQuery);
 router.get('/:productId', getProduct);
 router.post('/', checkAuth(), addProduct);
 router.patch('/:productId', checkAuth(), updateProduct);
-router.delete('/:productId', checkAuth(), deleteProduct);
+router.post('/delete', checkAuth(), deleteProduct);
 
 
 module.exports = router;

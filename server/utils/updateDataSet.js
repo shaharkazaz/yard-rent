@@ -2,22 +2,30 @@ const UpdateData = require('../model/updateData');
 const formatData = require('../utils/contentProduct');
 const mongoose = require('mongoose');
 
-
+// TODO: delete the console log what to do with error handling instead maybe make sure that the schema isn't exist before
+// TODO: must check if the schema exist before deleting raise an error
 const clearDataSet = () =>{
-    mongoose.connection.dropCollection("datasets",(error,result)=>{
-        if(error){
-            console.log(error)
-        }
-        else{
-            console.log(result)
+    mongoose.connection.db.listCollections({name: 'datasets'}).next(function(error, collinfo) {
+        if (collinfo!==null) {
+            mongoose.connection.dropCollection("datasets",(error,result)=>{
+                if(error){
+                    console.log(error)
+                }
+                else{
+                    console.log(result)
+                }
+            });
         }
     });
-    mongoose.connection.dropCollection("recommendations",(error,result)=>{
-        if(error){
-            console.log(error)
-        }
-        else{
-            console.log(result)
+    mongoose.connection.db.listCollections({name: 'recommendations'}).next(function(error, collinfo) {
+        if (collinfo!==null) {
+            mongoose.connection.dropCollection("recommendations",(error,result)=> {
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log(result)
+                }
+            })
         }
     });
     UpdateData.updateOne({$set:{numOfNewProducts: 0}}).then((status)=>{
@@ -36,14 +44,12 @@ const initialUpdateSchema = () =>{
     //add error handling
     update.save();
 };
-const updateDataSet = () => {
-    //need to check if the collection update is exsist if not initial
-    // mongoose.connection.db.listCollections({name: 'mycollectionname'})
-    //     .next(function(err, collinfo) {
-    //         if (collinfo) {
-    //             // The collection exists
-    //         }
-    //     });
+const updateDataSetCollections = () => {
+    mongoose.connection.db.listCollections({name: 'updatedatas'}).next(function(err, collinfo) {
+        if (collinfo===null) {
+            initialUpdateSchema();
+        }
+    });
     UpdateData.updateOne({$inc: {numOfNewProducts: 1}}).then((status)=>{
         if(status.ok!==1){
             console.log("couldn't increase the number of new product")
@@ -55,5 +61,5 @@ const updateDataSet = () => {
         }
     });
 };
-module.exports = initialUpdateSchema;
-module.exports = updateDataSet;
+
+module.exports = {clearDataSet,updateDataSetCollections};
