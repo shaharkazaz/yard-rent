@@ -28,6 +28,15 @@ module.exports = {
             });
             order.save().then(() => {
                 User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(() => {
+                    // Decrease the rewards from user amount
+                    const rewardsAsNegative = (-1)*rewards
+                    User.findOneAndUpdate({_id: userId}, {$inc: { rewards: rewardsAsNegative}}).then(()=>{
+                        console.log("Decreased rewards total amount")
+                    }).catch(error => {
+                        return res.status(500).json({
+                            error
+                        })
+                    });
                     res.status(200).json({
                         message: 'new order was added'
                     })
