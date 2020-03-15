@@ -38,10 +38,11 @@ module.exports={
                     password: hash,
                     address,
                     role: 'user',
-                    rewards :0
+                    rewards :200
                 });
 
                 user.save().then(() => {
+
                        res.status(200).json({
                            success: true,
                            message: 'User created',
