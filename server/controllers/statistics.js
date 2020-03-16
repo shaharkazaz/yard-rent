@@ -4,6 +4,8 @@ const Products = require('../model/product');
 module.exports = {
     weeklyData: (req, res) => {
         // TODO get only the orders of the past week
+        const lastWeek = new Date();
+        lastWeek.setDate(lastWeek.getDate() -7);
         const pipeline = [
             {
                 "$lookup": {
@@ -11,6 +13,11 @@ module.exports = {
                     "localField": "products",
                     "foreignField": "_id",
                     "as": "productObjects"
+                }
+            },
+            {
+                "$match": {
+                    "date": { $gte: lastWeek  }
                 }
             }
         ];

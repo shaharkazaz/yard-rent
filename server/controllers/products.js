@@ -19,7 +19,7 @@ module.exports = {
         })
     },
     addProduct: async (req, res) => {
-        const {name, category, subCategory, rewards, address, deposit, durationInDays, description, realValue} = req.body;
+        const {name, category, subCategory, rewards, address, deposit, durationInDays, description} = req.body;
         const userId = await getUserId(req);
         const imageUrl = await uploadToGCP(req);
         const product = new Products({
