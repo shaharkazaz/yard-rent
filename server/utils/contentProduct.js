@@ -1,5 +1,5 @@
 const Product = require('../model/product');
-const DataSet = require('../model/dataSet');
+const DataSet = require('../model/productsDataSet');
 const mongoose = require('mongoose');
 
 const DataToString = data => {
@@ -7,7 +7,7 @@ const DataToString = data => {
     for (const [key,labels] of Object.entries(data)) {
         let tmpObj = {
             id: labels._id,
-            content: [labels.name,labels.category.name,labels.subCategory.subCategoryName,labels.rewards,labels.deposit].join(" ")
+            content: [labels.name,labels.category.name,labels.subCategory.name,labels.rewards,labels.description].join(" ")
         };
 
         formatted.push(tmpObj);
@@ -21,7 +21,7 @@ const formatData = async () => {
         category: 1,
         subCategory: 1,
         rewards: 1,
-        deposit: 1
+        description: 1
     }).populate('category').populate('subCategory').then((products) => {
         const result = DataToString(products);
         const dataSet = new DataSet({

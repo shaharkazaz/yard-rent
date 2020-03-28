@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 const Order = require('../model/order');
 const User = require('../model/user');
+const Product = require('../model/product');
 const getUserId = require('../utils/getUserId');
 
 module.exports = {
     getAllOrders: (req, res) => {
-        Order.find({},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((orders) => {
+        Order.find({}, {_id: 0}).populate('products', {_id: 0, name: 1, rewards: 1, image: 1}).then((orders) => {
             res.status(200).json({
                 orders
             })
@@ -16,7 +17,7 @@ module.exports = {
         })
     },
     addOrder: async (req, res) => {
-        const { products, rewards } = req.body;
+        const {products, rewards} = req.body;
         const userId = await getUserId(req);
 
         User.findById(userId).then((user) => {
@@ -29,9 +30,15 @@ module.exports = {
             order.save().then(() => {
                 User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(() => {
                     // Decrease the rewards from user amount
-                    const rewardsAsNegative = (-1)*rewards
-                    User.findOneAndUpdate({_id: userId}, {$inc: { rewards: rewardsAsNegative}}).then(()=>{
-                        console.log("Decreased rewards total amount")
+                    const rewardsAsNegative = (-1) * rewards;
+                    User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsAsNegative}}).then(() => {
+                        console.log("Decreased rewards total amount");
+                        Product.updateMany({_id: {$in: products}}, {$inc: {orderCounter: 1}}).then(() => {
+                        }).catch(error => {
+                            return res.status(500).json({
+                                error
+                            })
+                        })
                     }).catch(error => {
                         return res.status(500).json({
                             error
@@ -58,7 +65,12 @@ module.exports = {
     },
     getOrder: (req, res) => {
         const orderId = req.params.orderId;
-        Order.findById({orderId},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((order) => {
+        Order.findById({orderId}, {_id: 0}).populate('products', {
+            _id: 0,
+            name: 1,
+            rewards: 1,
+            image: 1
+        }).then((order) => {
             res.status(200).json({
                 order
             })
@@ -70,7 +82,12 @@ module.exports = {
     },
     getOrderByUserId: (req, res) => {
         const userId = req.params.userId;
-        User.findById({userId},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((order) => {
+        User.findById({userId}, {_id: 0}).populate('products', {
+            _id: 0,
+            name: 1,
+            rewards: 1,
+            image: 1
+        }).then((order) => {
             res.status(200).json({
                 order
             })
@@ -84,11 +101,16 @@ module.exports = {
     updateOrder: (req, res) => {
         const orderId = req.params.orderId;
         Order.updateOne({_id: orderId}, req.body).then(() => {
-            Order.findById({_id:orderId},{_id:0}).populate('products',{_id:0,name:1,rewards:1,image:1}).then((order)=>{
+            Order.findById({_id: orderId}, {_id: 0}).populate('products', {
+                _id: 0,
+                name: 1,
+                rewards: 1,
+                image: 1
+            }).then((order) => {
                 res.status(200).json({
                     order
                 })
-            }).catch(error=>{
+            }).catch(error => {
                 res.status(500).json({
                     error
                 })

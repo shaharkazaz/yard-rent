@@ -13,11 +13,11 @@ module.exports = {
         })
     },
     addSubCategory: (req, res) => {
-        const { subCategoryName,parentCategoryId } = req.body;
+        const { name,parentCategoryId } = req.body;
 
         const subCategory = new SubCategory({
             _id: new mongoose.Types.ObjectId(),
-            subCategoryName,
+            name,
             parentCategoryId
         });
         subCategory.save().then(() => {
