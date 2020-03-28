@@ -60,25 +60,18 @@ module.exports = {
             });
         });
     },
-    login: (req, res) => {
-        const {email, password} = req.body;
-        User.findOne({email}).then((user) => {
-            if (user.length === 0) {
+    login: (req, res) =>{
+        const { email, password } = req.body;
+        User.find({ email }).then((users) => {
+            if(users.length === 0){
                 return res.status(200).json({
                     success: false,
                     message: 'Username or password are incorrect'
                 });
             }
-            //TODO: correct message
-            if(user.isDeleted === true){
-                return res.status(200).json({
-                    success: false,
-                    message: 'The user was deleted'
-                });
-            }
-
-            bcrypt.compare(password, user.password, (error, result) => {
-                if (error) {
+            const [ user ] = users;
+            bcrypt.compare(password, user.password, (error, result) =>{
+                if(error){
                     return res.status(401).json({
                         success: false,
                         message: 'Username or password are incorrect'
