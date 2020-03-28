@@ -8,7 +8,7 @@ const deleteProducts = require('../utils/deleteProducts');
 
 module.exports = {
     getAllProducts: (req, res) => {
-        Products.find({isDeleted: false}, {_id: 0}).populate('user', {name: 1, _id: 0}).populate('category', {
+        Products.find({isDeleted: false}).populate('user', {name: 1, _id: 0}).populate('category', {
             name: 1,
             _id: 0
         }).populate('subCategory', {name: 1, _id: 0}).then((products) => {
@@ -53,7 +53,7 @@ module.exports = {
     },
     getProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.findById({_id: productId, isDeleted: false}, {_id: 0}).populate('user', {
+        Products.findById({_id: productId, isDeleted: false}).populate('user', {
             name: 1,
             _id: 0
         }).populate('category', {
@@ -71,7 +71,7 @@ module.exports = {
     updateProduct: (req, res) => {
         const productId = req.params.productId;
         Products.updateOne({_id: productId}, req.body).then(() => {
-            Products.findById({_id: productId}, {_id: 0}).populate('user', {name: 1, _id: 0}).populate('category', {
+            Products.findById({_id: productId}).populate('user', {name: 1, _id: 0}).populate('category', {
                 name: 1,
                 _id: 0
             }).populate('subCategory', {name: 1, _id: 0}).then((product) => {
