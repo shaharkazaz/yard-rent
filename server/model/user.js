@@ -15,7 +15,8 @@ const userSchema = mongoose.Schema({
     address: { type: String, required: true },
     rewards: { type: Number, required: true },
     product: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false }],
-    orderId: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false }]
+    orderId: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false }],
+    isDeleted: {type: Boolean, default: false, required: true}
 });
 
 module.exports = mongoose.model('User', userSchema);

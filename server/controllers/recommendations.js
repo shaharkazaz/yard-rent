@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DataSet = require('../model/dataSet');
+const DataSet = require('../model/productsDataSet');
 const Recommendation = require('../model/recommendation');
 
 const ContentBasedRecommender = require('content-based-recommender');
