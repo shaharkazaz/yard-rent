@@ -137,7 +137,6 @@ module.exports = {
         const userId = await getUserId(req);
         User.findById({_id: userId}, {_id: 0, product: 1}).populate({
             path: 'product', match: {isDeleted: false}, select: {
-                _id: 0,
                 isDeleted: 0
             }, populate: [{path: 'user', select: {name: 1, _id: 0}}, {
                 path: 'category', select: {
