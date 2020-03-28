@@ -7,7 +7,7 @@ const DataToString = data => {
     for (const [key,labels] of Object.entries(data)) {
         let tmpObj = {
             id: labels._id,
-            content: [labels.name,labels.category.name,labels.subCategory.subCategoryName,labels.rewards,labels.description].join(" ")
+            content: [labels.name,labels.category.name,labels.subCategory.name,labels.rewards,labels.description].join(" ")
         };
 
         formatted.push(tmpObj);

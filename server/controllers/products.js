@@ -11,7 +11,7 @@ module.exports = {
         Products.find({isDeleted: false}, {_id: 0}).populate('user', {name: 1, _id: 0}).populate('category', {
             name: 1,
             _id: 0
-        }).populate('subCategory', {subCategoryName: 1, _id: 0}).then((products) => {
+        }).populate('subCategory', {name: 1, _id: 0}).then((products) => {
             res.status(200).json(products)
         }).catch((error) => {
             res.status(500).json({
@@ -59,7 +59,7 @@ module.exports = {
         }).populate('category', {
             name: 1,
             _id: 0
-        }).populate('subCategory', {subCategoryName: 1, _id: 0}).then((product) => {
+        }).populate('subCategory', {name: 1, _id: 0}).then((product) => {
             res.status(200).json(product)
         }).catch(error => {
             res.status(500).json({
@@ -74,7 +74,7 @@ module.exports = {
             Products.findById({_id: productId}, {_id: 0}).populate('user', {name: 1, _id: 0}).populate('category', {
                 name: 1,
                 _id: 0
-            }).populate('subCategory', {subCategoryName: 1, _id: 0}).then((product) => {
+            }).populate('subCategory', {name: 1, _id: 0}).then((product) => {
                 res.status(200).json(product)
             }).catch(error => {
                 res.status(500).json({
@@ -91,7 +91,7 @@ module.exports = {
     //TODO: error handling on the remove from DB?
     deleteProduct: async (req, res) => {
         const {products} = req.body;
-        await deleteProducts(products,res)
+        await deleteProducts(products, res)
     },
     //User.findByIdAndUpdate(product.user, {$pull: {product: productId}}).then(() => {
     //TODO: return a populated product and decide on the filter

@@ -151,7 +151,7 @@ module.exports = {
                     name: 1,
                     _id: 0
                 }
-            }, {path: 'subCategory', select: {subCategoryName: 1, _id: 0}}]
+            }, {path: 'subCategory', select: {name: 1, _id: 0}}]
         }).then((product) => {
             res.status(200).json(product)
         }).catch(error => {
