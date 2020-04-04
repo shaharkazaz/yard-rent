@@ -8,31 +8,28 @@ import { CarouselConfig } from '@datorama/core/lib/carousel/carousel.types';
 })
 export class AboutPageComponent implements OnInit {
   constructor() {}
-
+  generalPath = '../../../assets/images/co-founders/'
   cofounders = [
     {
     name: 'Niv',
     role: 'DevOps Engineer at Microsoft',
-    img: '../../../assets/images/co-founders/Niv.jpg'
+    img:  this.generalPath + 'Niv.jpg'
     },
     {
       name: 'Shahar',
       role: 'Front End Architect at Datorama',
-      img: '../../../assets/images/co-founders/Shahar.jpg'
+      img: this.generalPath + 'Shahar.jpg'
     },
     {
       name: 'Ayelet',
       role: 'Software Engineer at Deep Instinct',
-      img: '../../../assets/images/co-founders/Ayelet.jpg'
+      img: this.generalPath + 'Ayelet.jpg'
     },
     {
       name: 'Chen',
       role: 'Software Engineer at AnyVision',
-      img: '../../../assets/images/co-founders/Chen.jpg'
+      img: this.generalPath + 'Chen.jpg'
     }
   ]
 
-
-
-  ngOnInit() {}
 }
