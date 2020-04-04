@@ -1,8 +1,8 @@
-<div class="d-flex-column width-100 align-center">
-  <h1 class="align-center" style="font-family: 'Pacifico', cursive; font-size: 40px">Can't Sell it, Share it</h1>
+<div class="d-flex-column width-100 align-center" *transloco="let t">
+  <h1 class="yardrent-titles align-center">Can't Sell it, Share it</h1>
   <div class="d-flex-column width-50 align-center">
     <p>
-      YardRent is the largest online peer-to-peer borrow marketplace, empowering its members to embrace the sharing economy and leave unnecessary purchases behind. Designed with both people and businesses in mind, anyone can post their items and spaces on YardRent for people in their community to rent. YardRent is dedicated to changing the world and curtailing the spread of unsustainable consumerism. The platform has also launched TreeProject, a commitment from Ruckify to plant a tree for every transaction made on the app, allowing anyone to be a part of the mission towards a greener, healthier earth.
+      {{t('about-description')}}
     </p>
   </div>
 </div>
@@ -10,7 +10,7 @@
   <ul>
     <li *ngFor="let person of cofounders">
       <p>
-        <img [src]="person.img" alt="unplash" >
+        <img [src]="person.img">
         <b>{{person.name}}</b><br>
         {{person.role}}
       </p>
