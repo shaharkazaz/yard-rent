@@ -1,5 +1,5 @@
 <div class="d-flex-column width-100 align-center" *transloco="let t">
-  <h1 class="yardrent-titles align-center">Can't Sell it, Share it</h1>
+  <h1 class="yardrent-titles align-center">{{t('slogan')}}</h1>
   <div class="d-flex-column width-50 align-center">
     <p>
       {{t('about-description')}}
@@ -7,10 +7,10 @@
   </div>
 </div>
 <ng-container>
-  <ul>
-    <li *ngFor="let person of cofounders">
-      <p>
-        <img class="founder-img" [src]="person.img">
+  <ul class="d-flex">
+    <li class="inline-block" *ngFor="let person of founders">
+      <p class="text-center">
+        <img class="founder-img" [src]="getFounderImage(person.name)">
         <b>{{person.name}}</b><br>
         {{person.role}}
       </p>
