@@ -27,7 +27,7 @@ export class AboutPageComponent {
       role: 'Software Engineer at AnyVision',
     }
   ]
-  private getFounderImage(name){
+  getFounderImage(name){
     return this.generalPath + name + '.jpg';
   }
 
