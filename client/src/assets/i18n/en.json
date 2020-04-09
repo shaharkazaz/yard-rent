@@ -173,5 +173,11 @@
   "rewards-needed": "Rewards needed: {{rewards}} 🌟",
   "add-to-cart": "Add to cart",
   "view-item": "View item",
-  "item-added-to-cart": "Item added to cart"
+  "item-added-to-cart": "Item added to cart",
+  "slogan": "Can't Sell it, Share it",
+  "about-description": "YardRent is the largest online peer-to-peer borrow marketplace, empowering its members to embrace the sharing economy and leave unnecessary purchases behind. Designed with both people and businesses in mind, anyone can post their items and spaces on YardRent for people in their community to rent. YardRent is dedicated to changing the world and curtailing the spread of unsustainable consumerism. The platform has also launched TreeProject, a commitment from Ruckify to plant a tree for every transaction made on the app, allowing anyone to be a part of the mission towards a greener, healthier earth.",
+  "contact-us-description": "Feel free to contact us for any kind of question",
+  "office": "Office",
+  "corporate-office": "Corporate Office"
+
 }
