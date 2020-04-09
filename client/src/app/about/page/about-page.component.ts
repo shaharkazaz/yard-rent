@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CarouselConfig } from '@datorama/core/lib/carousel/carousel.types';
 
 @Component({
@@ -6,7 +6,7 @@ import { CarouselConfig } from '@datorama/core/lib/carousel/carousel.types';
   templateUrl: './about-page.component.html',
   styleUrls: ['./about-page.component.scss']
 })
-export class AboutPageComponent implements OnInit {
+export class AboutPageComponent {
   constructor() {}
   private readonly generalPath = '../../../assets/images/co-founders/'
   founders = [
@@ -31,6 +31,5 @@ export class AboutPageComponent implements OnInit {
     return this.generalPath + name + '.jpg';
   }
 
-  ngOnInit() {}
 
 }
