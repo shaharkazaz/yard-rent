@@ -42,5 +42,8 @@ export const URI_CONSTANTS = {
   },
   shops: {
     getAll: 'shops'
+  },
+  pollutionIndicator: {
+    getAirPollution: 'airPollution'
   }
 };
