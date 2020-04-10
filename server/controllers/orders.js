@@ -19,7 +19,8 @@ module.exports = {
     addOrder: async (req, res) => {
         const {products, rewards} = req.body;
         const userId = await getUserId(req);
-
+        Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}}).then(() => {
+        });
         User.findById(userId).then((user) => {
             const order = new Order({
                 _id: new mongoose.Types.ObjectId(),
@@ -33,30 +34,24 @@ module.exports = {
                     const rewardsAsNegative = (-1) * rewards;
                     User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsAsNegative}}).then(() => {
                         console.log("Decreased rewards total amount");
-                        Product.updateMany({_id: {$in: products}}, {$inc: {orderCounter: 1}}).then(() => {
-                        }).catch(error => {
-                            return res.status(500).json({
-                                error
-                            })
-                        })
                     }).catch(error => {
                         return res.status(500).json({
                             error
                         })
-                    });
-                    res.status(200).json({
-                        message: 'new order was added'
                     })
                 }).catch(error => {
                     return res.status(500).json({
                         error
                     })
+                });
+                res.status(200).json({
+                    message: 'new order was added'
                 })
             }).catch(error => {
                 return res.status(500).json({
                     error
                 })
-            });
+            })
         }).catch(error => {
             return res.status(500).json({
                 error

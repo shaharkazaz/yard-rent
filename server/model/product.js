@@ -11,7 +11,6 @@ const productSchema = mongoose.Schema({
         description: {type: String, required: true},
         image: {type: String, required: true},
         isDeleted: {type: Boolean, default: false, required: true},
-        orderCounter: {type: Number, default: 0, required: true},
         isRented: {type: Boolean, default: false, required: true}
     });
 

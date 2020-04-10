@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const DataSet = require('../model/productsDataSet');
 const Recommendation = require('../model/recommendation');
+const formatData = require('../utils/contentProduct');
 
 const ContentBasedRecommender = require('content-based-recommender');
 const RecommendationProductsNumber = 2;
@@ -13,7 +14,6 @@ const recommender = new ContentBasedRecommender({
 const getProductPopulated = async productId => {
     const result = Recommendation.findById(productId).populate({
         path: 'recommendedProducts', select: {
-            _id: 0,
             isDeleted: 0
         }, populate: [{path: 'user', select: {name: 1, _id: 0}}, {
             path: 'category', select: {
@@ -31,8 +31,13 @@ module.exports = {
         const recommendation = await getProductPopulated(productId);
         if (recommendation) {
             res.status(200).json(recommendation.recommendedProducts)
-        } else {
-            DataSet.findOne({}).then((dataSet) => {
+        }
+        else {
+            DataSet.findOne({}).then(async (dataSet) => {
+                //TODO: the recommender.train dosent wait for the data set creation
+                if(dataSet==null){
+                    await formatData();
+                }
                 recommender.train(dataSet.data.toObject({getters: true}));
                 const similarDocuments = recommender.getSimilarDocuments(productId, 0, RecommendationProductsNumber);
                 const ids = similarDocuments.map(l => l.id);
