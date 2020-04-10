@@ -13,5 +13,8 @@ export const URI_CONSTANTS = {
   products: {
     getAllProducts: 'products',
     getProduct: 'products/{productId}'
+  },
+  pollutionIndicator: {
+    getAirPollution: 'airPollution'
   }
 };

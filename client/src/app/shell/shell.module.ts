@@ -11,6 +11,7 @@ import {
 import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
 import { AppFooterComponent } from './footer/app-footer.component';
+import { PollutionIndicatorComponent } from './footer/pollution-indicator/pollution-indicator.component';
 import { RouterModule } from '@angular/router';
 import { AuthModule } from '../auth/auth.module';
 
@@ -27,7 +28,7 @@ import { AuthModule } from '../auth/auth.module';
     DatoLinkButtonModule,
     AuthModule
   ],
-  declarations: [AppHeaderComponent, AppFooterComponent],
+  declarations: [AppHeaderComponent, AppFooterComponent, PollutionIndicatorComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
 })
 export class ShellModule {}
