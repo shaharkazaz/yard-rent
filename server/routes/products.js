@@ -5,7 +5,7 @@ const {getAllProducts, addProduct, getProduct, updateProduct, deleteProduct, get
 const checkAuth = require('../middlewares/checkAuth');
 
 router.get('/', getAllProducts);
-router.get('/search/:query', getProductByQuery);
+router.get('/search', getProductByQuery);
 router.get('/:productId', getProduct);
 router.post('/', checkAuth(), addProduct);
 router.patch('/:productId', checkAuth(), updateProduct);

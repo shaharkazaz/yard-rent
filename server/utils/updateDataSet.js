@@ -45,7 +45,7 @@ const initialUpdateSchema = () =>{
     common.save();
 };
 const updateDataSetCollections = () => {
-    mongoose.connection.db.listCollections({name: 'common'}).next(function(err, collinfo) {
+    mongoose.connection.db.listCollections({name: 'commons'}).next(function(err, collinfo) {
         if (collinfo===null) {
             initialUpdateSchema();
         }

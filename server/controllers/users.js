@@ -1,9 +1,10 @@
+const {clearDataSet} = require('../utils/updateDataSet');
 const User = require('../model/user');
+const Products = require('../model/product');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const getUserId = require('../utils/getUserId');
-const deleteProducts = require('../utils/deleteProducts');
 
 function getToken({_id, role}) {
     return jwt.sign({
@@ -60,18 +61,18 @@ module.exports = {
             });
         });
     },
-    login: (req, res) =>{
-        const { email, password } = req.body;
-        User.find({ email }).then((users) => {
-            if(users.length === 0){
+    login: (req, res) => {
+        const {email, password} = req.body;
+        User.find({email}).then((users) => {
+            if (users.length === 0) {
                 return res.status(200).json({
                     success: false,
                     message: 'Username or password are incorrect'
                 });
             }
-            const [ user ] = users;
-            bcrypt.compare(password, user.password, (error, result) =>{
-                if(error){
+            const [user] = users;
+            bcrypt.compare(password, user.password, (error, result) => {
+                if (error) {
                     return res.status(401).json({
                         success: false,
                         message: 'Username or password are incorrect'
@@ -125,9 +126,16 @@ module.exports = {
         const {users} = req.body;
         const objectIdUsers = users.map(user => mongoose.Types.ObjectId(user));
         User.updateMany({_id: {$in: objectIdUsers}}, {$set: {isDeleted: true}}).then(() => {
-                User.find({_id: {$in: objectIdUsers}}, {products: 1, _id: 0}).then((products) => {
-                    deleteProducts(products, res)
+            User.find({_id: {$in: objectIdUsers}}, {product: 1, _id: 0}).then((products) => {
+                Products.updateMany({_id: {$in: products[0]._doc.product}}, {$set: {isDeleted: true}}).then(() => {
+                    res.status(200).json();
+                    clearDataSet();
+                }).catch(error => {
+                    res.status(500).json({
+                        error
+                    })
                 })
+            })
         }).catch(error => {
             res.status(500).json(error)
         })
@@ -152,7 +160,16 @@ module.exports = {
     },
     //TODO: need to check if the user isDeleted
     getUserByNameEmailAddress: (req, res) => {
-        const {name, email, address} = req.body;
+        let {name, email, address} = req.body;
+        if (typeof name === 'undefined'){
+            name = "";
+        }
+        if (typeof email === 'undefined'){
+            email = "";
+        }
+        if (typeof address === 'undefined'){
+            address = "";
+        }
         User.aggregate([
             {
                 $match: {
