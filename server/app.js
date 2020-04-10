@@ -28,6 +28,7 @@ const categoriesRouter = require('./routes/categories');
 const subCategoriesRouter = require('./routes/subCategories');
 const twitterRouter = require('./routes/twitter')
 const statisticsRouter =  require('./routes/statistics')
+const airPollutionRouter =  require('./routes/airPollution')
 
 app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
@@ -58,6 +59,7 @@ app.use('/categories', categoriesRouter);
 app.use('/subCategories', subCategoriesRouter);
 app.use('/twitter', twitterRouter);
 app.use('/statistics', statisticsRouter);
+app.use('/airPollution', airPollutionRouter)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
