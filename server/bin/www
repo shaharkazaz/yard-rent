@@ -34,13 +34,13 @@ var numClients = 0;
 
 io.on('connection', function(socket) {
   numClients++;
-  io.emit('stats', { numClients: numClients });
+  io.emit('numClients', { numClients: numClients });
 
   console.log('Connected clients:', numClients);
 
   socket.on('disconnect', function() {
     numClients--;
-    io.emit('stats', { numClients: numClients });
+    io.emit('numClients', { numClients: numClients });
 
     console.log('Connected clients:', numClients);
   });

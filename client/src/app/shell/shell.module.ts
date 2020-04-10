@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {OnlineUsersComponent} from './footer/online-users/online-users.component'
 import { AppHeaderComponent } from './header/app-header.component';
 import {
     DatoButtonModule,
@@ -33,7 +34,7 @@ import { LanguageSelectorComponent } from './header/language-selector/language-s
         AuthModule,
         DatoPopoverModule
     ],
-  declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent, LanguageSelectorComponent,PollutionIndicatorComponent],
+  declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent, LanguageSelectorComponent,PollutionIndicatorComponent,OnlineUsersComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
 })
 export class ShellModule {}
