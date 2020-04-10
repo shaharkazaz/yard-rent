@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import {OnlineUsersComponent} from './footer/online-users/online-users.component'
 import { AppHeaderComponent } from './header/app-header.component';
 import {
   DatoButtonModule,
@@ -27,7 +28,7 @@ import { AuthModule } from '../auth/auth.module';
     DatoLinkButtonModule,
     AuthModule
   ],
-  declarations: [AppHeaderComponent, AppFooterComponent],
+  declarations: [AppHeaderComponent, AppFooterComponent, OnlineUsersComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
 })
 export class ShellModule {}
