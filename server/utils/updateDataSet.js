@@ -1,6 +1,8 @@
 const Common = require('../model/common');
 const formatData = require('../utils/contentProduct');
 const mongoose = require('mongoose');
+const ProductsDataSet = require('../model/productsDataSet');
+const Product = require('../model/product');
 
 // TODO: delete the console log what to do with error handling instead maybe make sure that the schema isn't exist before
 // TODO: must check if the schema exist before deleting raise an error
@@ -35,6 +37,19 @@ const clearDataSet = () =>{
     });
     formatData();
 };
+const clearRecommenations = () =>{
+    mongoose.connection.db.listCollections({name: 'recommendations'}).next(function(error, collinfo) {
+        if (collinfo!==null) {
+            mongoose.connection.dropCollection("recommendations",(error,result)=> {
+                if (error) {
+                    console.log(error)
+                } else {
+                    console.log(result)
+                }
+            })
+        }
+    });
+};
 const initialUpdateSchema = () =>{
     const common = new Common({
         _id: new mongoose.Types.ObjectId(),
@@ -61,5 +76,47 @@ const updateDataSetCollections = () => {
         }
     });
 };
+const removeProductsFromDataSet = (productsIdsToRemove) => {
+    ProductsDataSet.updateOne({$pull: {data: {_id:productsIdsToRemove}}}).then((status)=>{
+        clearRecommenations();
+        if (status.ok!==1){
+            console.log("didnt remove products from dataset")
+        }
+    })
+};
 
-module.exports = {clearDataSet,updateDataSetCollections};
+const updateProductInDataSet = async (productIdToUpdate) => {
+    const result = await createContentForProductId(productIdToUpdate);
+    ProductsDataSet.updateOne({'data._id': productIdToUpdate}, {$set: {'data.$.content': result}}).then((status) => {
+        clearRecommenations();
+        if (status.ok !== 1) {
+            console.log("didnt remove products from dataset")
+        }
+    })
+};
+const addProductInDataSet = async (productIdToAdd) => {
+    const result = await createContentForProductId(productIdToAdd);
+    let tmpObj = {
+        _id: mongoose.Types.ObjectId(productIdToAdd),
+        content: result
+    };
+    ProductsDataSet.updateOne({$push: {data: tmpObj}}).then((status) => {
+        clearRecommenations();
+        if (status.ok !== 1) {
+            console.log("didnt remove products from dataset")
+        }
+    })
+};
+const createContentForProductId = async (productId) => {
+    return await Product.findOne({_id:productId,isDeleted: false,isRented:false}, {
+        name: 1,
+        category: 1,
+        subCategory: 1,
+        rewards: 1,
+        description: 1
+    }).populate('category').populate('subCategory').then((product) => {
+        return [product.name, product.category.name, product.subCategory.name, product.rewards, product.description].join(" ");
+    });
+};
+
+module.exports = {clearDataSet,updateDataSetCollections,removeProductsFromDataSet,addProductInDataSet,updateProductInDataSet};

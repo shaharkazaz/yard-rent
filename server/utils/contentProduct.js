@@ -6,7 +6,7 @@ const DataToString = data => {
     let formatted = [];
     for (const [key,labels] of Object.entries(data)) {
         let tmpObj = {
-            id: labels._id,
+            _id: mongoose.Types.ObjectId(labels._id),
             content: [labels.name,labels.category.name,labels.subCategory.name,labels.rewards,labels.description].join(" ")
         };
 
@@ -16,7 +16,7 @@ const DataToString = data => {
     return formatted;
 };
 const formatData = async () => {
-    Product.find({isDeleted: false}, {
+    Product.find({isDeleted: false,isRented:false}, {
         name: 1,
         category: 1,
         subCategory: 1,

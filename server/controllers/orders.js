@@ -3,6 +3,7 @@ const Order = require('../model/order');
 const User = require('../model/user');
 const Product = require('../model/product');
 const getUserId = require('../utils/getUserId');
+const {removeProductsFromDataSet} = require('../utils/updateDataSet');
 
 module.exports = {
     getAllOrders: (req, res) => {
@@ -46,7 +47,8 @@ module.exports = {
                 });
                 res.status(200).json({
                     message: 'new order was added'
-                })
+                });
+                removeProductsFromDataSet(products);
             }).catch(error => {
                 return res.status(500).json({
                     error
