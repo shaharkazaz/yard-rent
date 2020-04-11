@@ -40,6 +40,10 @@ const routes: Routes = [
     loadChildren: () => import('./getting-started/getting-started.module').then(({ GettingStartedModule }) => GettingStartedModule)
   },
   {
+    path: 'shopping-cart',
+    loadChildren: () => import('./shopping-cart/shopping-cart.module').then(({ ShoppingCartModule }) => ShoppingCartModule)
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'

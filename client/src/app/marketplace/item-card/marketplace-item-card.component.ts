@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { DatoSnackbar } from '@datorama/core';
 import {Product} from "../marketplace.types";
+import {ShoppingCartService} from "../../shopping-cart/state/shopping-cart.service";
 
 @Component({
   selector: 'marketplace-item-card',
@@ -16,7 +17,7 @@ import {Product} from "../marketplace.types";
 export class MarketplaceItemCardComponent implements OnInit {
   @Input() item: Product;
   private numberFormatter = Intl.NumberFormat();
-  constructor(private snackbar: DatoSnackbar) {}
+  constructor(private snackbar: DatoSnackbar, private shoppingCartService: ShoppingCartService) {}
 
   ngOnInit() {}
 
@@ -25,6 +26,7 @@ export class MarketplaceItemCardComponent implements OnInit {
   }
 
   addItemToCart() {
+    this.shoppingCartService.add(this.item);
     this.snackbar.success('item-added-to-cart');
   }
 }

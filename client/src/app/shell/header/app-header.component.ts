@@ -5,6 +5,8 @@ import {AuthQuery} from '../../auth/state/auth.query';
 import {DatoDialog, DatoSnackbar, filterDialogSuccess} from '@datorama/core';
 import {LoginComponent} from '../../auth/login/login.component';
 import {NavigationEnd, Router} from '@angular/router';
+import {ShoppingCartQuery} from "../../shopping-cart/state/shopping-cart.query";
+import {User} from "../../auth/state/auth.model";
 
 @Component({
   selector: 'app-header',
@@ -12,10 +14,8 @@ import {NavigationEnd, Router} from '@angular/router';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
-  // TODO connect to cart store
-  itemsCount$ = of(0);
-  // TODO user interface
-  user: any;
+  itemsCount$ = this.shoppingCartQuery.selectCount();
+  user: User;
   isLoggedIn$ = this.authQuery.isLoggedIn$;
   gettingStartedMenuItems = [
     'how-to-post',
@@ -30,7 +30,8 @@ export class AppHeaderComponent implements OnInit {
     private authQuery: AuthQuery,
     private dialog: DatoDialog,
     private snackbar: DatoSnackbar,
-    private router: Router
+    private router: Router,
+    private shoppingCartQuery: ShoppingCartQuery
   ) {}
 
   ngOnInit(): void {
