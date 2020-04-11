@@ -3,6 +3,7 @@ import { AuthStore } from './auth.store';
 import { User } from './auth.model';
 import { Query } from '@datorama/akita';
 import { UserRole } from '../auth.types';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class AuthQuery extends Query<User> {
 
   getUserRole(): UserRole {
     return this.getValue().user.role;
+  }
+
+  selectUserRole(): Observable<UserRole> {
+    return this.select(state => state.user.role);
   }
 }
 

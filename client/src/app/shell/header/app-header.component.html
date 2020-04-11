@@ -19,14 +19,10 @@
       }}</dato-button>
     </ng-container>
     <ng-template #loggedIn>
-      <div
-        class="profile mr-20 pointer"
-        [datoTooltip]="userMenu"
-        datoTooltipType="long"
-        datoTooltipPosition="bottom"
-        datoTooltipTrigger="click"
-        #tooltip="datoTooltip"
-      >
+      <div class="profile mr-20 pointer"
+           datoPopoverPlacement="bottom"
+           datoPopoverClassName="user-menu"
+           [datoPopoverContent]="userMenu">
         <dato-icon
           height="40px"
           width="40px"
@@ -43,30 +39,31 @@
             {{ t('you-have-rewards', { rewards: user.rewards || 0 }) }}
           </div>
           <dato-link
+            datoPopoverClose
             class="my-5"
             datoType="secondary"
             routerLink="user/my-products"
-            (click)="tooltip.hide()"
             >{{ t('my-products') }}</dato-link
           >
           <dato-link
+            datoPopoverClose
             class="my-5"
             datoType="secondary"
             routerLink="user/my-orders"
-            (click)="tooltip.hide()"
             >{{ t('my-orders') }}</dato-link
           >
           <dato-link
+            datoPopoverClose
             class="my-5"
             datoType="secondary"
             routerLink="user/profile"
-            (click)="tooltip.hide()"
             >{{ t('my-profile') }}</dato-link
           >
           <dato-button
+            datoPopoverClose
             class="mt-10"
             datoType="secondary"
-            (click)="logout() && tooltip.hide()"
+            (click)="logout()"
             >{{ t('logout') }}</dato-button
           >
         </div>
@@ -96,7 +93,7 @@
       >+ {{ t('post-something') }}</dato-button
     >
   </div>
-  <div class="lower d-flex align-center">
+  <nav class="lower d-flex align-center">
     <dato-button
       class="link"
       datoType="none"
@@ -138,6 +135,14 @@
       <div>{{ t('contact-us') }}</div>
     </dato-button>
     <dato-button
+      class="link"
+      datoType="none"
+      routerLink="contact"
+      routerLinkActive="active-page"
+    >
+      <div>{{ t('Genius') }}</div>
+    </dato-button>
+    <dato-button
       *hasRole="'admin'"
       class="link"
       datoType="none"
@@ -146,7 +151,7 @@
     >
       <div>{{ t('management') }}</div>
     </dato-button>
-  </div>
+  </nav>
 
   <dato-menu #gettingStarted="datoMenu" placement="bottom-center">
     <ng-template datoMenuContent>

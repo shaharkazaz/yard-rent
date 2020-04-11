@@ -16,7 +16,7 @@
   }
 
   .cart {
-    position: relative;
+    //position: relative;
     height: 40px;
     .items-count {
       font-size: 20px;
@@ -46,10 +46,6 @@
 
   .logo {
     border: none;
-    outline: none;
-  }
-
-  ::ng-deep dato-link {
     outline: none;
   }
 

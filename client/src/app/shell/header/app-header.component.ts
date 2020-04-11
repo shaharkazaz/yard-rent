@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
-import { AuthService } from '../../auth/state/auth.service';
-import { AuthQuery } from '../../auth/state/auth.query';
-import { DatoDialog, DatoSnackbar, filterDialogSuccess } from '@datorama/core';
-import { LoginComponent } from '../../auth/login/login.component';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {of} from 'rxjs';
+import {AuthService} from '../../auth/state/auth.service';
+import {AuthQuery} from '../../auth/state/auth.query';
+import {DatoDialog, DatoSnackbar, filterDialogSuccess} from '@datorama/core';
+import {LoginComponent} from '../../auth/login/login.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -59,4 +59,5 @@ export class AppHeaderComponent implements OnInit {
   }
 
   private navigateToAddItem() {}
+
 }

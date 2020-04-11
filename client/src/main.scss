@@ -12,6 +12,16 @@ a {
   color: inherit;
 }
 
+.user-menu {
+  background-color: #fff;
+  padding: 1rem;
+  font-size: 14px;
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+  dato-link {
+    outline: none;
+  }
+}
+
 .graph-tooltip {
   pointer-events: none;
   font-size: 11px;

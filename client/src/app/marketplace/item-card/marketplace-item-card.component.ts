@@ -5,6 +5,7 @@ import {
   OnInit
 } from '@angular/core';
 import { DatoSnackbar } from '@datorama/core';
+import {Product} from "../marketplace.types";
 
 @Component({
   selector: 'marketplace-item-card',
@@ -13,7 +14,7 @@ import { DatoSnackbar } from '@datorama/core';
   styleUrls: ['./marketplace-item-card.component.scss']
 })
 export class MarketplaceItemCardComponent implements OnInit {
-  @Input() item: any;
+  @Input() item: Product;
   private numberFormatter = Intl.NumberFormat();
   constructor(private snackbar: DatoSnackbar) {}
 

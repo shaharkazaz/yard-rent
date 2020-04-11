@@ -1,0 +1,27 @@
+:host {
+  display: block;
+  height: 100%;
+  .title {
+    border-bottom: 1px solid #ccced3;
+  }
+  .side-container {
+    margin-left: 10%;
+  }
+  .height-60 {
+    height: 60%;
+  }
+  .height-30 {
+    height: 30%;
+  }
+  .back-wing {
+    transition: background-color .3s;
+    left: 0;
+    outline: none;
+    height: 100px;
+    width: 100px;
+    border-radius: 100px;
+    ::ng-deep dato-icon {
+      transition: color .3s;
+    }
+  }
+}

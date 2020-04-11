@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { parseUrl } from '../../shared/utils';
-import { image64base } from './image-upload-test';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {MarketplaceService} from "../state/marketplace.service";
+import {Observable, of} from "rxjs";
+import {Product} from "../marketplace.types";
 
 @Component({
   selector: 'marketplace-item-page',
@@ -10,24 +11,14 @@ import { image64base } from './image-upload-test';
   styleUrls: ['./marketplace-item-page.component.scss']
 })
 export class MarketplaceItemPageComponent implements OnInit {
-  constructor(private httpClient: HttpClient) {}
+  product$: Observable<any>;
+  constructor(private marketplaceService: MarketplaceService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.httpClient
-      .post(parseUrl('products'), {
-        user: '5e230ed64610ac3b844767ce',
-        name: 'chen amiel',
-        category: '5e5a8f8ef995f966609e7715',
-        subCategory: '5e5a91f684d88c10c41b2f3c',
-        rewards: 3214532,
-        address: 'Mendel 5ewqe',
-        deposit: 3,
-        durationInDays: '98637051',
-        description: 'jasifajfioasjhaoijiofjaiofjafoafjasijaofa',
-        image: image64base
-      })
-      .subscribe(data => {
-        debugger;
-      });
+    this.product$ = of({ "isDeleted": false, "name": "chen amiel", "user": { "name": "chen" }, "category": { "name": "furnitures" }, "subCategory": { "subCategoryName": "table" }, "rewards": 100, "address": "Mendel 5ewqe", "deposit": 3, "durationInDays": "1970-01-02T03:23:57.051Z", "description": "jasifajfioasjhaoijiofjaiofjafoafjasijaofa", "image": "https://storage.googleapis.com/yard-rent.appspot.com/4ekv5sk7q6s882.jpg", "__v": 0 })//this.marketplaceService.getProduct(this.route.snapshot.params.id);
+  }
+
+  addItemToCart() {
+
   }
 }

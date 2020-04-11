@@ -8,4 +8,8 @@ export class MarketplaceService {
   getAllProducts() {
     return this.dataService.getAllProducts();
   }
+
+  getProduct(id: string) {
+    return this.dataService.getProduct(id);
+  }
 }

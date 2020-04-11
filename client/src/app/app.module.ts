@@ -1,20 +1,13 @@
-import {
-  BrowserModule,
-  EVENT_MANAGER_PLUGINS
-} from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import {BrowserModule, EVENT_MANAGER_PLUGINS} from '@angular/platform-browser';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { environment } from '../environments/environment';
-import { translocoLoader } from './transloco-loader';
-import {
-  TRANSLOCO_CONFIG,
-  translocoConfig,
-  TranslocoModule
-} from '@ngneat/transloco';
-import { HomeModule } from './home/home.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {environment} from '../environments/environment';
+import {translocoLoader} from './transloco-loader';
+import {TRANSLOCO_CONFIG, translocoConfig, TranslocoModule} from '@ngneat/transloco';
+import {HomeModule} from './home/home.module';
 import {
   APP_TRANSLATE,
   DATO_CORE_LOGGER,
@@ -22,12 +15,13 @@ import {
   DatoCoreModule,
   EventModifiersPlugin
 } from '@datorama/core';
-import { TranslatePipe } from './shared/pipes/translate.pipe';
-import { ShellModule } from './shell/shell.module';
-import { AuthModule } from './auth/auth.module';
-import { AppInitService } from './app-init.service';
-import { gridStorageAPI } from './app-grid-storage-api';
-import { appLogger } from './app-event-logger';
+import {TranslatePipe} from './shared/pipes/translate.pipe';
+import {ShellModule} from './shell/shell.module';
+import {AuthModule} from './auth/auth.module';
+import {AppInitService} from './app-init.service';
+import {gridStorageAPI} from './app-grid-storage-api';
+import {appLogger} from './app-event-logger';
+import {ErrorsInterceptor} from "./shared/interceptors/errors.interceptor";
 
 export function initApp(appInitService: AppInitService) {
   return () => {
@@ -45,7 +39,7 @@ export function initApp(appInitService: AppInitService) {
     AppRoutingModule,
     HttpClientModule,
     TranslocoModule,
-    DatoCoreModule
+    DatoCoreModule,
   ],
   providers: [
     AppInitService,
@@ -79,7 +73,12 @@ export function initApp(appInitService: AppInitService) {
         prodMode: environment.production
       })
     },
-    translocoLoader
+    translocoLoader,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorsInterceptor,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })

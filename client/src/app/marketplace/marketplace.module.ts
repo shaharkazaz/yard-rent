@@ -14,6 +14,7 @@ import { MarketplaceService } from './state/marketplace.service';
 import { CommonModule } from '@angular/common';
 import { MarketplaceItemPageComponent } from './item-page/marketplace-item-page.component';
 import { MarketplaceAllItemsComponent } from './all-items/marketplace-all-items.component';
+import {BingMapModule} from "../shared/components/bing-map/bing-map.module";
 
 const routes: Routes = [
   {
@@ -45,7 +46,8 @@ const routes: Routes = [
     DatoIconModule,
     CommonModule,
     DatoDirectivesModule,
-    DatoButtonModule
+    DatoButtonModule,
+    BingMapModule,
   ],
   declarations: [
     MarketplacePageComponent,

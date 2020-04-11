@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MarketplaceService } from '../state/marketplace.service';
 import { Observable } from 'rxjs';
+import {Product} from "../marketplace.types";
 
 @Component({
   selector: 'app-marketplace-all-items',
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./marketplace-all-items.component.scss']
 })
 export class MarketplaceAllItemsComponent implements OnInit {
-  items: Observable<any[]>;
+  items: Observable<Product[]>;
 
   constructor(private marketplaceService: MarketplaceService) {}
 
