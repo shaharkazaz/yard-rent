@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AboutPageComponent } from './about-page.component';
+import { AboutPageComponent } from './page/about-page.component';
 import {CommonModule} from '@angular/common';
 import {TranslocoModule} from "@ngneat/transloco";
 
@@ -19,4 +19,4 @@ const routes: Routes = [
 
 
 
-export class AboutPageModule {}
+export class AboutModule {}

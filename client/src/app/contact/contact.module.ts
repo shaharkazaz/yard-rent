@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ContactPageComponent } from './contact-page.component';
+import { ContactPageComponent } from './page/contact-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import {TranslocoModule} from "@ngneat/transloco";
 
@@ -13,6 +13,5 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes), TranslocoModule],
   declarations: [ContactPageComponent],
-  exports: [ContactPageComponent]
 })
-export class ContactPageModule {}
+export class ContactModule {}

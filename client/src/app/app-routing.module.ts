@@ -10,8 +10,8 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () =>
-      import('./about/page/about-page.module').then(
-        ({ AboutPageModule }) => AboutPageModule
+      import('./about/about.module').then(
+        ({ AboutModule }) => AboutModule
       )
   },
   {
@@ -33,10 +33,11 @@ const routes: Routes = [
   },
   {
     path: 'contact',
-    loadChildren: () =>
-      import('./contact/page/contact-page.module').then(
-        ({ ContactPageModule }) => ContactPageModule
-      )
+    loadChildren: () => import('./contact/contact.module').then(({ ContactModule }) => ContactModule)
+  },
+  {
+    path: 'getting-started',
+    loadChildren: () => import('./getting-started/getting-started.module').then(({ GettingStartedModule }) => GettingStartedModule)
   },
   {
     path: '',

@@ -1,3 +1,5 @@
-<div class="bar-container"></div>
-<dato-loader *ngIf="loading"></dato-loader>
-<div></div>
+<div class="content-container d-flex-column align-center">
+  <div class="yardrent-titles">{{ 'last-week-orders' | transloco }}</div>
+  <div class="bar-container"></div>
+  <span *ngIf="loading" class="loader dato-spinner-loader"></span>
+</div>

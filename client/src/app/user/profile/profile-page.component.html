@@ -10,7 +10,7 @@
   <div class="dato-headline mb-10">{{ user.name }}</div>
   <span class="dato-sub-headline mb-10"
     >{{ t('you-have-rewards', { rewards: user.rewards }) }}
-    <dato-link routerLink="">{{ t('get-more') }}</dato-link></span
+    <dato-link routerLink="/getting-started" fragment="what-are-rewards">{{ t('get-more') }}</dato-link></span
   >
   <div class="d-flex-grow"></div>
   <dato-button (click)="logout()" datoType="secondary">{{

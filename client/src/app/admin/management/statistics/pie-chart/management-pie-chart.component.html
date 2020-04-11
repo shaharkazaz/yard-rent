@@ -1,1 +1,5 @@
-<p>pie-chart works!</p>
+<div class="content-container d-flex-column align-center">
+  <div class="yardrent-titles">{{ 'orders-per-category' | transloco }}</div>
+  <div class="pie-container"></div>
+  <span *ngIf="loading" class="loader dato-spinner-loader"></span>
+</div>

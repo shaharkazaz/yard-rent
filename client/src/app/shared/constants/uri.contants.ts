@@ -5,7 +5,8 @@ export const URI_CONSTANTS = {
     getUser: 'users/getuser'
   },
   management: {
-    getWeeklyData: 'statistics/graph-1',
+    getWeeklyData: 'statistics/weekly-data',
+    getOrdersPerCategory: 'statistics/orders-per-category',
     getAllUsers: 'users/getAll',
     deleteUser: 'users/deleteuser/{id}',
     updateUser: 'users/updateuser/{id}'

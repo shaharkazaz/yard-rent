@@ -18,6 +18,12 @@ export class ManagementService {
       .pipe(tap(weeklyData => this.managementStore.update({ weeklyData })));
   }
 
+  getOrdersPerCategory() {
+    return this.dataService
+      .getOrdersPerCategory()
+      .pipe(tap(ordersPerCategory => this.managementStore.update({ ordersPerCategory })));
+  }
+
   getAllUsers() {
     return this.dataService
       .getAllUsers()

@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {of} from 'rxjs';
 import {AuthService} from '../../auth/state/auth.service';
 import {AuthQuery} from '../../auth/state/auth.query';
 import {DatoDialog, DatoSnackbar, filterDialogSuccess} from '@datorama/core';
 import {LoginComponent} from '../../auth/login/login.component';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +17,13 @@ export class AppHeaderComponent implements OnInit {
   // TODO user interface
   user: any;
   isLoggedIn$ = this.authQuery.isLoggedIn$;
+  gettingStartedMenuItems = [
+    'how-to-post',
+    'how-to-rent',
+    'what-are-rewards'
+  ];
+
+  @ViewChild('gettingStartedBtn', {static: false, read: ElementRef}) gettingStartedBtn: ElementRef;
 
   constructor(
     private authService: AuthService,
@@ -32,6 +39,13 @@ export class AppHeaderComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
       });
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        const element = this.gettingStartedBtn.nativeElement;
+        const addClass = event.url.includes('getting-started');
+        addClass ? element.classList.add('active-page') : element.classList.remove('active-page');
+      }
+    });
   }
 
   openLoginDialog(view: 'login' | 'sign-up') {

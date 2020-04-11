@@ -11,6 +11,7 @@ import * as d3 from 'd3';
 import { ManagementQuery } from '../../state/management.query';
 import { isEmpty } from '@datorama/core';
 import { of } from 'rxjs';
+import {WeeklyData} from "../../state/management.types";
 
 @Component({
   selector: 'management-bar-chart',
@@ -43,15 +44,15 @@ export class ManagementBarChartComponent implements OnInit {
     });
   }
 
-  private initBarChart(data: any) {
+  private initBarChart(data: WeeklyData) {
     // set the dimensions and margins of the graph
     const margin = { top: 30, right: 30, bottom: 100, left: 60 },
-      width = 460 - margin.left - margin.right,
-      height = 450 - margin.top - margin.bottom;
+      width = 380 - margin.left - margin.right,
+      height = 380 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     const svg = d3
-      .select('.bar-container')
+      .select('management-bar-chart .bar-container')
       .append('svg')
       .attr('width', width + margin.left + margin.right)
       .attr('height', height + margin.top + margin.bottom)

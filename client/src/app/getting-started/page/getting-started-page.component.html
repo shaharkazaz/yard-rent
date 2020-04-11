@@ -1,0 +1,7 @@
+<ng-container *transloco="let t">
+  <div class="section d-flex-column align-center" [class.accent-100-background-color]="odd"
+       *ngFor="let section of sections; odd as odd" [attr.id]="section">
+    <div class="yardrent-titles mb-20">{{t(section)}}</div>
+    <div class="dato-simple text-center">{{t(section + '-description')}}</div>
+  </div>
+</ng-container>

@@ -69,7 +69,7 @@
         </div>
       </ng-template>
       <div
-        class="cart d-flex align-center-end pointer mr-20"
+        class="cart relative d-flex align-center-end pointer mr-20"
         *datoSubscribe="itemsCount$ as itemsCount"
       >
         <div
@@ -102,11 +102,7 @@
     >
       <div>{{ t('home-page') }}</div>
     </dato-button>
-    <dato-button
-      class="link"
-      datoType="none"
-      [datoMenuTriggerFor]="gettingStarted"
-    >
+    <dato-button #gettingStartedBtn class="link" datoType="none" [datoMenuTriggerFor]="gettingStartedMenu">
       <div class="mr-3">{{ t('getting-started') }}</div>
       <dato-icon width="10px" height="17px" datoIcon="arrow-down"></dato-icon>
     </dato-button>
@@ -137,7 +133,7 @@
     <dato-button
       class="link"
       datoType="none"
-      routerLink="contact"
+      routerLink="genius"
       routerLinkActive="active-page"
     >
       <div>{{ t('Genius') }}</div>
@@ -153,16 +149,10 @@
     </dato-button>
   </nav>
 
-  <dato-menu #gettingStarted="datoMenu" placement="bottom-center">
+  <dato-menu #gettingStartedMenu="datoMenu" placement="bottom-center">
     <ng-template datoMenuContent>
-      <button datoMenuItem routerLink="">
-        <div>{{ t('how-to-post') }}</div>
-      </button>
-      <button datoMenuItem routerLink="">
-        <div>{{ t('how-to-rent') }}</div>
-      </button>
-      <button datoMenuItem routerLink="">
-        <div>{{ t('what-are-rewards') }}</div>
+      <button datoMenuItem *ngFor="let item of gettingStartedMenuItems" routerLink="getting-started" [fragment]="item">
+        <div>{{ t(item) }}</div>
       </button>
     </ng-template>
   </dato-menu>

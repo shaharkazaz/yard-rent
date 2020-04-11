@@ -1,19 +1,13 @@
 <div class="d-flex-column width-100 align-center" *transloco="let t">
-  <h1 class="yardrent-titles align-center">{{t('slogan')}}</h1>
-  <div class="d-flex-column width-50 align-center">
-    <p>
-      {{t('about-description')}}
-    </p>
-  </div>
+  <h1 class="yardrent-titles mb-20">{{t('slogan')}}</h1>
+  <p class="text-center width-75 mt-0">{{t('about-description')}}</p>
 </div>
 <ng-container>
-  <ul class="d-flex">
-    <li class="inline-block" *ngFor="let person of founders">
-      <p class="text-center">
-        <img class="founder-img" [src]="getFounderImage(person.name)">
-        <b>{{person.name}}</b><br>
-        {{person.role}}
-      </p>
+  <ul class="d-flex align-space-around-center mb-0">
+    <li class="relative founder inline-block mx-20 d-flex-column align-center" *ngFor="let person of founders">
+      <img class="relative founder-img mb-20" [src]="getFounderImage(person.name)">
+      <div><b>{{person.name}}</b></div>
+      <div>{{person.role}}</div>
     </li>
   </ul>
 </ng-container>
