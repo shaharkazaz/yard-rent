@@ -20,7 +20,7 @@ module.exports = {
     addOrder: async (req, res) => {
         const {products, rewards} = req.body;
         const userId = await getUserId(req);
-        let unfitProducts = {"missingItems": null, "rentedItems": null};
+        let unfitProducts = {"missingItems": [], "rentedItems": []};
         await Product.find({_id: {$in: products}, isRented: true}, {name: 1}).then(async (alreadyRentedProducts) => {
             if (await alreadyRentedProducts.length > 0) {
                 unfitProducts.rentedItems = alreadyRentedProducts;
