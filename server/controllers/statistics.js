@@ -4,6 +4,7 @@ const Products = require('../model/product');
 module.exports = {
     weeklyData: (req, res) => {
         // TODO get only the orders of the past week
+        const today = new Date().getDay();
         const lastWeek = new Date();
         lastWeek.setDate(lastWeek.getDate() -7);
         const pipeline = [
@@ -21,16 +22,21 @@ module.exports = {
                 }
             }
         ];
-        const results = [
-            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-        ].map(day => ({day, orders: 0, rewards: 0}));
+
+        let daysOfWeekOrdered = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        for(let i=0;i<today;i++)
+        {
+            const d = daysOfWeekOrdered.shift();
+            daysOfWeekOrdered.push(d);
+        }
+        let results = daysOfWeekOrdered.map(day => ({day, orders: 0, rewards: 0}));
 
         Orders.aggregate(pipeline).then((stats) => {
             stats.forEach(o =>{
                 const dayIndex = o.date.getDay();
                 // sum all rewards of products per order
                 const rewardsPerDay = o.productObjects.reduce((acc, product) => (acc + product.rewards), 0);
-                const dayData = results[dayIndex];
+                const dayData = results[(dayIndex + today)%6];
                 dayData.rewards += rewardsPerDay;
                 dayData.orders++;
             });
