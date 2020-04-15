@@ -20,6 +20,20 @@ module.exports = {
     addOrder: async (req, res) => {
         const {products, rewards} = req.body;
         const userId = await getUserId(req);
+        let unfitProducts = {"missingItems": [], "rentedItems": []};
+        await Product.find({_id: {$in: products}, isRented: true}, {name: 1}).then(async (alreadyRentedProducts) => {
+            if (await alreadyRentedProducts.length > 0) {
+                unfitProducts.rentedItems = alreadyRentedProducts;
+            }
+        });
+        await Product.find({_id: {$in: products}, isDeleted: true}, {name: 1}).then(async (alreadyDeletedProducts) => {
+            if (await alreadyDeletedProducts.length > 0) {
+                unfitProducts.missingItems = alreadyDeletedProducts
+            }
+        });
+        if (unfitProducts.rentedItems.length > 0 || unfitProducts.missingItems.length > 0) {
+            return res.status(409).json(unfitProducts);
+        }
         Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}}).then(() => {
         });
         User.findById(userId).then((user) => {
