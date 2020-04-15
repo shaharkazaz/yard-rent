@@ -26,8 +26,8 @@ module.exports = {
         let daysOfWeekOrdered = [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         for(let i=0;i<today;i++)
         {
-            const d = daysOfWeekOrdered.shift();
-            daysOfWeekOrdered.push(d);
+            const d = daysOfWeekOrdered.pop();
+            daysOfWeekOrdered.unshift(d);
         }
         let results = daysOfWeekOrdered.map(day => ({day, orders: 0, rewards: 0}));
 
@@ -36,7 +36,7 @@ module.exports = {
                 const dayIndex = o.date.getDay();
                 // sum all rewards of products per order
                 const rewardsPerDay = o.productObjects.reduce((acc, product) => (acc + product.rewards), 0);
-                const dayData = results[(dayIndex + today)%6];
+                const dayData = results[Math.abs(today + dayIndex)%7];
                 dayData.rewards += rewardsPerDay;
                 dayData.orders++;
             });
