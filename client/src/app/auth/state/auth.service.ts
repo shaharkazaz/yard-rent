@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
-import { DatoSnackbar } from '@datorama/core';
-import { AuthDataService } from './auth.data-service';
-import { Credentials, SignupParams } from '../auth.types';
-import { tap } from 'rxjs/operators';
-import { AuthStore, clearStorage, saveInStorage } from './auth.store';
-import { createEmptyUser } from './auth.model';
-import { inStorage } from './auth.query';
+import {Injectable} from '@angular/core';
+import {DatoSnackbar} from '@datorama/core';
+import {AuthDataService} from './auth.data-service';
+import {Credentials, SignupParams} from '../auth.types';
+import {tap} from 'rxjs/operators';
+import {AuthStore, clearStorage, saveInStorage} from './auth.store';
+import {createEmptyUser} from './auth.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AuthService {
   constructor(
     private authDataService: AuthDataService,
     private snackbar: DatoSnackbar,
-    private authStore: AuthStore
+    private authStore: AuthStore,
   ) {}
 
   login(params: Credentials) {

@@ -1,0 +1,25 @@
+<ng-container *transloco="let t">
+  <div class="height-100" *ngIf="hasItems; else emptyCart">
+    <dato-grid-controller class="pt-20 cart-items"
+                          [gridOptions]="gridOptions"
+                          [rowActions]="rowActions">
+      <dato-grid-toolbar-v2 [gridActions]="gridActions"></dato-grid-toolbar-v2>
+      <dato-grid-v2></dato-grid-v2>
+    </dato-grid-controller>
+    <div class="d-flex">
+      <div class="d-flex-grow"></div>
+      <div datoTooltip="insufficient-rewards" [datoTooltipDisabled]="hasEnoughRewards">
+        <dato-button [disabled]="!hasEnoughRewards">{{t('place-order')}}</dato-button>
+      </div>
+    </div>
+  </div>
+  <ng-template #emptyCart>
+    <div class="height-100 d-flex-column align-center">
+      <dato-icon height="200px" width="200px" datoIcon="empty-shopping-cart"></dato-icon>
+      <div class="d-flex align-center mt-20">
+        <div class="mr-5">{{ t('empty-cart') }}</div>
+        <dato-link routerLink="/marketplace">{{t('marketplace')}}</dato-link>
+      </div>
+    </div>
+  </ng-template>
+</ng-container>

@@ -5,6 +5,7 @@ import {isEmpty} from "@datorama/core";
 import {of} from "rxjs";
 import * as d3 from "d3";
 import {OrdersPerCategoryData} from "../../state/management.types";
+import {formatNumber} from "../../../../shared/utils";
 
 @Component({
   selector: 'management-pie-chart',
@@ -78,14 +79,13 @@ export class ManagementPieChartComponent implements OnInit {
       .style("opacity", 0.7)
 
     // Now add the annotation. Use the centroid method to get the best coordinates
-    const numberFormat = new Intl.NumberFormat().format;
     svg
       .selectAll('mySlices')
       .data(data_ready)
       .enter()
       .append('text')
       .html((d: any) => `
-            <tspan x="0">${numberFormat(d.data.value)}</tspan>
+            <tspan x="0">${formatNumber(d.data.value)}</tspan>
             <tspan x="0" dy="1.2em">${d.data.key}</tspan>
         `)
       .attr("transform", (d: any) => "translate(" + arcGenerator.centroid(d) + ")")

@@ -7,6 +7,7 @@ import {
 import { DatoSnackbar } from '@datorama/core';
 import {Product} from "../marketplace.types";
 import {ShoppingCartService} from "../../shopping-cart/state/shopping-cart.service";
+import { formatNumber } from '../../shared/utils';
 
 @Component({
   selector: 'marketplace-item-card',
@@ -16,13 +17,12 @@ import {ShoppingCartService} from "../../shopping-cart/state/shopping-cart.servi
 })
 export class MarketplaceItemCardComponent implements OnInit {
   @Input() item: Product;
-  private numberFormatter = Intl.NumberFormat();
   constructor(private snackbar: DatoSnackbar, private shoppingCartService: ShoppingCartService) {}
 
   ngOnInit() {}
 
   formatNumber(rewards: number) {
-    return this.numberFormatter.format(rewards);
+    return formatNumber(rewards);
   }
 
   addItemToCart() {

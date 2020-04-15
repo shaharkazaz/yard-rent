@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AuthQuery } from '../../auth/state/auth.query';
-import { AuthService } from '../../auth/state/auth.service';
-import { Router } from '@angular/router';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AuthQuery} from '../../auth/state/auth.query';
+import {Router} from '@angular/router';
+import {AppAuthService} from "../../auth/app-auth.service";
+import {User} from "../../auth/state/auth.model";
 
 @Component({
   selector: 'app-profile',
@@ -10,10 +11,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile-page.component.scss']
 })
 export class ProfilePageComponent implements OnInit {
-  user: any;
+  user: User;
   constructor(
     private authQuery: AuthQuery,
-    private authService: AuthService,
+    private appAuthService: AppAuthService,
     private router: Router
   ) {}
 
@@ -22,7 +23,6 @@ export class ProfilePageComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['home']);
+    this.appAuthService.logout();
   }
 }

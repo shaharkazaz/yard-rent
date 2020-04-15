@@ -12,6 +12,7 @@ import { ManagementQuery } from '../../state/management.query';
 import { isEmpty } from '@datorama/core';
 import { of } from 'rxjs';
 import {WeeklyData} from "../../state/management.types";
+import {formatNumber} from "../../../../shared/utils";
 
 @Component({
   selector: 'management-bar-chart',
@@ -90,7 +91,6 @@ export class ManagementBarChartComponent implements OnInit {
     // Bars
     const that = this;
     this.tooltipEl = this.renderer.selectRootElement('.bar-chart-tooltip');
-    const numberFormat = new Intl.NumberFormat().format;
     svg
       .selectAll('mybar')
       .data(data)
@@ -110,7 +110,7 @@ export class ManagementBarChartComponent implements OnInit {
         tooltip.html(`
                     <div>Date: ${d.day}</div>
                     <div>Orders made: ${d.orders}</div>
-                    <div style="color: green">Total rewards: ${numberFormat(
+                    <div style="color: green">Total rewards: ${formatNumber(
                       d.rewards
                     )}$</div>
                 `);

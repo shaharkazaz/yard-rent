@@ -10,6 +10,7 @@ export type User = {
   name: string;
   token: string;
   user: any;
+  rewards: number;
 };
 
 export function createEmptyUser() {

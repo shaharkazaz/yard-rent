@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  height: 100%;
+  padding: 0 20px;
+  ::ng-deep dato-grid-v2 .ag-floating-bottom-container .ag-row{
+    border-top: 1px solid #F1F2F5;
+    background-color: white;
+    .ag-cell {
+      border-right: none;
+    }
+  }
+  .cart-items {
+    height: calc(100% - 100px);
+  }
+}

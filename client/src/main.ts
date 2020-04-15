@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
+import { enableAkitaProdMode, persistState } from '@datorama/akita';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { LicenseManager } from 'ag-grid-enterprise';
@@ -11,7 +11,11 @@ console.clear();
 
 if (environment.production) {
   enableProdMode();
+  enableAkitaProdMode();
 }
+
+persistState({key: 'shopping-cart', include: ['shoppingCart']});
+
 
 platformBrowserDynamic()
   .bootstrapModule(AppModule)

@@ -21,4 +21,5 @@ export function saveInStorage(token: string) {
 
 export function clearStorage() {
   localStorage.removeItem('token');
+  localStorage.removeItem('shopping-cart');
 }

@@ -1,12 +1,12 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {of} from 'rxjs';
-import {AuthService} from '../../auth/state/auth.service';
 import {AuthQuery} from '../../auth/state/auth.query';
 import {DatoDialog, DatoSnackbar, filterDialogSuccess} from '@datorama/core';
 import {LoginComponent} from '../../auth/login/login.component';
 import {NavigationEnd, Router} from '@angular/router';
 import {ShoppingCartQuery} from "../../shopping-cart/state/shopping-cart.query";
 import {User} from "../../auth/state/auth.model";
+import {AppAuthService} from "../../auth/app-auth.service";
+import {combineLatest, Subject} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -22,11 +22,14 @@ export class AppHeaderComponent implements OnInit {
     'how-to-rent',
     'what-are-rewards'
   ];
+  viewInit = new Subject<HTMLElement>();
 
-  @ViewChild('gettingStartedBtn', {static: false, read: ElementRef}) gettingStartedBtn: ElementRef;
+  @ViewChild('gettingStartedBtn', {static: false, read: ElementRef}) set gettingStartedTab(element: ElementRef) {
+    element && this.viewInit.next(element.nativeElement);
+  }
 
   constructor(
-    private authService: AuthService,
+    private appAuthService: AppAuthService,
     private authQuery: AuthQuery,
     private dialog: DatoDialog,
     private snackbar: DatoSnackbar,
@@ -40,11 +43,11 @@ export class AppHeaderComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
       });
-    this.router.events.subscribe((event) => {
+    combineLatest([this.router.events, this.viewInit.asObservable()])
+    .subscribe(([event, btn]) => {
       if (event instanceof NavigationEnd) {
-        const element = this.gettingStartedBtn.nativeElement;
         const addClass = event.url.includes('getting-started');
-        addClass ? element.classList.add('active-page') : element.classList.remove('active-page');
+        addClass ? btn.classList.add('active-page') : btn.classList.remove('active-page');
       }
     });
   }
@@ -57,8 +60,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate(['home']);
+    this.appAuthService.logout();
   }
 
   addNewItem() {

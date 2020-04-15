@@ -11,4 +11,8 @@ export class ShoppingCartService {
   add(product: Product) {
     this.shoppingCartStore.add(product);
   }
+
+  delete(ids: string | string[]) {
+    this.shoppingCartStore.remove(ids);
+  }
 }

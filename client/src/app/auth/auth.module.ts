@@ -26,7 +26,7 @@ const api = [LoginComponent, IsLoggedInDirective, HasRoleDirective];
     ReactiveFormsModule,
     DatoButtonModule,
     DatoDialogModule,
-    DatoSnackbarModule
+    DatoSnackbarModule,
   ],
   declarations: api,
   entryComponents: [LoginComponent, DatoSnackbarComponent],
