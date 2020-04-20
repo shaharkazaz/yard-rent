@@ -15,12 +15,17 @@ export class ErrorsInterceptor implements HttpInterceptor {
     return next.handle(request.clone(request)).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
         if (errorResponse instanceof HttpErrorResponse) {
-          if (errorResponse.status === 401) {
-            this.authService.logout();
-            this.snackbar.error('session-expired');
-          } else {
-            this.snackbar.error('something-went-wrong');
+          switch (errorResponse.status) {
+            case 401:
+              this.authService.logout();
+              this.snackbar.error('session-expired');
+              break;
+            case 409:
+              break;
+            default:
+              this.snackbar.error('something-went-wrong');
           }
+
           return throwError(errorResponse);
         }
       })

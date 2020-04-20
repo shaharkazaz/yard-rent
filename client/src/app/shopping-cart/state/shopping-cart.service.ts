@@ -15,4 +15,9 @@ export class ShoppingCartService {
   delete(ids: string | string[]) {
     this.shoppingCartStore.remove(ids);
   }
+
+  clearCart() {
+    this.shoppingCartStore.reset();
+    localStorage.removeItem('shopping-cart');
+  }
 }

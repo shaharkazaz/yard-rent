@@ -5,7 +5,7 @@ import {Product} from "../../marketplace/marketplace.types";
 export interface ShoppingCartState extends EntityState<Product> {}
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'shoppingCart', idKey: '_id' })
+@StoreConfig({ name: 'shoppingCart', idKey: '_id', resettable: true })
 export class ShoppingCartStore extends EntityStore<ShoppingCartState> {
 
   constructor() {

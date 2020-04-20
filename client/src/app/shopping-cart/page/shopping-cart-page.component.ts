@@ -1,5 +1,14 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
+import {
+  DatoDialog,
   DatoGridColumnDef,
   DatoGridColumnTypes,
   DatoGridControllerComponent, DatoGridFilterTypes,
@@ -12,6 +21,11 @@ import {take} from "rxjs/operators";
 import {ShoppingCartService} from "../state/shopping-cart.service";
 import {AuthQuery} from "../../auth/state/auth.query";
 import {User} from "../../auth/state/auth.model";
+import {OrdersService} from "../orders.service";
+import {Router} from "@angular/router";
+import {Product} from "../../marketplace/marketplace.types";
+
+type ErroredItem = {_id: string, name: string};
 
 @Component({
   selector: 'app-shopping-cart',
@@ -22,6 +36,9 @@ import {User} from "../../auth/state/auth.model";
 export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
   @ViewChild(DatoGridControllerComponent, { static: false })
   private gridController: DatoGridControllerComponent;
+
+  @ViewChild('orderFailed', { static: true }) private orderFailure: TemplateRef<any>
+
   gridOptions: DatoGridOptions = {
     gridName: 'shopping-cart',
     columnDefs: this.getColumns(),
@@ -31,7 +48,16 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
   rowActions: RowAction[] = this.getRowActions();
   totalAmount: number;
   user: User;
-  constructor(private shoppingCartQuery: ShoppingCartQuery, private shoppingCartService: ShoppingCartService, private authQuery: AuthQuery) {}
+  loading: boolean;
+  private cartItems: Product[];
+
+  constructor(private shoppingCartQuery: ShoppingCartQuery,
+              private shoppingCartService: ShoppingCartService,
+              private authQuery: AuthQuery,
+              private ordersService: OrdersService,
+              private router: Router,
+              private cdr: ChangeDetectorRef,
+              private dialog: DatoDialog) {}
 
   ngOnInit() {
     this.user = this.authQuery.getValue().user;
@@ -47,6 +73,32 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
 
   get hasEnoughRewards() {
     return this.totalAmount <= this.user.rewards;
+  }
+
+  placeOrder() {
+    this.loading = true;
+    this.ordersService.placeOrder({
+      rewards: this.totalAmount,
+      products: this.cartItems.map(({_id}) => _id)
+    }).subscribe(
+      ({orderId}) => {
+        this.shoppingCartService.clearCart();
+        const route = this.router.config.find(r => r.path === 'order-complete');
+        route.data = { orderId: [...orderId].reduce((acc, _, i) => acc + orderId.charCodeAt(i), 0) };
+        this.router.navigateByUrl('/order-complete');
+      },
+      ({error, status}) => {
+        this.loading = false;
+        this.cdr.detectChanges();
+        if (status === 409) {
+          const productIds = Object.values(error).flat().map(({_id}: ErroredItem) => _id);
+          this.shoppingCartService.delete(productIds);
+          this.dialog.open(this.orderFailure, {
+            data: error,
+            width: '600px'
+          });
+        }
+      });
   }
 
   private getColumns(): DatoGridColumnDef[] {
@@ -95,9 +147,9 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
   }
 
   private initGrid() {
-    const cartItems = this.shoppingCartQuery.getAll();
-    this.totalAmount = cartItems.reduce((sum, item) => sum + item.rewards, 0);
-    this.gridController.gridService.setRows(cartItems);
+    this.cartItems = this.shoppingCartQuery.getAll();
+    this.totalAmount = this.cartItems.reduce((sum, item) => sum + item.rewards, 0);
+    this.gridController.gridService.setRows(this.cartItems);
     this.gridController.gridQuery.waitForGrid().pipe(take(1)).subscribe(() => {
       this.gridController.gridService.api.grid.setPinnedBottomRowData([{name: 'Total', rewards: this.totalAmount}]);
     });

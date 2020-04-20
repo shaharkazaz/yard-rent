@@ -36,7 +36,7 @@
             {{ t('hello', { name: user.name }) }}
           </div>
           <div class="dato-simple-bold mb-10">
-            {{ t('you-have-rewards', { rewards: user.rewards || 0 }) }}
+            {{ t('you-have-rewards', { rewards:formatNumber(user.rewards) }) }}
           </div>
           <dato-link
             datoPopoverClose

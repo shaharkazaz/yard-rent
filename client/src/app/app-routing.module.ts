@@ -44,6 +44,10 @@ const routes: Routes = [
     loadChildren: () => import('./shopping-cart/shopping-cart.module').then(({ ShoppingCartModule }) => ShoppingCartModule)
   },
   {
+    path: 'order-complete',
+    loadChildren: () => import('./order-complete/order-complete.module').then(({ OrderCompleteModule }) => OrderCompleteModule)
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'

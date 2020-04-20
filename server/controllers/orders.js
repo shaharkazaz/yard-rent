@@ -20,7 +20,7 @@ module.exports = {
     addOrder: async (req, res) => {
         const {products, rewards} = req.body;
         const userId = await getUserId(req);
-        let unfitProducts = {"missingItems": [], "rentedItems": []};
+        let unfitProducts = {};
         await Product.find({_id: {$in: products}, isRented: true}, {name: 1}).then(async (alreadyRentedProducts) => {
             if (await alreadyRentedProducts.length > 0) {
                 unfitProducts.rentedItems = alreadyRentedProducts;
@@ -31,14 +31,15 @@ module.exports = {
                 unfitProducts.missingItems = alreadyDeletedProducts
             }
         });
-        if (unfitProducts.rentedItems.length > 0 || unfitProducts.missingItems.length > 0) {
+        if (unfitProducts.rentedItems || unfitProducts.missingItems > 0) {
             return res.status(409).json(unfitProducts);
         }
         Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}}).then(() => {
         });
         User.findById(userId).then((user) => {
+            const orderId = new mongoose.Types.ObjectId();
             const order = new Order({
-                _id: new mongoose.Types.ObjectId(),
+                _id: orderId,
                 user: user._id,
                 products,
                 rewards
@@ -59,9 +60,7 @@ module.exports = {
                         error
                     })
                 });
-                res.status(200).json({
-                    message: 'new order was added'
-                });
+                res.status(200).json({orderId});
                 removeProductsFromDataSet(products);
             }).catch(error => {
                 return res.status(500).json({

@@ -195,5 +195,20 @@
   "logout-clear-cart": "You have {{count}} items in your cart, if you proceed with the logout your cart will be cleard.<br>Are you sure you want to proceed?",
   "place-order":  "Place order",
   "insufficient-rewards":  "Insufficient rewards",
-  "empty-cart": "Your cart is empty! fill it up with goods from our "
+  "empty-cart": "Your cart is empty! fill it up with goods from our",
+  "order-completed": {
+    "title": "Order {{id}} has been placed",
+    "subtitle": "Enjoy your items! keep on making the world greener 🌱",
+    "twitter-title": "Hold on! want to make <span class='dato-headline'>100</span> shiny new rewards?",
+    "twitter-instructions": "All you have to do is allow us to post your order on our twitter channel!",
+      "no-thanks": "No thanks",
+    "sure": "Sure!"
+  },
+  "order-failure": {
+    "following-items": "The following items are",
+    "title": "Something went wrong",
+    "rented-items": "{{order-failure.following-items}} already rented:",
+    "missing-items": "{{order-failure.following-items}} no longer available for renting:",
+    "status": "The items listed above were removed from your shopping cart.<br><br>If you wish to rent the remaining items re-click the \"Place order\" button."
+  }
 }

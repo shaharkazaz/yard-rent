@@ -7,6 +7,7 @@ import {ShoppingCartQuery} from "../../shopping-cart/state/shopping-cart.query";
 import {User} from "../../auth/state/auth.model";
 import {AppAuthService} from "../../auth/app-auth.service";
 import {combineLatest, Subject} from "rxjs";
+import {formatNumber} from "../../shared/utils";
 
 @Component({
   selector: 'app-header',
@@ -50,6 +51,10 @@ export class AppHeaderComponent implements OnInit {
         addClass ? btn.classList.add('active-page') : btn.classList.remove('active-page');
       }
     });
+  }
+
+  formatNumber(value: number) {
+    return value ? formatNumber(value) : 0;
   }
 
   openLoginDialog(view: 'login' | 'sign-up') {

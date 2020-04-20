@@ -1,6 +1,6 @@
 <ng-container *transloco="let t">
   <div class="height-100" *ngIf="hasItems; else emptyCart">
-    <dato-grid-controller class="pt-20 cart-items"
+    <dato-grid-controller class="mt-20 cart-items"
                           [gridOptions]="gridOptions"
                           [rowActions]="rowActions">
       <dato-grid-toolbar-v2 [gridActions]="gridActions"></dato-grid-toolbar-v2>
@@ -9,7 +9,7 @@
     <div class="d-flex">
       <div class="d-flex-grow"></div>
       <div datoTooltip="insufficient-rewards" [datoTooltipDisabled]="hasEnoughRewards">
-        <dato-button [disabled]="!hasEnoughRewards">{{t('place-order')}}</dato-button>
+        <dato-button [disabled]="!hasEnoughRewards || loading" [loading]="loading" (click)="placeOrder()">{{t('place-order')}}</dato-button>
       </div>
     </div>
   </div>
@@ -23,3 +23,26 @@
     </div>
   </ng-template>
 </ng-container>
+<ng-template #orderFailed let-dialogRef>
+  <div class="d-flex-column" *transloco="let t; read: 'order-failure'">
+    <dato-dialog-header>{{t('title')}}</dato-dialog-header>
+    <dato-dialog-content>
+        <ng-container *ngIf="dialogRef.data.rentedItems">
+          <div>{{t('rented-items')}}</div>
+          <ul>
+            <li *ngFor="let item of dialogRef.data.rentedItems">{{item.name}}</li>
+          </ul>
+        </ng-container>
+        <ng-container *ngIf="dialogRef.data.missingItems">
+          <div>{{t('missing-items')}}</div>
+          <ul>
+            <li *ngFor="let item of dialogRef.data.missingItems">{{item.name}}</li>
+          </ul>
+        </ng-container>
+      <div [innerHTML]="t('status')"></div>
+    </dato-dialog-content>
+    <dato-dialog-footer>
+      <dato-button (click)="dialogRef.close()">ok</dato-button>
+    </dato-dialog-footer>
+  </div>
+</ng-template>

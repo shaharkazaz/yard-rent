@@ -14,5 +14,8 @@ export const URI_CONSTANTS = {
   products: {
     getAllProducts: 'products',
     getProduct: 'products/{id}'
+  },
+  orders: {
+    placeOrder: 'orders'
   }
 };
