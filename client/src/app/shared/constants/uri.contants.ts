@@ -17,5 +17,8 @@ export const URI_CONSTANTS = {
   },
   orders: {
     placeOrder: 'orders'
+  },
+  twitter: {
+    postTwitt: 'twitter'
   }
 };

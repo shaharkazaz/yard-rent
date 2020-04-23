@@ -77,14 +77,16 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
 
   placeOrder() {
     this.loading = true;
-    this.ordersService.placeOrder({
+    const orderDetails = {
       rewards: this.totalAmount,
       products: this.cartItems.map(({_id}) => _id)
-    }).subscribe(
+    };
+    this.ordersService.placeOrder(orderDetails).subscribe(
       ({orderId}) => {
         this.shoppingCartService.clearCart();
         const route = this.router.config.find(r => r.path === 'order-complete');
-        route.data = { orderId: [...orderId].reduce((acc, _, i) => acc + orderId.charCodeAt(i), 0) };
+        const idAsNumber = [...orderId].reduce((acc, _, i) => acc + orderId.charCodeAt(i), 0);
+        route.data = { orderId: idAsNumber, orderDetails  };
         this.router.navigateByUrl('/order-complete');
       },
       ({error, status}) => {

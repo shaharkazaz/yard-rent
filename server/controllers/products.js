@@ -181,7 +181,7 @@ module.exports = {
     releaseProducts: (req, res) => {
         const {products} = req.body;
         const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
-        :Products.updateMany({_id: {$in: objectIdProducts}}, {$set: {isRented: false}}).then(() => {
+        Products.updateMany({_id: {$in: objectIdProducts}}, {$set: {isRented: false}}).then(() => {
             res.status(200).json();
         }).catch(error => {
             res.status(500).json({

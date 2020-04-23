@@ -1,15 +1,26 @@
 <div *transloco="let t; read: 'order-completed'">
-  <div class="d-flex align-center py-30 align-center orange-400-background-color primary-0-color">
-    <div class="d-flex-column align-center">
-      <div class="dato-headline mb-10">{{t('title', {id: orderId})}}</div>
-      <div class="dato-sub-headline">{{t('subtitle')}}</div>
+    <div class="d-flex align-center py-30 align-center orange-400-background-color primary-0-color">
+      <div class="d-flex-column align-center">
+        <div class="dato-headline mb-10">{{t('title', {id: orderId})}}</div>
+        <div class="dato-sub-headline">{{t('subtitle')}}</div>
+      </div>
     </div>
-  </div>
-  <div class="mt-30 dato-sub-headline text-center" [innerHTML]="t('twitter-title')"></div>
-  <div class="mt-10 dato-sub-headline text-center">{{t('twitter-instructions')}}</div>
-  <div class="d-flex align-center accent-300-color"><dato-icon height="80px" width="80px" datoIcon="twitter"></dato-icon></div>
-  <div class="d-flex align-center">
-    <dato-button class="mr-10" datoType="secondary" routerLink="">{{t('no-thanks')}}</dato-button>
-    <dato-button>{{t('sure')}}</dato-button>
-  </div>
+  <ng-container *ngIf="!loading; else spinner">
+    <div class="mt-30 dato-sub-headline text-center" [innerHTML]="t('twitter-title')"></div>
+    <div class="mt-10 dato-sub-headline text-center">{{t('twitter-instructions')}}</div>
+    <div class="mt-10 dato-simple text-center">{{t('twitter-disclaimer')}}</div>
+    <div class="d-flex align-center accent-300-color">
+      <dato-icon height="80px" width="80px" datoIcon="twitter"></dato-icon>
+    </div>
+    <div class="d-flex align-center">
+      <dato-button class="mr-10" datoType="secondary" routerLink="">{{t('no-thanks')}}</dato-button>
+      <dato-button (click)="postTwitt()">{{t('sure')}}</dato-button>
+    </div>
+  </ng-container>
+  <ng-template #spinner>
+    <span class="my-30 dato-spinner-loader" #loader>
+      <div class="checkmark draw"></div>
+    </span>
+    <div class="dato-sub-headline text-center">{{t(tweeted ? 'redirecting-to-home' : 'posting')}}</div>
+  </ng-template>
 </div>

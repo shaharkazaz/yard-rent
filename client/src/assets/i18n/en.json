@@ -200,9 +200,12 @@
     "title": "Order {{id}} has been placed",
     "subtitle": "Enjoy your items! keep on making the world greener 🌱",
     "twitter-title": "Hold on! want to make <span class='dato-headline'>100</span> shiny new rewards?",
-    "twitter-instructions": "All you have to do is allow us to post your order on our twitter channel!",
+    "twitter-instructions": "All you have to do is allow us to post your order* on our twitter channel!",
+    "twitter-disclaimer": "*Only your name and the amount of items you rented will be posted",
       "no-thanks": "No thanks",
-    "sure": "Sure!"
+    "sure": "Sure!",
+    "posting": "Posting on twitter",
+    "redirecting-to-home": "Posted! redirecting to home page"
   },
   "order-failure": {
     "following-items": "The following items are",
