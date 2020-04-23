@@ -7,6 +7,7 @@
       routerLink=""
     />
     <div class="d-flex-grow"></div>
+    <app-language-selector></app-language-selector>
     <ng-container *ngIf="!(isLoggedIn$ | async); else loggedIn">
       <dato-button
         class="mr-10"

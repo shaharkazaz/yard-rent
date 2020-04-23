@@ -1,0 +1,12 @@
+:host {
+  .lang-selection-trigger {
+    height: 45px;
+    width: 70px;
+    justify-content: flex-end;
+    align-items: center;
+
+    .rotate {
+      transform: rotate(180deg);
+    }
+  }
+}

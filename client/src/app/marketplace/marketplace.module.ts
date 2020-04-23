@@ -4,8 +4,8 @@ import { MarketplacePageComponent } from './page/marketplace-page.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import {
   DatoButtonModule,
-  DatoDirectivesModule,
-  DatoIconModule
+  DatoDirectivesModule, DatoFileInputModule,
+  DatoIconModule, DatoInputModule
 } from '@datorama/core';
 import { MarketplaceFiltersComponent } from './filters/marketplace-filters.component';
 import { MarketplaceItemCardComponent } from './item-card/marketplace-item-card.component';
@@ -16,6 +16,7 @@ import { MarketplaceItemPageComponent } from './item-page/marketplace-item-page.
 import { MarketplaceAllItemsComponent } from './all-items/marketplace-all-items.component';
 import {BingMapModule} from "../shared/components/bing-map/bing-map.module";
 import { MarketplaceAddItemComponent } from './add-item/marketplace-add-item.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -53,6 +54,9 @@ const routes: Routes = [
     DatoDirectivesModule,
     DatoButtonModule,
     BingMapModule,
+    DatoFileInputModule,
+    ReactiveFormsModule,
+    DatoInputModule,
   ],
   declarations: [
     MarketplacePageComponent,

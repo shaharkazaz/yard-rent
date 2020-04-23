@@ -1,0 +1,19 @@
+<ng-container *transloco="let t; read: 'languages'">
+
+<section class="pointer d-flex lang-selection-trigger pr-20"
+         data-auto-id="trigger-language-options"
+         (click)="menuOpen = !menuOpen"
+         [datoMenuTriggerFor]="menu">
+  <dato-icon datoIcon="localization" width="32px" height="30px"></dato-icon>
+  <span class="dato-note-bold pl-8 uppercase">{{activeLanguage}}</span>
+  <dato-icon class="ml-5" datoIcon="arrow-down" [class.rotate]="menuOpen" width="10px" height="8px"></dato-icon>
+</section>
+
+<dato-menu #menu="datoMenu" (menuClosed)="menuOpen = false" placement="bottom" menuClass="language-selection">
+  <ng-template datoMenuContent>
+    <button datoMenuItem *ngFor="let option of availableLangs" class="dato-simple"
+            [class.active-lang]="option === activeLanguage"
+            (click)="onLanguageChange(option)">{{t(option)}}</button>
+  </ng-template>
+</dato-menu>
+</ng-container>

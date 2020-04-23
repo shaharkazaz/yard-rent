@@ -213,5 +213,12 @@
     "rented-items": "{{order-failure.following-items}} already rented:",
     "missing-items": "{{order-failure.following-items}} no longer available for renting:",
     "status": "The items listed above were removed from your shopping cart.<br><br>If you wish to rent the remaining items re-click the \"Place order\" button."
+  },
+  "add-item": {
+    "upload-image": "Upload your product image"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Spanish"
   }
 }

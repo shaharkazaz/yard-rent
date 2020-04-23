@@ -1,0 +1,8 @@
+.language-selection {
+  button[datoMenuItem] {
+    width: 70px;
+    &.active-lang {
+      background-color: #C7E3FB;
+    }
+  }
+}

@@ -16,6 +16,7 @@ import { AuthModule } from '../auth/auth.module';
 import { DeveloperOptionsComponent } from './header/developer-options/developer-options.component';
 import { UserMenuComponent } from './header/user-menu/user-menu.component';
 import { NavComponent } from './header/nav/nav.component';
+import { LanguageSelectorComponent } from './header/language-selector/language-selector.component';
 
 @NgModule({
     imports: [
@@ -31,7 +32,7 @@ import { NavComponent } from './header/nav/nav.component';
         AuthModule,
         DatoPopoverModule
     ],
-  declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent],
+  declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent, LanguageSelectorComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
 })
 export class ShellModule {}

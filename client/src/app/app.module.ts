@@ -4,9 +4,6 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {environment} from '../environments/environment';
-import {translocoLoader} from './transloco-loader';
-import {TRANSLOCO_CONFIG, translocoConfig, TranslocoModule} from '@ngneat/transloco';
 import {HomeModule} from './home/home.module';
 import {
   APP_TRANSLATE,
@@ -22,6 +19,7 @@ import {AppInitService} from './app-init.service';
 import {gridStorageAPI} from './app-grid-storage-api';
 import {appLogger} from './app-event-logger';
 import {ErrorsInterceptor} from "./shared/interceptors/errors.interceptor";
+import {TranslocoRootModule} from "./transloco-root.module";
 
 export function initApp(appInitService: AppInitService) {
   return () => {
@@ -38,7 +36,7 @@ export function initApp(appInitService: AppInitService) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    TranslocoModule,
+    TranslocoRootModule,
     DatoCoreModule,
   ],
   providers: [
@@ -64,16 +62,6 @@ export function initApp(appInitService: AppInitService) {
       multi: true
     },
     { provide: APP_TRANSLATE, useExisting: TranslatePipe },
-    {
-      provide: TRANSLOCO_CONFIG,
-      useValue: translocoConfig({
-        availableLangs: ['en', 'es'],
-        defaultLang: 'en',
-        reRenderOnLangChange: true,
-        prodMode: environment.production
-      })
-    },
-    translocoLoader,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorsInterceptor,

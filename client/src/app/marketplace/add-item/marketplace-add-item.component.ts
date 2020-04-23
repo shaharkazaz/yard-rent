@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-add-item',
@@ -7,8 +8,9 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketplaceAddItemComponent implements OnInit {
-
-  constructor() { }
+  control = new FormControl();
+  productForm = new FormGroup({});
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
   }

@@ -1,1 +1,15 @@
-<p>add-item works!</p>
+  <div class="d-flex align-center" *transloco="let t;read: 'add-item'" [formGroup]="productForm">
+    <div class="d-flex-column align-start-center primary-400-color">
+      <div class="d-flex-column">
+        <div class="dato-sub-headline">Product name:</div>
+        <dato-input></dato-input>
+      </div>
+      <div class="d-flex-column">
+        <div class="dato-sub-headline">Product description:</div>
+        <textarea></textarea>
+      </div>
+    </div>
+    <dato-file-input class="m-20" [formControl]="control">
+      <dato-file-input-default datoSize="md">{{t('upload-image')}}</dato-file-input-default>
+    </dato-file-input>
+  </div>
