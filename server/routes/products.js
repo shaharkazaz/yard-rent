@@ -10,7 +10,8 @@ router.get('/:productId', getProduct);
 router.post('/', checkAuth(), addProduct);
 router.patch('/:productId', checkAuth(), updateProduct);
 router.post('/delete', checkAuth(), deleteProduct);
-router.post('/release', checkAuth(), releaseProducts)
+// TODO remove
+router.post('/_release', checkAuth(), releaseProducts)
 
 
 module.exports = router;

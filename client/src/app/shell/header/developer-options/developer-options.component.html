@@ -1,0 +1,13 @@
+<ng-container>
+  <dato-icon class="mr-15 pointer" datoIcon="dev"
+             height="37px"
+             width="37px"
+             datoTooltip="Developer options"
+             datoTooltipPosition="left"
+             datoPopoverPlacement="bottom"
+             [datoPopoverContent]="devMenu"
+  ></dato-icon>
+  <ng-template #devMenu>
+    <dato-link (click)="unrentAll()" datoType="secondary">Un-rent all items</dato-link>
+  </ng-template>
+</ng-container>

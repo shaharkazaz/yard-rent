@@ -20,5 +20,8 @@ export const URI_CONSTANTS = {
   },
   twitter: {
     postTwitt: 'twitter'
+  },
+  development: {
+    releaseProducts: 'products/_release'
   }
 };

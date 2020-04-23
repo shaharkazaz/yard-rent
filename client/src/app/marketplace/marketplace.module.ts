@@ -15,12 +15,17 @@ import { CommonModule } from '@angular/common';
 import { MarketplaceItemPageComponent } from './item-page/marketplace-item-page.component';
 import { MarketplaceAllItemsComponent } from './all-items/marketplace-all-items.component';
 import {BingMapModule} from "../shared/components/bing-map/bing-map.module";
+import { MarketplaceAddItemComponent } from './add-item/marketplace-add-item.component';
 
 const routes: Routes = [
   {
     path: '',
     component: MarketplacePageComponent,
     children: [
+      {
+        path: 'add-item',
+        component: MarketplaceAddItemComponent
+      },
       {
         path: 'all-items',
         component: MarketplaceAllItemsComponent
@@ -54,7 +59,8 @@ const routes: Routes = [
     MarketplaceFiltersComponent,
     MarketplaceItemCardComponent,
     MarketplaceItemPageComponent,
-    MarketplaceAllItemsComponent
+    MarketplaceAllItemsComponent,
+    MarketplaceAddItemComponent
   ],
   exports: [MarketplacePageComponent],
   providers: [MarketplaceDataService, MarketplaceService]

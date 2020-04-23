@@ -13,6 +13,9 @@ import { CommonModule } from '@angular/common';
 import { AppFooterComponent } from './footer/app-footer.component';
 import { RouterModule } from '@angular/router';
 import { AuthModule } from '../auth/auth.module';
+import { DeveloperOptionsComponent } from './header/developer-options/developer-options.component';
+import { UserMenuComponent } from './header/user-menu/user-menu.component';
+import { NavComponent } from './header/nav/nav.component';
 
 @NgModule({
     imports: [
@@ -28,7 +31,7 @@ import { AuthModule } from '../auth/auth.module';
         AuthModule,
         DatoPopoverModule
     ],
-  declarations: [AppHeaderComponent, AppFooterComponent],
+  declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
 })
 export class ShellModule {}

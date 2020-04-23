@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  height: 40px;
+
+  ::ng-deep dato-button {
+    &.link {
+      margin: 0 20px;
+      transition: border-bottom-color 0.4s ease-in-out;
+      border-bottom: 2px solid transparent;
+      div {
+        transition: color 0.4s ease-in-out;
+      }
+    }
+    &.active-page {
+      div {
+        color: #00b7ff;
+      }
+      border-color: #00b7ff;
+    }
+  }
+}

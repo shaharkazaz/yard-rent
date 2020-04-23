@@ -1,0 +1,66 @@
+<ng-container *transloco="let t">
+
+<nav class="d-flex align-center">
+  <dato-button
+    class="link"
+    datoType="none"
+    routerLink="home"
+    routerLinkActive="active-page"
+  >
+    <div>{{ t('home-page') }}</div>
+  </dato-button>
+  <dato-button #gettingStartedBtn class="link" datoType="none" [datoMenuTriggerFor]="gettingStartedMenu">
+    <div class="mr-3">{{ t('getting-started') }}</div>
+    <dato-icon width="10px" height="17px" datoIcon="arrow-down"></dato-icon>
+  </dato-button>
+  <dato-button
+    class="link"
+    datoType="none"
+    routerLink="marketplace"
+    routerLinkActive="active-page"
+  >
+    <div>{{ t('marketplace') }}</div>
+  </dato-button>
+  <dato-button
+    class="link"
+    datoType="none"
+    routerLink="about"
+    routerLinkActive="active-page"
+  >
+    <div>{{ t('about-us') }}</div>
+  </dato-button>
+  <dato-button
+    class="link"
+    datoType="none"
+    routerLink="contact"
+    routerLinkActive="active-page"
+  >
+    <div>{{ t('contact-us') }}</div>
+  </dato-button>
+  <dato-button
+    class="link"
+    datoType="none"
+    routerLink="genius"
+    routerLinkActive="active-page"
+  >
+    <div>{{ t('Genius') }}</div>
+  </dato-button>
+  <dato-button
+    *hasRole="'admin'"
+    class="link"
+    datoType="none"
+    routerLink="admin"
+    routerLinkActive="active-page"
+  >
+    <div>{{ t('management') }}</div>
+  </dato-button>
+</nav>
+
+<dato-menu #gettingStartedMenu="datoMenu" placement="bottom-center">
+  <ng-template datoMenuContent>
+    <button datoMenuItem *ngFor="let item of gettingStartedMenuItems" routerLink="getting-started" [fragment]="item">
+      <div>{{ t(item) }}</div>
+    </button>
+  </ng-template>
+</dato-menu>
+</ng-container>

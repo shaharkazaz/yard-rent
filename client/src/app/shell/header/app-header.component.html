@@ -19,142 +19,20 @@
       }}</dato-button>
     </ng-container>
     <ng-template #loggedIn>
-      <div class="profile mr-20 pointer"
-           datoPopoverPlacement="bottom"
-           datoPopoverClassName="user-menu"
-           [datoPopoverContent]="userMenu">
-        <dato-icon
-          height="40px"
-          width="40px"
-          class="primary-400-color"
-          datoIcon="user"
-        ></dato-icon>
-      </div>
-      <ng-template #userMenu>
-        <div class="d-flex-column">
-          <div class="dato-sub-headline mb-10">
-            {{ t('hello', { name: user.name }) }}
-          </div>
-          <div class="dato-simple-bold mb-10">
-            {{ t('you-have-rewards', { rewards:formatNumber(user.rewards) }) }}
-          </div>
-          <dato-link
-            datoPopoverClose
-            class="my-5"
-            datoType="secondary"
-            routerLink="user/my-products"
-            >{{ t('my-products') }}</dato-link
-          >
-          <dato-link
-            datoPopoverClose
-            class="my-5"
-            datoType="secondary"
-            routerLink="user/my-orders"
-            >{{ t('my-orders') }}</dato-link
-          >
-          <dato-link
-            datoPopoverClose
-            class="my-5"
-            datoType="secondary"
-            routerLink="user/profile"
-            >{{ t('my-profile') }}</dato-link
-          >
-          <dato-button
-            datoPopoverClose
-            class="mt-10"
-            datoType="secondary"
-            (click)="logout()"
-            >{{ t('logout') }}</dato-button
-          >
-        </div>
-      </ng-template>
-      <div
-        class="cart relative d-flex align-center-end pointer mr-20 no-select"
-        routerLink="shopping-cart"
-        *datoSubscribe="itemsCount$ as itemsCount"
-      >
-        <div
-          class="items-count absolute"
-          [ngClass]="{
+      <app-developer-options *hasRole="'admin'"></app-developer-options>
+      <app-user-menu></app-user-menu>
+      <div class="cart relative d-flex align-center-end pointer mr-20 no-select"
+        routerLink="shopping-cart" *datoSubscribe="itemsCount$ as itemsCount">
+        <div class="items-count absolute" [ngClass]="{
             'single-digit': itemsCount < 10,
             'triple-digit': itemsCount > 99
-          }"
-        >
+          }">
           {{ itemsCount > 99 ? '99+' : itemsCount }}
         </div>
-        <dato-icon
-          height="40px"
-          width="40px"
-          class="orange-400-color"
-          datoIcon="shopping-cart"
-        ></dato-icon>
+        <dato-icon height="40px" width="40px" class="orange-400-color" datoIcon="shopping-cart"></dato-icon>
       </div>
     </ng-template>
-    <dato-button class="mr-10" datoType="orange" (click)="addNewItem()"
-      >+ {{ t('post-something') }}</dato-button
-    >
+    <dato-button class="mr-10" datoType="orange" (click)="addNewItem()">+ {{ t('post-something') }}</dato-button>
   </div>
-  <nav class="lower d-flex align-center">
-    <dato-button
-      class="link"
-      datoType="none"
-      routerLink="home"
-      routerLinkActive="active-page"
-    >
-      <div>{{ t('home-page') }}</div>
-    </dato-button>
-    <dato-button #gettingStartedBtn class="link" datoType="none" [datoMenuTriggerFor]="gettingStartedMenu">
-      <div class="mr-3">{{ t('getting-started') }}</div>
-      <dato-icon width="10px" height="17px" datoIcon="arrow-down"></dato-icon>
-    </dato-button>
-    <dato-button
-      class="link"
-      datoType="none"
-      routerLink="marketplace"
-      routerLinkActive="active-page"
-    >
-      <div>{{ t('marketplace') }}</div>
-    </dato-button>
-    <dato-button
-      class="link"
-      datoType="none"
-      routerLink="about"
-      routerLinkActive="active-page"
-    >
-      <div>{{ t('about-us') }}</div>
-    </dato-button>
-    <dato-button
-      class="link"
-      datoType="none"
-      routerLink="contact"
-      routerLinkActive="active-page"
-    >
-      <div>{{ t('contact-us') }}</div>
-    </dato-button>
-    <dato-button
-      class="link"
-      datoType="none"
-      routerLink="genius"
-      routerLinkActive="active-page"
-    >
-      <div>{{ t('Genius') }}</div>
-    </dato-button>
-    <dato-button
-      *hasRole="'admin'"
-      class="link"
-      datoType="none"
-      routerLink="admin"
-      routerLinkActive="active-page"
-    >
-      <div>{{ t('management') }}</div>
-    </dato-button>
-  </nav>
-
-  <dato-menu #gettingStartedMenu="datoMenu" placement="bottom-center">
-    <ng-template datoMenuContent>
-      <button datoMenuItem *ngFor="let item of gettingStartedMenuItems" routerLink="getting-started" [fragment]="item">
-        <div>{{ t(item) }}</div>
-      </button>
-    </ng-template>
-  </dato-menu>
+  <app-nav></app-nav>
 </header>
