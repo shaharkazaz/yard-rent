@@ -5,7 +5,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import {
   DatoButtonModule,
   DatoDirectivesModule, DatoFileInputModule,
-  DatoIconModule, DatoInputModule
+  DatoIconModule, DatoInputModule, DatoInputNumberModule, DatoPipesModule, DatoSelectModule
 } from '@datorama/core';
 import { MarketplaceFiltersComponent } from './filters/marketplace-filters.component';
 import { MarketplaceItemCardComponent } from './item-card/marketplace-item-card.component';
@@ -57,6 +57,9 @@ const routes: Routes = [
     DatoFileInputModule,
     ReactiveFormsModule,
     DatoInputModule,
+    DatoInputNumberModule,
+    DatoSelectModule,
+    DatoPipesModule,
   ],
   declarations: [
     MarketplacePageComponent,

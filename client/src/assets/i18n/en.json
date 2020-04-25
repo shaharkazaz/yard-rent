@@ -215,7 +215,15 @@
     "status": "The items listed above were removed from your shopping cart.<br><br>If you wish to rent the remaining items re-click the \"Place order\" button."
   },
   "add-item": {
-    "upload-image": "Upload your product image"
+    "upload-image": "Upload your product image",
+    "product-name": "Product name:",
+    "product-description": "Product description:",
+    "category": "Category:",
+    "sub-category": "Sub-category:",
+    "rewards-amount": "Rewards amount:",
+    "clear-image": "Clear image",
+    "submit": "Submit",
+    "successfully-added": "Item has been successfully added to the marketplace"
   },
   "languages": {
     "en": "English",

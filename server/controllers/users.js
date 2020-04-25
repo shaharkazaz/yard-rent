@@ -153,7 +153,7 @@ module.exports = {
                 }
             }, {path: 'subCategory', select: {name: 1, _id: 0}}]
         }).then((product) => {
-            res.status(200).json(product)
+            res.status(200).json(product ? product.product : []);
         }).catch(error => {
             res.status(500).json(error)
         })

@@ -8,6 +8,9 @@
              [datoPopoverContent]="devMenu"
   ></dato-icon>
   <ng-template #devMenu>
-    <dato-link (click)="unrentAll()" datoType="secondary">Un-rent all items</dato-link>
+    <div class="d-flex-column">
+      <dato-link (click)="releaseRented()" datoType="secondary">Release rented items</dato-link>
+      <dato-link (click)="releaseDeleted()" datoType="secondary">Release deleted items</dato-link>
+    </div>
   </ng-template>
 </ng-container>

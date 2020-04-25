@@ -11,6 +11,8 @@ import {
   DatoLinkButtonModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
+import {UserService} from "./user.service";
+import {UserDataService} from "./user.data-service";
 
 const routes: Routes = [
   {
@@ -42,6 +44,7 @@ const routes: Routes = [
     MyProductsPageComponent,
     ProfilePageComponent
   ],
+  providers: [UserService, UserDataService],
   exports: [MyOrdersPageComponent]
 })
 export class UserModule {}
