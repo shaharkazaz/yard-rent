@@ -178,10 +178,17 @@ module.exports = {
             })
         })
     },
-    releaseProducts: (req, res) => {
-        const {products} = req.body;
-        const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
-        Products.updateMany({_id: {$in: objectIdProducts}}, {$set: {isRented: false}}).then(() => {
+    releaseRentedProducts: (req, res) => {
+        Products.updateMany({isRented: true}, {$set: {isRented: false}}).then(() => {
+            res.status(200).json();
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        });
+    },
+    releaseDeletedProducts: (req, res) => {
+        Products.updateMany({isDeleted: true}, {$set: {isDeleted: false}}).then(() => {
             res.status(200).json();
         }).catch(error => {
             res.status(500).json({
