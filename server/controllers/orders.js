@@ -49,16 +49,25 @@ module.exports = {
                     // Decrease the rewards from user amount
                     const rewardsAsNegative = (-1) * rewards;
                     User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsAsNegative}}).then(() => {
-                        console.log("Decreased rewards total amount");
+                        // Increase rewards to all products owners
+                        for(let product of products)
+                        {
+                            Product.findById(product).then(product => {
+                                let userIdToIncreaseRewards = product.user;
+                                let rewardsAmount = product.rewards;
+                                User.findOneAndUpdate({_id: userIdToIncreaseRewards},{$inc: {rewards: rewardsAmount}}).then(() => {
+                                }).catch(error =>{
+                                    return res.status(500).json({error})
+                                });
+                            }).catch(error => {
+                                return res.status(500).json({error})
+                            });
+                        }
                     }).catch(error => {
-                        return res.status(500).json({
-                            error
-                        })
+                        return res.status(500).json({error})
                     })
                 }).catch(error => {
-                    return res.status(500).json({
-                        error
-                    })
+                    return res.status(500).json({error})
                 });
                 res.status(200).json({orderId});
                 removeProductsFromDataSet(products);
