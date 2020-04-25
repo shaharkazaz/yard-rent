@@ -30,9 +30,11 @@ module.exports = {
             name
         });
         category.save().then(() => {
-            res.status(200).json({
-                message: 'new category was added'
-            })
+            Category.findById(category._id).populate('subCategories',{name:1,_id:1}).then((category) => {
+                res.status(200).json({
+                    category
+                })
+            });
         }).catch(error => {
             res.status(500).json({
                 error

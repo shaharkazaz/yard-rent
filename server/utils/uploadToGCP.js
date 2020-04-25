@@ -6,7 +6,7 @@ const base64Img = require('base64-img');
 
 const configGCP = require('../utils/configGCP');
 
-async function uploadImage(req){
+async function uploadImage(req,res){
     return new Promise(resolve => {
         const bucketName = 'yard-rent.appspot.com';
         const encodedImage = req.body.image;
@@ -34,6 +34,9 @@ async function uploadImage(req){
             fs.unlink(fullImagePath, (err) => {
                 if (err) {console.error(err)}
                 //file removed
+            });
+            return res.status(500).json({
+                message: 'Failed to upload image' + err
             });
         });
     });
