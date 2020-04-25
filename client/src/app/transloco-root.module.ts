@@ -8,7 +8,6 @@ import {
   TranslocoModule
 } from "@ngneat/transloco";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
@@ -34,7 +33,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
         availableLangs: ['en', 'es'],
         defaultLang: 'en',
         reRenderOnLangChange: true,
-        prodMode: environment.production
+        prodMode: true
       })
     },
   ]

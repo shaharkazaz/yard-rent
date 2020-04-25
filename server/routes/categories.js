@@ -7,7 +7,7 @@ const checkAuth = require('../middlewares/checkAuth');
 
 router.get('/', getAllCategories);
 router.post('/', checkAuth(role.Admin), addCategory);
-router.get('/:categoryId', getAllSubCategoriesOfCategoryId);
+router.get('/:categoryId/subCategories', getAllSubCategoriesOfCategoryId);
 router.delete('/:categoryId', checkAuth(role.Admin), deleteCategory);
 
 

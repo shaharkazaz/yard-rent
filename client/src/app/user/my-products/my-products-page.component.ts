@@ -7,10 +7,11 @@ import {
 import {
   DatoGridColumnDef,
   DatoGridColumnTypes,
-  DatoGridControllerComponent,
+  DatoGridControllerComponent, DatoGridFilterTypes,
   DatoGridOptions,
   RowAction
 } from '@datorama/core';
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-my-products',
@@ -23,20 +24,45 @@ export class MyProductsPageComponent implements OnInit {
   private gridController: DatoGridControllerComponent;
   gridOptions: DatoGridOptions = {
     gridName: 'my-products',
-    columnDefs: this.getColumns()
+    columnDefs: this.getColumns(),
+    rowHeight: 100
   };
   rowActions: RowAction[] = this.getRowActions();
-  constructor() {}
+  constructor(private userService: UserService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getProductsList().subscribe(data => {
+      this.gridController.gridService.setRows(data);
+    });
+  }
 
   private getColumns(): DatoGridColumnDef[] {
     return [
       {
-        headerName: 'products-table.id',
-        field: '_id',
-        type: DatoGridColumnTypes.Number
-      }
+        headerName: 'cart-table.name',
+        field: 'name',
+        type: DatoGridColumnTypes.String
+      },
+      {
+        headerName: 'cart-table.image',
+        field: 'image',
+        filter: DatoGridFilterTypes.None,
+        sortable: false,
+        cellRenderer: ({data}) => data.image ? `<img class="m-10" height="80" src="${data.image}" />` : ''
+      },
+      {
+        headerName: 'cart-table.description',
+        field: 'description',
+        type: DatoGridColumnTypes.String,
+        filter: DatoGridFilterTypes.None,
+        sortable: false,
+      },
+      {
+        headerName: 'cart-table.rewards',
+        field: 'rewards',
+        type: DatoGridColumnTypes.Number,
+        valueFormatter: ({data}) => data.rewards ? `${data.rewards} ⭐️` : ''
+      },
     ];
   }
 

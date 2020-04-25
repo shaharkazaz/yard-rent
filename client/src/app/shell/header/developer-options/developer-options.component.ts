@@ -16,7 +16,11 @@ export class DeveloperOptionsComponent implements OnInit {
   ngOnInit() {}
 
 
-  unrentAll() {
-    this.http.post(parseUrl(URI_CONSTANTS.development.releaseProducts), {}).subscribe();
+  releaseRented() {
+    this.http.post(parseUrl(URI_CONSTANTS.development.releaseRented), {}).subscribe();
+  }
+
+  releaseDeleted() {
+    this.http.post(parseUrl(URI_CONSTANTS.development.releaseRented), {}).subscribe();
   }
 }

@@ -10,6 +10,6 @@ router.post('/signup', signup);
 router.get('/getuser', getUserByToken);
 router.get('/search', getUserByNameEmailAddress);
 router.post('/delete', deleteUsers);
-router.get('/getMyProducts', checkAuth(), getAllProductsOfUser);
+router.get('/productsList', checkAuth(), getAllProductsOfUser);
 
 module.exports = router;

@@ -12,8 +12,14 @@ export const URI_CONSTANTS = {
     updateUser: 'users/updateuser/{id}'
   },
   products: {
-    getAllProducts: 'products',
-    getProduct: 'products/{id}'
+    getAll: 'products',
+    get: 'products/{id}',
+    add: 'products',
+    update: 'products:/{id}'
+  },
+  categories: {
+    getAll: 'categories',
+    getSubCategories: 'categories/{id}/subCategories'
   },
   orders: {
     placeOrder: 'orders'
@@ -21,7 +27,11 @@ export const URI_CONSTANTS = {
   twitter: {
     postTwitt: 'twitter'
   },
+  users: {
+    productsList: 'users/productsList'
+  },
   development: {
-    releaseProducts: 'products/_release'
+    releaseRented: 'products/_releaseRented',
+    releaseDeleted: 'products/_releaseDeleted'
   }
 };

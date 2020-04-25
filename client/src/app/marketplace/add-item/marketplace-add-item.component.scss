@@ -1,5 +1,29 @@
 :host {
-  dato-file-input {
+  .image-container {
     margin-left: 10%;
+    &.hide-default-content {
+      ::ng-deep footer, ::ng-deep header {
+        display: none !important;
+      }
+    }
+  }
+  .form-container {
+    width: 350px;
+    .form-input {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+      & > div {
+        margin-bottom: 10px;
+        text-decoration: underline;
+      }
+    }
+    textarea {
+      height: 100px;
+    }
+  }
+  .uploaded-image {
+    z-index: -1;
+    max-width: 250px;
   }
 }
