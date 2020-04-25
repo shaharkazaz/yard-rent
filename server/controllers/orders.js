@@ -90,23 +90,6 @@ module.exports = {
             })
         })
     },
-    getOrderByUserId: (req, res) => {
-        const userId = req.params.userId;
-        User.findById({userId}, {_id: 0}).populate('products', {
-            _id: 0,
-            name: 1,
-            rewards: 1,
-            image: 1
-        }).then((order) => {
-            res.status(200).json({
-                order
-            })
-        }).catch(error => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
     // TODO: remove when finish do we need the option to update an order?
     updateOrder: (req, res) => {
         const orderId = req.params.orderId;
