@@ -14,7 +14,6 @@ module.exports = {
     },
     addSubCategory: (req, res) => {
         const { name,parentCategoryId } = req.body;
-
         const subCategory = new SubCategory({
             _id: new mongoose.Types.ObjectId(),
             name,
@@ -22,8 +21,10 @@ module.exports = {
         });
         subCategory.save().then(() => {
             Category.findOneAndUpdate({_id: parentCategoryId}, {$push: {subCategories: subCategory._id}}).then(() => {
-                res.status(200).json({
-                    message: 'new sub category was added'
+                SubCategory.findById({_id:subCategory._id}).populate('parentCategoryId',{name:1,_id:1}).then((created)=>{
+                    res.status(200).json({
+                        created
+                    })
                 })
             }).catch(error => {
                 res.status(500).json({

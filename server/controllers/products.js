@@ -24,7 +24,7 @@ module.exports = {
     addProduct: async (req, res) => {
         const {name, category, subCategory, rewards, address, description} = req.body;
         const userId = await getUserId(req);
-        const imageUrl = await uploadToGCP(req);
+        const imageUrl = await uploadToGCP(req,res);
         const product = new Products({
             _id: new mongoose.Types.ObjectId(),
             name,
@@ -38,18 +38,28 @@ module.exports = {
         });
         product.save().then(() => {
             User.findByIdAndUpdate({_id: userId}, {$push: {product: product._id}}).then(() => {
-                res.status(200).json({
-                    message: 'new product was added'
+                Products.findById({_id: product._id}, {isDeleted: 0, isRented: 0}).populate('user', {
+                    name: 1,
+                    _id: 0
+                }).populate('category', {
+                    name: 1,
+                    _id: 0
+                }).populate('subCategory', {name: 1, _id: 0}).then((product) => {
+                    res.status(200).json(product);
+                    addProductInDataSet(product._id);
+                }).catch(error => {
+                    res.status(500).json({
+                        error
+                    })
                 });
-                addProductInDataSet(product._id);
             }).catch(error => {
                 return res.status(500).json({
-                    error
+                    message: "failed to update the user's products " + error
                 })
             })
         }).catch(error => {
             return res.status(500).json({
-                error
+                message: 'save product failed ' + error
             })
         });
     },
