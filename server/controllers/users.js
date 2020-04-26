@@ -195,5 +195,29 @@ module.exports = {
                 error
             })
         })
+    },
+    getAllOrdersOfUser: async (req, res) => {
+        const userId = await getUserId(req);
+        User.findById({_id:userId}).populate('orderId', {
+                _id: 1,
+                date: 1,
+                products: 1,
+                rewards: 1
+        }
+        ).then((orders) => {
+            let newOrders = [];
+            for (let idx in orders.orderId) newOrders.push({
+                'date': orders.orderId[idx].date,
+                'products': orders.orderId[idx].products.length,
+                '_id': orders.orderId[idx]._id,
+                'user': orders.orderId[idx].user,
+                'rewards': orders.orderId[idx].rewards
+            });
+            res.status(200).json(newOrders ? newOrders : [])
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        })
     }
 };

@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {GettingStartedPageComponent} from "./page/getting-started-page.component";
 import {TranslocoModule} from "@ngneat/transloco";
 import {CommonModule} from "@angular/common";
+import {DatoButtonModule} from "@datorama/core";
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), TranslocoModule, CommonModule],
+  imports: [RouterModule.forChild(routes), TranslocoModule, CommonModule, DatoButtonModule],
   declarations: [GettingStartedPageComponent]
 })
 export class GettingStartedModule {}

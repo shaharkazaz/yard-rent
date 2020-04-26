@@ -10,8 +10,8 @@ import {NavigationEnd, Router} from "@angular/router";
 })
 export class NavComponent implements OnInit {
   gettingStartedMenuItems = [
-    'how-to-post',
     'how-to-rent',
+    'how-to-post',
     'what-are-rewards'
   ];
   viewInit = new Subject<HTMLElement>();

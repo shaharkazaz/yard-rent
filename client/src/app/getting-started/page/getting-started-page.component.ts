@@ -1,6 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import {untilDestroyed} from "ngx-take-until-destroy";
+import {DatoDialog, DatoSnackbar, filterDialogSuccess} from "@datorama/core";
+import {AuthQuery} from "../../auth/state/auth.query";
+import {ShoppingCartQuery} from "../../shopping-cart/state/shopping-cart.query";
+import {LoginComponent} from "../../auth/login/login.component";
 
 @Component({
   selector: 'app-getting-started',
@@ -9,9 +13,62 @@ import {untilDestroyed} from "ngx-take-until-destroy";
 })
 export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
 
-  sections = ['how-to-post', 'how-to-rent', 'what-are-rewards'];
+  itemsCount$ = this.shoppingCartQuery.selectCount();
+  isLoggedIn$ = this.authQuery.isLoggedIn$;
+  private readonly generalPath = '../../../assets/images/getting-started/'
 
-  constructor(private router: Router, private host: ElementRef) { }
+  sections = [
+      {
+        name:'how-to-post',
+        description: 'how-to-post-description'
+      },
+      {
+        name:'how-to-rent',
+        description: 'how-to-rent-description'
+      },
+      {
+        name:'what-are-rewards',
+        description: 'what-are-rewards-description'
+      }
+    ];
+
+  getSectionImage(name){
+    return this.generalPath + name + '.jpg';
+  }
+
+  getIconImage(name){
+    return this.generalPath + name + '.png';
+  }
+
+  constructor(
+    private router: Router,
+    private host: ElementRef,
+    private dialog: DatoDialog,
+    private authQuery: AuthQuery,
+    private snackbar: DatoSnackbar,
+    private shoppingCartQuery: ShoppingCartQuery
+  ) { }
+
+  addNewItem() {
+    if (this.authQuery.isLoggedIn()) {
+      this.navigateToAddItem();
+    } else {
+      this.openLoginDialog('login')
+        .afterClosed()
+        .pipe(filterDialogSuccess())
+        .subscribe(() => this.navigateToAddItem());
+      this.snackbar.info('login-to-continue', { duration: 1500 });
+    }
+  }
+  private navigateToAddItem() {
+    this.router.navigate(['marketplace/add-item']);
+  }
+  openLoginDialog(view: 'login' | 'sign-up') {
+    return this.dialog.open(LoginComponent, {
+      data: { view },
+      enableClose: true
+    });
+  }
 
   ngOnDestroy(): void {}
 
