@@ -7,8 +7,12 @@
 <marketplace-filters></marketplace-filters>
 <!-- TODO make the items container overflow-->
 <div class="d-flex align-space-around-center d-flex-wrap mt-20 overflow-auto">
-  <marketplace-item-card
-    *ngFor="let item of items | async"
-    [item]="item"
-  ></marketplace-item-card>
+  <ng-container *ngIf="!loading; else loaders">
+    <marketplace-item-card *ngFor="let item of items" [item]="item"></marketplace-item-card>
+  </ng-container>
+  <ng-template #loaders>
+    <item-card-loader></item-card-loader>
+    <item-card-loader></item-card-loader>
+    <item-card-loader></item-card-loader>
+  </ng-template>
 </div>

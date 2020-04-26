@@ -1,27 +1,27 @@
 <ng-container *transloco="let t">
-<div class="relative d-flex align-center height-100" *ngIf="(product$ | async) as product">
-  <div class="height-100 d-flex-column align-start-center">
-    <div class="title mb-10 dato-headline">{{product.name}}</div>
-    <div>{{product.description}}</div>
-    <div class="d-flex-grow"></div>
-    <div class="d-flex align-center">
-      <dato-button (click)="addItemToCart()"
-      >+ {{ t('add-to-cart')}}</dato-button
-      >
+  <ng-container *ngIf="(product$ | async) as product">
+    <div class="height-100 d-flex-column align-start-center">
+      <div class="title mb-10 dato-headline">{{product.name}}</div>
+      <div>{{product.description}}</div>
+      <div class="d-flex-grow"></div>
+      <div class="d-flex align-center">
+        <dato-button (click)="addItemToCart()"
+        >+ {{ t('add-to-cart')}}</dato-button
+        >
+      </div>
     </div>
-  </div>
-  <aside class="height-100 side-container d-flex-column align-center">
-    <img class="height-60 mb-20" [src]="product.image">
-    <div class="width-100 height-30">
-      <bing-map></bing-map>
+    <aside class="height-100 side-container d-flex-column align-center">
+      <img class="height-60 mb-20" [src]="product.image">
+      <div class="width-100 height-30">
+        <bing-map></bing-map>
+      </div>
+    </aside>
+    <div
+      datoTooltip="back-to-marketplace"
+      datoTooltipPosition="bottom"
+      class="back-wing d-flex align-center primary-100-background-color accent-300-background-color:h primary-300-color primary-0-color:h absolute pointer"
+      routerLink="../">
+      <dato-icon datoSize="lg" datoIcon="arrow-left"></dato-icon>
     </div>
-  </aside>
-  <div
-    datoTooltip="back-to-marketplace"
-    datoTooltipPosition="bottom"
-    class="back-wing d-flex align-center primary-100-background-color accent-300-background-color:h primary-300-color primary-0-color:h absolute pointer"
-    routerLink="../">
-   <dato-icon datoSize="lg" datoIcon="arrow-left"></dato-icon>
-  </div>
-</div>
+  </ng-container>
 </ng-container>

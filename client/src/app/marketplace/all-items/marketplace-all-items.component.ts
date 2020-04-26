@@ -1,20 +1,24 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MarketplaceService } from '../state/marketplace.service';
-import { Observable } from 'rxjs';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {MarketplaceService} from '../state/marketplace.service';
 import {Product} from "../marketplace.types";
 
 @Component({
   selector: 'app-marketplace-all-items',
   templateUrl: './marketplace-all-items.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./marketplace-all-items.component.scss']
+  styleUrls: ['./marketplace-all-items.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketplaceAllItemsComponent implements OnInit {
-  items: Observable<Product[]>;
+  items: Product[];
+  loading = true;
 
-  constructor(private marketplaceService: MarketplaceService) {}
+  constructor(private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.items = this.marketplaceService.getAllProducts();
+    this.marketplaceService.getAllProducts().subscribe((products) => {
+      this.loading = false;
+      this.items = products;
+      this.cdr.detectChanges();
+    });
   }
 }

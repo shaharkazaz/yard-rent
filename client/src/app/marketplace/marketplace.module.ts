@@ -17,6 +17,8 @@ import { MarketplaceAllItemsComponent } from './all-items/marketplace-all-items.
 import {BingMapModule} from "../shared/components/bing-map/bing-map.module";
 import { MarketplaceAddItemComponent } from './add-item/marketplace-add-item.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {ContentLoaderModule} from "@ngneat/content-loader";
+import { ItemCardLoaderComponent } from './item-card/item-card-loader/item-card-loader.component';
 
 const routes: Routes = [
   {
@@ -60,6 +62,7 @@ const routes: Routes = [
     DatoInputNumberModule,
     DatoSelectModule,
     DatoPipesModule,
+    ContentLoaderModule,
   ],
   declarations: [
     MarketplacePageComponent,
@@ -67,7 +70,8 @@ const routes: Routes = [
     MarketplaceItemCardComponent,
     MarketplaceItemPageComponent,
     MarketplaceAllItemsComponent,
-    MarketplaceAddItemComponent
+    MarketplaceAddItemComponent,
+    ItemCardLoaderComponent
   ],
   exports: [MarketplacePageComponent],
   providers: [MarketplaceDataService, MarketplaceService]
