@@ -118,16 +118,7 @@ module.exports = {
     //User.findByIdAndUpdate(product.user, {$pull: {product: productId}}).then(() => {
     //TODO: return a populated product and decide on the filter
     getProducts: (req, res) => {
-        let {text, minRewards, maxRewards, category, subCategory} = req.body;
-        if (typeof text === 'undefined') {
-            text = "";
-        }
-        if (typeof minRewards === 'undefined') {
-            minRewards = 0
-        }
-        if (typeof maxRewards === 'undefined') {
-            maxRewards = Number.MAX_SAFE_INTEGER
-        }
+        let {text = "", minRewards = 1, maxRewards = Number.MAX_SAFE_INTEGER, category, subCategory} = req.body;
         const pipeline = [
             {
                 $lookup: {
@@ -185,9 +176,7 @@ module.exports = {
         }
 
         Products.aggregate(pipeline).then(products => {
-            res.status(200).json({
-                products
-            })
+            res.status(200).json(products)
         }).catch(error => {
             return res.status(500).json({
                 error
