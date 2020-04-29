@@ -205,5 +205,49 @@ module.exports = {
                 error
             })
         });
+    },
+    addProductDataSet: async (req, res) => {
+        const {name, category, subCategory, rewards, description, imageUrl} = req.body;
+        const userId = await getUserId(req);
+        User.findById(userId).then((user)=>{
+            const address = user.address;
+            const product = new Products({
+                _id: new mongoose.Types.ObjectId(),
+                name,
+                user: userId,
+                category,
+                subCategory,
+                rewards,
+                address,
+                description,
+                image: imageUrl
+            });
+            product.save().then(() => {
+                User.findByIdAndUpdate({_id: userId}, {$push: {product: product._id}}).then(() => {
+                    Products.findById({_id: product._id}, {isDeleted: 0, isRented: 0}).populate('user', {
+                        name: 1,
+                        _id: 0
+                    }).populate('category', {
+                        name: 1,
+                        _id: 0
+                    }).populate('subCategory', {name: 1, _id: 0}).then((product) => {
+                        res.status(200).json(product);
+                        addProductInDataSet(product._id);
+                    }).catch(error => {
+                        res.status(500).json({
+                            error
+                        })
+                    });
+                }).catch(error => {
+                    return res.status(500).json({
+                        message: "failed to update the user's products " + error
+                    })
+                })
+            }).catch(error => {
+                return res.status(500).json({
+                    message: 'save product failed ' + error
+                })
+            });
+        })
     }
 };
