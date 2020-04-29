@@ -1,7 +1,7 @@
 interface ProductBase {
   name: string,
   category: { name: string },
-  subCategory: { subCategoryName: string },
+  subCategory: { name: string },
   rewards: number,
   address: string,
   deposit: number,

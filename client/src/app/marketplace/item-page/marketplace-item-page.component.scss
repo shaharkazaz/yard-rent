@@ -1,18 +1,28 @@
 :host {
   display: flex;
-  flex-grow: 1;
-  justify-content: center;
   height: 100%;
   align-items: center;
   position: relative;
+  .d-flex-basis-40 {
+    flex-basis: 40%;
+  }
+  .width-70 {
+    width: 70%;
+  }
+  aside {
+    flex-basis: 20%;
+  }
+  .image {
+    height: 60%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
   .title {
     border-bottom: 1px solid #ccced3;
   }
   .side-container {
     margin-left: 10%;
-  }
-  .height-60 {
-    height: 60%;
   }
   .height-30 {
     height: 30%;
@@ -27,5 +37,9 @@
     ::ng-deep dato-icon {
       transition: color .3s;
     }
+  }
+  .min-height-70 {
+    height: 70%;
+    min-height: 70%;
   }
 }

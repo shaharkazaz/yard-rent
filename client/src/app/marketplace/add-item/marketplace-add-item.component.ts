@@ -9,7 +9,7 @@ import {untilDestroyed} from "ngx-take-until-destroy";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-add-item',
+  selector: 'marketplace-add-item',
   templateUrl: './marketplace-add-item.component.html',
   styleUrls: ['./marketplace-add-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

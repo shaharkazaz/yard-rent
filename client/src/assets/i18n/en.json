@@ -145,7 +145,8 @@
   "what-are-rewards-description-bullet1": "Share your home products for letting others rent them which will grant you rewards",
   "what-are-rewards-description-bullet2": "Leave your feedback so others could enjoy",
   "you-have-rewards": "You have {{rewards}} rewards 🌟",
-  "what-would-you-like-to-rent": "what would you like to rent?",
+  "home-search.what-would-you-like-to-rent": "what would you like to rent?",
+  "home-search.help": "Just type what you need and will search our marketplace for it!",
   "create-post-on-yardrent": "Create a post on YardRent",
   "hello": "Hello, {{name}}",
   "logout": "Logout",
@@ -197,7 +198,9 @@
   "rewards-needed": "Rewards needed: {{rewards}} 🌟",
   "add-to-cart": "Add to cart",
   "view-item": "View item",
+  "item-page.suggestions": "You might also like",
   "item-added-to-cart": "Item added to cart",
+  "item-removed-from-cart": "Item removed from cart",
   "session-expired": "Your session has expired, please re-login",
   "something-went-wrong": "Something went wrong, please contact the support team",
   "back-to-marketplace": "Back to marketplace",
@@ -242,6 +245,16 @@
     "clear-image": "Clear image",
     "submit": "Submit",
     "successfully-added": "Item has been successfully added to the marketplace"
+  },
+  "marketplace-filters": {
+    "free-text": "Free text:",
+    "free-text-placeholder": "eg. basketball",
+    "category": "Category:",
+    "sub-category": "Sub-category:",
+    "rewards-range-min": "Min rewards:",
+    "rewards-range-max": "Max rewards:",
+    "clear": "Clear filters",
+    "apply": "Apply filters"
   },
   "languages": {
     "en": "English",

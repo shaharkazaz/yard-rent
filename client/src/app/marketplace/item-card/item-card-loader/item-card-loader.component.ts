@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {ContentLoaderComponent} from "@ngneat/content-loader";
 
 @Component({
@@ -7,4 +7,6 @@ import {ContentLoaderComponent} from "@ngneat/content-loader";
   styleUrls: ['./item-card-loader.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemCardLoaderComponent extends ContentLoaderComponent {}
+export class ItemCardLoaderComponent extends ContentLoaderComponent {
+  @Input() loaderSize: 'lg' | 'sm' = 'lg';
+}

@@ -1,3 +1,40 @@
-<div class="d-flex align-center">
-  Here will be filters
-</div>
+<ng-container *transloco="let c; read: 'categories'">
+  <div class="container dato-simple d-flex align-center-end" [formGroup]="filterForm" *transloco="let t: read: 'marketplace-filters'">
+    <div class="d-flex-column">
+      {{t('free-text')}}
+      <dato-input placeholder="marketplace-filters.free-text-placeholder" formControlName="text"></dato-input>
+    </div>
+    <ng-container
+      *ngTemplateOutlet="selection; context: {title: 'category', control: 'category', data: categories}"></ng-container>
+    <ng-container
+      *ngTemplateOutlet="selection; context: {title: 'sub-category', control: 'subCategory', data: subCategories}"></ng-container>
+    <div class="d-flex-column">
+      {{t('rewards-range-min')}}
+      <dato-input-number min="1">
+        <input style="box-sizing: border-box"  type="number" formControlName="minRewards" datoInputNumber/>
+      </dato-input-number>
+    </div>
+    <div class="d-flex-column">
+      {{t('rewards-range-max')}}
+      <dato-input-number min="1">
+        <input style="box-sizing: border-box"  type="number" formControlName="maxRewards" datoInputNumber/>
+      </dato-input-number>
+    </div>
+    <div class="d-flex">
+      <dato-button class="mr-10" datoType="secondary" (click)="clear()">{{t('clear')}}</dato-button>
+      <dato-button (click)="apply()">{{t('apply')}}</dato-button>
+    </div>
+    <ng-template #selection let-title="title" let-control="control" let-data="data">
+      <div class="d-flex-column">
+        {{t(title)}}
+      <dato-select style="width: 200px" [formControlName]="control" idKey="_id" labelKey="name" [dataSet]="data" #select>
+        <dato-option *ngFor="let option of select.data | searchResultsSort: select.searchTerm: {labelKey: 'name'}"
+                     [option]="option">
+          <span [innerHTML]="c(option.name) | datoHighlight: select.searchTerm"></span>
+        </dato-option>
+      </dato-select>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>
+

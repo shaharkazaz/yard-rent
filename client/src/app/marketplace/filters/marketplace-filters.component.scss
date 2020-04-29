@@ -3,4 +3,7 @@
   width: 100%;
   padding: 20px 0;
   border-bottom: 3px solid #ccced3;
+  .container > div {
+    margin: 0 10px;
+  }
 }
