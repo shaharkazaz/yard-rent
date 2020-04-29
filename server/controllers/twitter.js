@@ -1,4 +1,6 @@
 const Twitter = require('twitter');
+const getUserId = require('../utils/getUserId');
+const User = require('../model/user');
 const config = require('../utils/config');
 
 const Twitt = new Twitter(config);
@@ -45,13 +47,25 @@ module.exports = {
             }
         })
     },
-    postTwitt: (req, res) => {
-        const { message } = req.body;
+    postTwitt: async (req, res) => {
+        const rewardsPerTwitt = 100;
+        const userId = await getUserId(req);
+        const {message} = req.body;
         const params = {
             status: message
         }
-        Twitt.post('statuses/update', params, function(err, tweet, response) {
+
+        /*        Twitt.post('statuses/update', params).then(()=>{
+
+                }).catch(error => {
+                    return res.status(500).json({error})
+                });*/
+        Twitt.post('statuses/update', params, function (err, tweet, response) {
             if (!err) {
+                User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsPerTwitt}}).then(() => {
+                }).catch(error => {
+                    return res.status(500).json({error})
+                });
                 res.status(200).json({
                     message: 'Posted Successfully'
                 })
