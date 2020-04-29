@@ -3,28 +3,28 @@ const Products = require('../model/product');
 const User = require('../model/user');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
-const {addProductInDataSet,removeProductsFromDataSet,updateProductInDataSet} = require('../utils/updateDataSet');
+const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet} = require('../utils/updateDataSet');
 
 module.exports = {
-    getAllProducts: (req, res) => {
-        Products.find({isDeleted: false, isRented: false}, {
-            isDeleted: 0,
-            isRented: 0
-        }).populate('user', {name: 1, _id: 0}).populate('category', {
-            name: 1,
-            _id: 0
-        }).populate('subCategory', {name: 1, _id: 0}).then((products) => {
-            res.status(200).json(products);
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
+    // getAllProducts: (req, res) => {
+    //     Products.find({isDeleted: false, isRented: false}, {
+    //         isDeleted: 0,
+    //         isRented: 0
+    //     }).populate('user', {name: 1, _id: 0}).populate('category', {
+    //         name: 1,
+    //         _id: 0
+    //     }).populate('subCategory', {name: 1, _id: 0}).then((products) => {
+    //         res.status(200).json(products);
+    //     }).catch((error) => {
+    //         res.status(500).json({
+    //             error
+    //         })
+    //     })
+    // },
     addProduct: async (req, res) => {
         const {name, category, subCategory, rewards, address, description} = req.body;
         const userId = await getUserId(req);
-        const imageUrl = await uploadToGCP(req,res);
+        const imageUrl = await uploadToGCP(req, res);
         const product = new Products({
             _id: new mongoose.Types.ObjectId(),
             name,
@@ -65,7 +65,7 @@ module.exports = {
     },
     getProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.findById({_id: productId, isDeleted: false},{isDeleted:0}).populate('user', {
+        Products.findById({_id: productId, isDeleted: false}, {isDeleted: 0}).populate('user', {
             name: 1,
             _id: 0
         }).populate('category', {
@@ -117,13 +117,16 @@ module.exports = {
     },
     //User.findByIdAndUpdate(product.user, {$pull: {product: productId}}).then(() => {
     //TODO: return a populated product and decide on the filter
-    getProductByQuery: (req, res) => {
-        let {name, priceRange, category, subCategory} = req.body;
-        if (typeof name === 'undefined') {
-            name = "";
+    getProducts: (req, res) => {
+        let {text, minRewards, maxRewards, category, subCategory} = req.body;
+        if (typeof text === 'undefined') {
+            text = "";
         }
-        if (typeof priceRange === 'undefined') {
-            priceRange = {min: 0, max: Number.MAX_SAFE_INTEGER}
+        if (typeof minRewards === 'undefined') {
+            minRewards = 0
+        }
+        if (typeof maxRewards === 'undefined') {
+            maxRewards = Number.MAX_SAFE_INTEGER
         }
         const pipeline = [
             {
@@ -154,8 +157,11 @@ module.exports = {
                 }
             },
             {$unwind: "$user"},
-            {$match: {name: {"$regex": name, "$options": "i"}}},
-            {$match: {rewards: {$gt: priceRange.min, $lt: priceRange.max}}},
+            {$match: {$or: [{name: {"$regex": text, "$options": "i"}},
+                        {description: {"$regex": text, "$options": "i"}},
+                        {'category.name': {"$regex": text, "$options": "i"}},
+                        {'subCategory.name': {"$regex": text, "$options": "i"}}]}},
+            {$match: {rewards: {$gt: minRewards, $lt: maxRewards}}},
             {$match: {isDeleted: false}},
             {$match: {isRented: false}},
             {
@@ -207,9 +213,9 @@ module.exports = {
         });
     },
     addProductDataSet: async (req, res) => {
-        const {name, category, subCategory, rewards, description, imageUrl} = req.body;
+        const {name, category, subCategory, rewards, description, image} = req.body;
         const userId = await getUserId(req);
-        User.findById(userId).then((user)=>{
+        User.findById(userId).then((user) => {
             const address = user.address;
             const product = new Products({
                 _id: new mongoose.Types.ObjectId(),
@@ -220,7 +226,7 @@ module.exports = {
                 rewards,
                 address,
                 description,
-                image: imageUrl
+                image
             });
             product.save().then(() => {
                 User.findByIdAndUpdate({_id: userId}, {$push: {product: product._id}}).then(() => {
