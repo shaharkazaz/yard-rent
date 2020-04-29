@@ -54,12 +54,6 @@ module.exports = {
         const params = {
             status: message
         }
-
-        /*        Twitt.post('statuses/update', params).then(()=>{
-
-                }).catch(error => {
-                    return res.status(500).json({error})
-                });*/
         Twitt.post('statuses/update', params, function (err, tweet, response) {
             if (!err) {
                 User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsPerTwitt}}).then(() => {
