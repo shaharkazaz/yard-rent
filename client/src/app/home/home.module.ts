@@ -5,7 +5,7 @@ import {
     DatoCarouselModule, DatoDirectivesModule,
     DatoIconButtonModule,
     DatoIconModule,
-    DatoInputModule
+    DatoInputModule, DatoLinkButtonModule
 } from '@datorama/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         DatoInputModule,
         DatoIconModule,
         DatoIconButtonModule,
-        DatoDirectivesModule
+        DatoDirectivesModule,
+        DatoLinkButtonModule
     ]
 })
 export class HomeModule {}

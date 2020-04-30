@@ -1,4 +1,4 @@
-<ng-container *transloco="let t">
+<ng-container *transloco="let t" >
   <div class="carousel-container relative">
     <div class="d-flex-column quick-search absolute">
       <div class="title d-flex-column align-center">
@@ -36,14 +36,35 @@
     </dato-carousel>
   </div>
   <div class="content">
-    <div class="d-flex-column"></div>
-    <h1>Home!</h1>
-    <h1>Home!</h1>
-    <h1>Home!</h1>
-    <h1>Home!</h1>
-    <h1>Home!</h1>
-    <h1>Home!</h1>
-    <h1>Home!</h1>
+    <div class="d-flex align-center list-inline">
+      <ul>
+        <li>
+          <img [src]="getIconImage('homepage-recycle')" align="middle">
+          <h2>{{t('homepage-recycle')}}</h2>
+          <p>
+            {{t('homepage-recycle-description')}}
+          </p>
+          <video width="280" height="200" controls>
+            <source src="../../../assets/videos/homepage/global-warming.mp4" type="video/mp4">
+          </video>
+        </li>
+        <li>
+          <img [src]="getIconImage('homepage-share')">
+          <h2>{{t('homepage-share')}}</h2>
+          <p>
+            {{t('homepage-share-description')}}
+          </p>
+        </li>
+        <li>
+          <img [src]="getIconImage('homepage-rewards')">
+          <h2>{{t('homepage-rewards')}}</h2>
+          <p>
+            {{t('homepage-rewards-description')}}
+          </p>
+          <dato-link routerLink="/getting-started" fragment="what-are-rewards">{{t('learn-rewards')}}</dato-link>
+        </li>
+      </ul>
+    </div>
     <h1>Home!</h1>
     <h1>Home!</h1>
   </div>

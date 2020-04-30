@@ -17,6 +17,25 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit, OnDestroy {
+
+  private readonly generalPath = '../../../assets/images/homepage/'
+
+  sections = [
+    {
+      name:'homepage-recycle',
+      description: 'homepage-recycle-description'
+    },
+    {
+      name:'homepage-share',
+      description: 'homepage-share-description'
+    },
+    {
+      name:'homepage-rewards',
+      description: 'homepage-rewards-description'
+    }
+  ];
+
+
   carouselConfig: CarouselConfig = {
     loop: true,
     autoRun: true,
@@ -40,4 +59,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+
+  getIconImage(name){
+    return this.generalPath + name + '.png';
+  }
 }
