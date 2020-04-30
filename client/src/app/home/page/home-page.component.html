@@ -49,13 +49,6 @@
           </video>
         </li>
         <li>
-          <img [src]="getIconImage('homepage-share')">
-          <h2>{{t('homepage-share')}}</h2>
-          <p>
-            {{t('homepage-share-description')}}
-          </p>
-        </li>
-        <li>
           <img [src]="getIconImage('homepage-rewards')">
           <h2>{{t('homepage-rewards')}}</h2>
           <p>
@@ -63,9 +56,14 @@
           </p>
           <dato-link routerLink="/getting-started" fragment="what-are-rewards">{{t('learn-rewards')}}</dato-link>
         </li>
+        <li>
+          <img [src]="getIconImage('homepage-share')">
+          <h2>{{t('homepage-share')}}</h2>
+          <p>
+            {{t('homepage-share-description')}}
+          </p>
+        </li>
       </ul>
     </div>
-    <h1>Home!</h1>
-    <h1>Home!</h1>
   </div>
 </ng-container>
