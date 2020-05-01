@@ -4,7 +4,7 @@ const Recommendation = require('../model/recommendation');
 const formatData = require('../utils/contentProduct');
 
 const ContentBasedRecommender = require('content-based-recommender');
-const RecommendationProductsNumber = 2;
+const RecommendationProductsNumber = 3;
 const recommender = new ContentBasedRecommender({
     minScore: 0,
     maxSimilarDocuments: 100,
