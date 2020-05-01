@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(6)]],
     retypePassword: ['', Validators.minLength(6)]
   });
-
   constructor(
     private ref: DatoDialogRef,
     private fb: FormBuilder,
@@ -58,7 +57,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private login() {
+  private login()
+  {
     const { email, password } = this.form.value;
     this.authService.login({ email, password }).subscribe(
       ({ success }) => (success ? this.ref.close() : this.hideLoader()),
@@ -66,7 +66,8 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  private signup() {
+  private signup()
+  {
     this.authService
       .signup(this.form.value)
       .pipe(filter(({ success }) => success))
