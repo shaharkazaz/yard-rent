@@ -51,7 +51,8 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.form.valid) {
+    if (this.form.valid)
+    {
       this.loading = true;
       this.isLogin() ? this.login() : this.signup();
     }
