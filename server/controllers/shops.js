@@ -5,9 +5,7 @@ const getCoordinatesByAddress = require('../utils/gpsApi');
 module.exports = {
     getAllShops: (req, res) => {
         Shop.find({}).then((shops) => {
-            res.status(200).json({
-                shops
-            })
+            res.status(200).json(shops)
         }).catch((error) => {
             res.status(500).json({
                 error
