@@ -11,15 +11,16 @@ async function getCoordinatesByAddress(req){
         const country = req.body.country;
 
         // Prepare url string
-        const fullAddressSplitted = (address + city + country).split(" ")
-        let addressToSubmit = ""
+        const fullAddressSplitted = (address + " " + city + " " + country).split(" ");
+        let addressToSubmit = "";
         fullAddressSplitted.forEach((i) => {
+            addressToSubmit += " ";
             addressToSubmit += i;
-        })
+        });
 
-        const baseUrl = "http://dev.virtualearth.net/REST/v1/Locations/"
-        const apiKey = configBing.apiKey.toString()
-        const s = baseUrl + addressToSubmit + apiKey
+        const baseUrl = "http://dev.virtualearth.net/REST/v1/Locations/";
+        const apiKey = configBing.apiKey.toString();
+        const s = baseUrl + addressToSubmit + apiKey;
         http.get(s, res => {
             res.setEncoding("utf8");
             let body = "";
@@ -29,9 +30,9 @@ async function getCoordinatesByAddress(req){
             });
             res.on("end", () => {
                 body = JSON.parse(body);
-                const lat = body.resourceSets[0].resources[0].geocodePoints[0].coordinates[0]
-                const long = body.resourceSets[0].resources[0].geocodePoints[0].coordinates[1]
-                resolve(lat + "," + long);
+                const lat = body.resourceSets[0].resources[0].geocodePoints[0].coordinates[0];
+                const long = body.resourceSets[0].resources[0].geocodePoints[0].coordinates[1];
+                resolve({"lat": lat, "long": long});
             });
         });
     });

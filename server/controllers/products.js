@@ -4,7 +4,6 @@ const User = require('../model/user');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet,clearDataSet} = require('../utils/updateDataSet');
-const formatData = require('../utils/contentProduct');
 
 module.exports = {
     addProduct: async (req, res) => {

@@ -7,7 +7,7 @@ const checkAuth = require('../middlewares/checkAuth');
 router.get('/', getProducts);
 router.get('/:productId', getProduct);
 router.post('/', checkAuth(), addProduct);
-router.patch('/:productId', checkAuth(), updateProduct);
+router.patch('/update/:productId', checkAuth(), updateProduct);
 router.post('/delete', checkAuth(), deleteProduct);
 router.post('/returnProducts', checkAuth(), releaseRentedProductsByUSer);
 // TODO remove
