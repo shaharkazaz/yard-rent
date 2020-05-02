@@ -6,11 +6,13 @@ import {
     DatoDirectivesModule,
     DatoIconModule,
     DatoLinkButtonModule,
-    DatoMenuModule, DatoPopoverModule
+    DatoMenuModule,
+    DatoPopoverModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import { CommonModule } from '@angular/common';
 import { AppFooterComponent } from './footer/app-footer.component';
+import { PollutionIndicatorComponent } from './footer/pollution-indicator/pollution-indicator.component';
 import { RouterModule } from '@angular/router';
 import { AuthModule } from '../auth/auth.module';
 import { DeveloperOptionsComponent } from './header/developer-options/developer-options.component';
@@ -32,7 +34,7 @@ import { LanguageSelectorComponent } from './header/language-selector/language-s
         AuthModule,
         DatoPopoverModule
     ],
-  declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent, LanguageSelectorComponent],
+  declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent, LanguageSelectorComponent,PollutionIndicatorComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
 })
 export class ShellModule {}

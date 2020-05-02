@@ -1,0 +1,19 @@
+@keyframes pollution-indicator-size {
+  from {
+    r: 5%;
+  }
+  to {
+    r: 25%;
+  }
+}
+
+.circle-pollution-indicator {
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-name: pollution-indicator-size;
+}
+
+.svg-pollution-indicator {
+  width: 100px;
+  height: 100px;
+}

@@ -36,5 +36,10 @@ export const URI_CONSTANTS = {
   },
   shops: {
     getAll: 'shops'
+    getAllProducts: 'products',
+    getProduct: 'products/{productId}'
+  },
+  pollutionIndicator: {
+    getAirPollution: 'airPollution'
   }
 };
