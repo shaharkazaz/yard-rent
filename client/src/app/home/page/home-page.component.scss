@@ -44,22 +44,7 @@
       align: middle
     }
   }
-
-  @keyframes fadeIn {
-    0% {
-      opacity:0;
-    }
-    100% {
-      opacity:1;
-    }
-  }
-
-  @keyframes slideUp {
-    0% {
-      top: 50px;
-    }
-    100% {
-      top: 0;
-    }
+  video {
+    outline: none;
   }
 }
