@@ -14,10 +14,10 @@ import { MarketplaceService } from './state/marketplace.service';
 import { CommonModule } from '@angular/common';
 import { MarketplaceItemPageComponent } from './item-page/marketplace-item-page.component';
 import { MarketplaceAllItemsComponent } from './all-items/marketplace-all-items.component';
-import {BingMapModule} from "../shared/components/bing-map/bing-map.module";
+import {BingMapModule} from '../shared/components/bing-map/bing-map.module';
 import { MarketplaceAddItemComponent } from './add-item/marketplace-add-item.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {ContentLoaderModule} from "@ngneat/content-loader";
+import {ReactiveFormsModule} from '@angular/forms';
+import {ContentLoaderModule} from '@ngneat/content-loader';
 import { ItemCardLoaderComponent } from './item-card/item-card-loader/item-card-loader.component';
 import { ItemCartTogglerComponent } from './item-cart-toggler/item-cart-toggler.component';
 

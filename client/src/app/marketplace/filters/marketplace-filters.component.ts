@@ -37,6 +37,7 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
     this.filterForm.get('category').valueChanges.pipe(untilDestroyed(this)).subscribe(({name}) => {
       this.subCategories = this.subCategoriesMap[name];
       this.filterForm.get('subCategory').enable();
+      this.filterForm.get('subCategory').reset();
       this.cdr.detectChanges();
     });
     this.marketplaceService.getAllCategories().subscribe((categories) => {
