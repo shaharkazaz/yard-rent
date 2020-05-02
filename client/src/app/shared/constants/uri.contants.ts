@@ -35,7 +35,7 @@ export const URI_CONSTANTS = {
     releaseDeleted: 'products/_releaseDeleted'
   },
   shops: {
-    getAll: 'shops'
+    getAll: 'shops',
     getAllProducts: 'products',
     getProduct: 'products/{productId}'
   },
