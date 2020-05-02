@@ -275,6 +275,11 @@
       "content-plural": "You are about to remove these items from the marketplace, are you sure?"
     }
   },
+  "form-validation": {
+    "required": "This field is required",
+    "valid-email": "Please enter a valid email",
+    "min-length": "Min length is {{requiredLength}} characters"
+  },
   "yes": "Yes",
   "no": "No",
   "languages": {

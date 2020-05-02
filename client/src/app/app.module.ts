@@ -7,7 +7,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {HomeModule} from './home/home.module';
 import {
   APP_TRANSLATE,
-  DATO_CORE_LOGGER,
+  DATO_CORE_LOGGER, DATO_FORM_ERRORS,
   DATO_GRID_STORAGE_API,
   DatoCoreModule,
   EventModifiersPlugin
@@ -20,6 +20,7 @@ import {gridStorageAPI} from './app-grid-storage-api';
 import {appLogger} from './app-event-logger';
 import {ErrorsInterceptor} from "./shared/interceptors/errors.interceptor";
 import {TranslocoRootModule} from "./transloco-root.module";
+import {formErrors} from "./app-form-errors";
 
 export function initApp(appInitService: AppInitService) {
   return () => {
@@ -50,6 +51,7 @@ export function initApp(appInitService: AppInitService) {
   providers: [
     AppInitService,
     TranslatePipe,
+    { provide: DATO_FORM_ERRORS, useValue: formErrors },
     {
       provide: DATO_GRID_STORAGE_API,
       useValue: gridStorageAPI

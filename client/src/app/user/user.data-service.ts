@@ -14,6 +14,8 @@ export class UserDataService {
     return this.http.get<Product[]>(parseUrl(URI_CONSTANTS.users.productsList));
   }
 
-  getOrdersList() {}
+  getOrdersList() {
+    return this.http.get<any[]>(parseUrl(URI_CONSTANTS.users.ordersList));
+  }
 
 }

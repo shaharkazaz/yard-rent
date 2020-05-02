@@ -11,6 +11,7 @@ import {
   DatoGridOptions,
   RowAction
 } from '@datorama/core';
+import {UserService} from "../user.service";
 
 @Component({
   selector: 'app-my-orders-page',
@@ -26,9 +27,13 @@ export class MyOrdersPageComponent implements OnInit {
     columnDefs: this.getColumns()
   };
   rowActions: RowAction[] = this.getRowActions();
-  constructor() {}
+  constructor(private userService: UserService,) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getOrdersList().subscribe(data => {
+      this.gridController.gridService.setRows(data);
+    });
+  }
 
   private getColumns(): DatoGridColumnDef[] {
     return [
