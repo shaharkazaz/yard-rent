@@ -3,7 +3,7 @@
     <div class="yardrent-titles mb-20" >
       {{t('how-to-rent')}}
     </div>
-    <div class="d-flex align-center list-inline">
+    <div class="d-flex align-center list-inline grow">
       <ul>
         <li>
           <img [src]="getIconImage('how-to-rent-find')" align="middle">
@@ -30,12 +30,12 @@
     </div>
   </div>
 
-  <div id="how-to-post" class="section d-flex-column align-center ">
+  <div id="how-to-post" class="section d-flex-column align-center">
     <div class="yardrent-titles mb-20">
       {{t('how-to-post')}}
     </div>
 
-    <div class="d-flex align-center ">
+    <div class="d-flex align-center grow">
       <div class="list-inline">
         <ul>
           <p class="align-center">
@@ -67,7 +67,7 @@
     <div class="yardrent-titles mb-20">
       {{t('what-are-rewards')}}
     </div>
-    <div class="d-flex align-space-around-center ">
+    <div class="d-flex align-space-around-center grow">
       <div class="content-container mr-30">
         {{t('what-are-rewards-description')}}
         <ul>
@@ -78,6 +78,9 @@
             {{t('what-are-rewards-description-bullet2')}}
           </li>
         </ul>
+        <canvas id="myCanvas">
+          Niv
+        </canvas>
       </div>
       <div class="content-container">
         <img [src]="getSectionImage('what-are-rewards')">

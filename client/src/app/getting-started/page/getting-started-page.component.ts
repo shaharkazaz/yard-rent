@@ -16,6 +16,8 @@ export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
   itemsCount$ = this.shoppingCartQuery.selectCount();
   isLoggedIn$ = this.authQuery.isLoggedIn$;
   private readonly generalPath = '../../../assets/images/getting-started/'
+  private readonly canvas = document.getElementById('myCanvas');
+
 
   sections = [
       {
@@ -72,7 +74,10 @@ export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {}
 
+
+
   ngAfterViewInit() {
+
     this.scrollToHash();
     this.router.events.pipe(untilDestroyed(this)).subscribe(e => {
       if (e instanceof NavigationEnd) {
