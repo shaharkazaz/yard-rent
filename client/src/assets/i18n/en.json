@@ -282,6 +282,28 @@
   },
   "yes": "Yes",
   "no": "No",
+  "categories": {
+    "Furniture": "Furniture",
+    "Sports & Fitness": "Sports & Fitness",
+    "Jewellery": "Jewellery",
+    "Mobiles & Accessories": "Mobiles & Accessories",
+    "Sofa": "Sofa",
+    "Chairs": "Chairs",
+    "Laptop Tables": "Laptop Tables",
+    "Golf": "Golf",
+    "Basketball": "Basketball",
+    "Camping & Hiking": "Camping & Hiking",
+    "Hiking": "Hiking",
+    "Table Tennis": "Table Tennis",
+    "Watches": "Watches",
+    "Rings": "Rings",
+    "Earrings": "Earrings",
+    "Cufflink": "Cufflink",
+    "Necklaces": "Necklaces",
+    "Speakers": "Speakers",
+    "Headphones Mobiles": "Headphones Mobiles",
+    "Mobile Chargers": "Mobile Chargers"
+  },
   "languages": {
     "en": "English",
     "es": "Spanish"

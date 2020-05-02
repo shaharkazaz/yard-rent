@@ -217,6 +217,28 @@
   "add-item": {
     "upload-image": "Sube la imagen de tu producto"
   },
+  "categories": {
+    "Furniture": "Mueble",
+    "Sports & Fitness": "Deportes & fitness",
+    "Jewellery": "Joyería",
+    "Mobiles & Accessories": "Móviles & Accesorios",
+    "Sofa": "Sofá",
+    "Chairs": "Sillas",
+    "Laptop Tables": "Mesas para laptop",
+    "Golf": "Golf",
+    "Basketball": "Baloncesto",
+    "Camping & Hiking": "Camping & senderismo",
+    "Hiking": "Excursionismo",
+    "Table Tennis": "Tenis de mesa",
+    "Watches": "Relojes",
+    "Rings": "Anillos",
+    "Earrings": "Pendientes",
+    "Cufflink": "Gemela",
+    "Necklaces": "Collares",
+    "Speakers": "Oradoras",
+    "Headphones Mobiles": "Auriculares Móviles",
+    "Mobile Chargers": "Cargadores móviles"
+  },
   "languages": {
     "en": "English",
     "es": "Spanish"
