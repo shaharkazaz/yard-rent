@@ -39,7 +39,7 @@
     <div class="d-flex align-center list-inline">
       <ul>
         <li *ngFor="let section of sections">
-          <img [src]="'../../../assets/images/homepage/' + section + '.png'" align="middle">
+          <img [datoStaticSrc]="'/homepage/' + section + '.png'">
           <h2>{{t('homepage-' + section)}}</h2>
           <p>{{t('homepage-' + section + '-description')}}</p>
           <dato-link *ngIf="section === 'rewards'" routerLink="/getting-started" fragment="what-are-rewards">{{t('learn-rewards')}}</dato-link>

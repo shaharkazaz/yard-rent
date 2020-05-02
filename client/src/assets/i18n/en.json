@@ -30,6 +30,8 @@
     "delete": "Delete",
     "search": "Search..",
     "search.comment": "It's a generic search box in a list component of different types",
+    "search-all-values": "Search all values",
+    "search-all-values.comment": "Used in the grid's filter list search box",
     "no-items": "No items found",
     "no-available-items": "There are no available items",
     "no-results-found": "No results found...",
@@ -104,7 +106,10 @@
     "no-matching-results": "No matching results",
     "no-items-to-display": "There are no items to display",
     "unable-to-load-data": "Unable to load data",
-    "try-to-refresh-or-contact": "Try to refresh or contact support"
+    "try-to-refresh-or-contact": "Try to refresh or contact support",
+    "something-went-wrong": "Something went wrong",
+    "try-again-later": "Try again later",
+    "apply-filters": "Apply filters"
   },
   "cart": "Cart",
   "address": "Address",
@@ -146,7 +151,6 @@
   "you-have-rewards": "You have {{rewards}} rewards 🌟",
   "home-search.what-would-you-like-to-rent": "what would you like to rent?",
   "home-search.help": "Just type what you need and will search our marketplace for it!",
-  "create-post-on-yardrent": "Create a post on YardRent",
   "hello": "Hello, {{name}}",
   "logout": "Logout",
   "login-to-continue": "Login to continue",
@@ -180,9 +184,6 @@
     "id": "Order ID",
     "date": "Order date",
     "products": "Products"
-  },
-  "products-table": {
-    "id": "Product ID"
   },
   "cart-table": {
     "name": "Product Name",
@@ -252,6 +253,9 @@
     "submit": "Submit",
     "successfully-added": "Item has been successfully added to the marketplace"
   },
+  "edit-item": {
+    "successfully-updated": "Product was successfully updated"
+  },
   "marketplace-filters": {
     "free-text": "Free text:",
     "free-text-placeholder": "eg. basketball",
@@ -262,6 +266,17 @@
     "clear": "Clear filters",
     "apply": "Apply filters"
   },
+  "products-table": {
+    "is-rented": "Currently rented",
+    "item-returned": "Mark as returned",
+    "delete-items": {
+      "title": "Delete items",
+      "content": "You are about to remove this item from the marketplace, are you sure?",
+      "content-plural": "You are about to remove these items from the marketplace, are you sure?"
+    }
+  },
+  "yes": "Yes",
+  "no": "No",
   "languages": {
     "en": "English",
     "es": "Spanish"

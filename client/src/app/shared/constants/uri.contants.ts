@@ -15,7 +15,9 @@ export const URI_CONSTANTS = {
     getAll: 'products',
     get: 'products/{id}',
     add: 'products',
-    update: 'products:/{id}'
+    update: 'products/update/{id}',
+    delete: 'products/delete',
+    returnItems: 'products/returnProducts'
   },
   categories: {
     getAll: 'categories',

@@ -12,7 +12,7 @@ a {
   color: inherit;
 }
 
-dato-popover {
+dato-popover.shared {
   background-color: #fff;
   padding: 1rem;
   font-size: 14px;
@@ -21,6 +21,10 @@ dato-popover {
 
 dato-link {
   outline: none;
+}
+
+dato-input {
+  box-sizing: border-box;
 }
 
 .graph-tooltip {

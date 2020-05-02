@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
-import { CarouselConfig } from '@datorama/core/lib/carousel/carousel.types';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 
 @Component({
   selector: 'app-about-page',
   templateUrl: './about-page.component.html',
-  styleUrls: ['./about-page.component.scss']
+  styleUrls: ['./about-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutPageComponent {
-  constructor() {}
-  private readonly generalPath = '../../../assets/images/co-founders/'
   founders = [
     {
       name: 'Niv',
@@ -27,9 +25,5 @@ export class AboutPageComponent {
       role: 'Software Engineer at AnyVision',
     }
   ]
-  getFounderImage(name){
-    return this.generalPath + name + '.jpg';
-  }
-
 
 }
