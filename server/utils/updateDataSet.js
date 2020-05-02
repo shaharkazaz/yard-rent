@@ -94,6 +94,7 @@ const updateProductInDataSet = async (productIdToUpdate) => {
         }
     })
 };
+//TODO:updateMany
 const addProductInDataSet = async (productIdToAdd) => {
     const result = await createContentForProductId(productIdToAdd);
     let tmpObj = {
