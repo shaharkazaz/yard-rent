@@ -50,7 +50,7 @@ module.exports = {
     },
     getProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.find({_id: productId, isDeleted: false}, {isDeleted: 0}).populate('user', {
+        Products.findOne({_id: productId, isDeleted: false}, {isDeleted: 0}).populate('user', {
             name: 1,
             _id: 0
         }).populate('category', {
