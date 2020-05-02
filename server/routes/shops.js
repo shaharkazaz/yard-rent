@@ -7,7 +7,7 @@ const checkAuth = require('../middlewares/checkAuth');
 
 router.get('/', getAllShops);
 router.get('/:shopId', getShop);
-router.post('/', checkAuth(role.Admin), addShop);
+router.post('/addShop', checkAuth(role.Admin), addShop);
 router.patch('/:shopId', checkAuth(role.Admin), updateShop);
 router.delete('/:shopId', checkAuth(role.Admin), deleteShop);
 

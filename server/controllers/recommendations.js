@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const DataSet = require('../model/productsDataSet');
 const Recommendation = require('../model/recommendation');
 const formatData = require('../utils/contentProduct');
+const {clearDataSet} = require('../utils/updateDataSet');
 
 const ContentBasedRecommender = require('content-based-recommender');
 const RecommendationProductsNumber = 3;
@@ -59,5 +60,9 @@ module.exports = {
                 })
             });
         }
+    },
+    resetDataSet: (req,res)=> {
+        clearDataSet();
+        res.status(200).json();
     }
 };

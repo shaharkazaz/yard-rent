@@ -219,5 +219,17 @@ module.exports = {
                 error
             })
         })
+    },
+    updateUser: (req, res) => {
+        const userId = req.params.userId;
+        User.updateOne({_id: userId}, req.body).then(() => {
+            User.findById({_id: userId}, {product: 0, orderId: 0,isDeleted:0,password:0,role:0}).then((user)=>{
+                res.status(200).json(user);
+                })
+        }).catch((error) => {
+            res.status(500).json({
+                error
+            })
+        })
     }
 };

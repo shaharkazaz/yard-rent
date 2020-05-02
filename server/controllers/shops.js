@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Shop = require('../model/shop');
-
+const getCoordinatesByAddress = require('../utils/gpsApi');
 
 module.exports = {
     getAllShops: (req, res) => {
@@ -14,12 +14,15 @@ module.exports = {
             })
         })
     },
-    addShop: (req, res) => {
-        const { address } = req.body;
-
+    addShop: async (req, res) => {
+        const {address, city, country} = req.body;
+        const coordinates = await getCoordinatesByAddress(req);
         const shop = new Shop({
             _id: new mongoose.Types.ObjectId(),
-            address
+            address,
+            city,
+            country,
+            coordinates
         });
         shop.save().then(() => {
             res.status(200).json({
