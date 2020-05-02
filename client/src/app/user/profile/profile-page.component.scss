@@ -1,4 +1,22 @@
 :host {
+
+  .image-container {
+    width: 80px;
+    height: 60px;
+    margin-left: 10%;
+    margin-bottom: 80%;
+    &.hide-default-content {
+      ::ng-deep footer, ::ng-deep header {
+        display: none !important;
+      }
+    }
+  }
+
+  .uploaded-image {
+    z-index: -1;
+    max-width: 250px;
+  }
+
   height: calc(100% - 40px);
   display: flex;
   padding: 20px;

@@ -1,19 +1,26 @@
 <div class="d-flex-column d-flex-grow align-center" *transloco="let t">
-  <dato-icon
-    height="120px"
-    width="120px"
-    class="pointer primary-400-color mb-10"
-    datoIcon="user"
-    datoTooltip="click-to-upload-profile"
-    datoTooltipPosition="bottom"
-  ></dato-icon>
-  <div class="dato-headline mb-10">{{ user.name }}</div>
-  <span class="dato-sub-headline mb-10"
+
+  <div class="d-flex-column height-100" [formGroup]="userForm">
+    <div class="image-container align-center d-flex-column m-20"
+         [class.hide-default-content]="imageBase64">
+      <dato-file-input formControlName="image">
+        <dato-file-input-default datoSize="md">{{t('upload-image')}}</dato-file-input-default>
+      </dato-file-input>
+    </div>
+    <div class="dato-headline mb-10">{{ user.name }}</div>
+    <span class="dato-sub-headline mb-10"
     >{{ t('you-have-rewards', { rewards: user.rewards }) }}
-    <dato-link routerLink="/getting-started" fragment="what-are-rewards">{{ t('get-more') }}</dato-link></span
-  >
+      <dato-link routerLink="/getting-started" fragment="what-are-rewards">{{ t('get-more') }}</dato-link></span
+    >
+    <div class="d-flex-grow"></div>
+    <dato-button (click)="logout()" datoType="secondary">{{
+      t('logout')
+      }}</dato-button>
+  </div>
+
   <div class="d-flex-grow"></div>
-  <dato-button (click)="logout()" datoType="secondary">{{
-    t('logout')
-  }}</dato-button>
+  <div class="d-flex align-center">
+    <dato-button (click)="submit()" [loading]="loading">{{t('submit')}}</dato-button>
+  </div>
+
 </div>

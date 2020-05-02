@@ -30,7 +30,9 @@ export const URI_CONSTANTS = {
     postTwitt: 'twitter'
   },
   users: {
-    productsList: 'users/productsList'
+    productsList: 'users/productsList',
+    update: 'users/update/{id}'
+
   },
   development: {
     releaseRented: 'products/_releaseRented',

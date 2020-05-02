@@ -8,6 +8,7 @@ export type Creds = {
 export type User = {
   id: ID;
   name: string;
+  image: string;
   token: string;
   user: any;
   rewards: number;
