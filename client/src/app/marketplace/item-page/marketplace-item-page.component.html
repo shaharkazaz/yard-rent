@@ -30,9 +30,14 @@
     <div class="d-flex-column mt-30 align-center">
       <div class="dato-headline title width-70 mb-20">{{t('item-page.suggestions')}}</div>
       <div class="width-70 d-flex align-space-between-center">
-        <item-card-loader></item-card-loader>
-        <item-card-loader></item-card-loader>
-        <item-card-loader></item-card-loader>
+        <ng-container *ngIf="recommendation; else loadingRecommendation">
+          <marketplace-item-card *ngFor="let item of recommendation" [item]="item"></marketplace-item-card>
+        </ng-container>
+        <ng-template #loadingRecommendation>
+          <item-card-loader></item-card-loader>
+          <item-card-loader></item-card-loader>
+          <item-card-loader></item-card-loader>
+        </ng-template>
       </div>
     </div>
   </div>

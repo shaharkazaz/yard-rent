@@ -31,4 +31,8 @@ export class MarketplaceDataService {
   getSubCategories(id: string) {
     return this.http.get<SubCategory[]>(parseUrl(URI_CONSTANTS.categories.getSubCategories, {id}));
   }
+
+  getProductRecommendation(id: string) {
+    return this.http.get<Product[]>(parseUrl(URI_CONSTANTS.products.getRecommendations, {id}));
+  }
 }

@@ -29,4 +29,8 @@ export class MarketplaceService {
   getSubCategories(id: string) {
     return this.dataService.getSubCategories(id);
   }
+
+  getProductRecommendation(id: string) {
+    return this.dataService.getProductRecommendation(id);
+  }
 }

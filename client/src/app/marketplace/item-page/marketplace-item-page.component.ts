@@ -11,6 +11,7 @@ import {Product} from "../marketplace.types";
 })
 export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
   product: Product;
+  recommendation: Product[];
   private productId: string;
 
   constructor(private cdr: ChangeDetectorRef, private marketplaceService: MarketplaceService, private route: ActivatedRoute) {}
@@ -21,6 +22,10 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
       this.product = product;
       this.cdr.detectChanges();
     });
+    this.marketplaceService.getProductRecommendation(this.productId).subscribe((recommendation) => {
+      this.recommendation = recommendation;
+      this.cdr.detectChanges();
+    })
   }
 
   ngOnDestroy(): void {}
