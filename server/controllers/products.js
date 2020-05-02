@@ -185,7 +185,7 @@ module.exports = {
     },
     releaseDeletedProducts: (req, res) => {
         Products.updateMany({isDeleted: true}, {$set: {isDeleted: false}}).then(() => {
-            clearDataSet;
+            clearDataSet();
             res.status(200).json();
         }).catch(error => {
             res.status(500).json({
