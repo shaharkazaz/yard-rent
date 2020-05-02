@@ -3,24 +3,10 @@ const Products = require('../model/product');
 const User = require('../model/user');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
-const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet} = require('../utils/updateDataSet');
+const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet,clearDataSet} = require('../utils/updateDataSet');
+const formatData = require('../utils/contentProduct');
 
 module.exports = {
-    // getAllProducts: (req, res) => {
-    //     Products.find({isDeleted: false, isRented: false}, {
-    //         isDeleted: 0,
-    //         isRented: 0
-    //     }).populate('user', {name: 1, _id: 0}).populate('category', {
-    //         name: 1,
-    //         _id: 0
-    //     }).populate('subCategory', {name: 1, _id: 0}).then((products) => {
-    //         res.status(200).json(products);
-    //     }).catch((error) => {
-    //         res.status(500).json({
-    //             error
-    //         })
-    //     })
-    // },
     addProduct: async (req, res) => {
         const {name, category, subCategory, rewards, address, description} = req.body;
         const userId = await getUserId(req);
@@ -148,10 +134,14 @@ module.exports = {
                 }
             },
             {$unwind: "$user"},
-            {$match: {$or: [{name: {"$regex": text, "$options": "i"}},
+            {
+                $match: {
+                    $or: [{name: {"$regex": text, "$options": "i"}},
                         {description: {"$regex": text, "$options": "i"}},
                         {'category.name': {"$regex": text, "$options": "i"}},
-                        {'subCategory.name': {"$regex": text, "$options": "i"}}]}},
+                        {'subCategory.name': {"$regex": text, "$options": "i"}}]
+                }
+            },
             {$match: {rewards: {$gt: minRewards, $lt: maxRewards}}},
             {$match: {isDeleted: false}},
             {$match: {isRented: false}},
@@ -185,6 +175,7 @@ module.exports = {
     },
     releaseRentedProducts: (req, res) => {
         Products.updateMany({isRented: true}, {$set: {isRented: false}}).then(() => {
+            clearDataSet();
             res.status(200).json();
         }).catch(error => {
             res.status(500).json({
@@ -194,6 +185,7 @@ module.exports = {
     },
     releaseDeletedProducts: (req, res) => {
         Products.updateMany({isDeleted: true}, {$set: {isDeleted: false}}).then(() => {
+            clearDataSet;
             res.status(200).json();
         }).catch(error => {
             res.status(500).json({
@@ -244,5 +236,17 @@ module.exports = {
                 })
             });
         })
+    },
+    releaseRentedProductsByUSer: (req, res) => {
+        const {products} = req.body;
+        const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
+        Products.updateMany({_id: {$in: objectIdProducts}}, {$set: {isRented: false}}).then(() => {
+            clearDataSet();
+            res.status(200).json();
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        });
     }
 };
