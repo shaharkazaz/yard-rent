@@ -31,6 +31,10 @@ const routes: Routes = [
         component: MarketplaceAddItemComponent
       },
       {
+        path: 'edit-item/:id',
+        component: MarketplaceAddItemComponent
+      },
+      {
         path: 'all-items',
         component: MarketplaceAllItemsComponent
       },

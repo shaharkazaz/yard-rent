@@ -19,13 +19,13 @@
         </dato-input-number>
       </div>
     </div>
-    <div class="image-container align-center d-flex-column m-20" *datoSubscribe="imageSrc$ as imageSrc"
-         [class.hide-default-content]="imageSrc">
+    <div class="image-container align-center d-flex-column m-20"
+         [class.hide-default-content]="imageBase64">
       <dato-file-input formControlName="image">
         <dato-file-input-default datoSize="md">{{t('upload-image')}}</dato-file-input-default>
       </dato-file-input>
-      <dato-button class="mt-10" datoType="secondary" [disabled]="!imageSrc" (click)="clearImage()">{{t('clear-image')}}</dato-button>
-      <img class="uploaded-image fixed" *ngIf="imageSrc" [src]="imageSrc">
+      <dato-button class="mt-10" datoType="secondary" [disabled]="!imageBase64" (click)="clearImage()">{{t('clear-image')}}</dato-button>
+      <img class="uploaded-image fixed" *ngIf="imageBase64" [src]="imageBase64">
     </div>
   </div>
   <div class="d-flex-grow"></div>

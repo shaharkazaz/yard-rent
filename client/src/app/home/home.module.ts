@@ -9,6 +9,7 @@ import {
 } from '@datorama/core';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [HomePageComponent],
@@ -22,7 +23,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         DatoIconModule,
         DatoIconButtonModule,
         DatoDirectivesModule,
-        DatoLinkButtonModule
+        DatoLinkButtonModule,
+        RouterModule
     ]
 })
 export class HomeModule {}

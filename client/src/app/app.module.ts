@@ -37,7 +37,15 @@ export function initApp(appInitService: AppInitService) {
     AppRoutingModule,
     HttpClientModule,
     TranslocoRootModule,
-    DatoCoreModule,
+    DatoCoreModule.forRoot({
+      appSelector: 'app-root',
+      sidenavSelector: '.sidenav',
+      paths: {
+        editor: '',
+        richText: '',
+        staticImages: '/assets/images'
+      }
+    }),
   ],
   providers: [
     AppInitService,

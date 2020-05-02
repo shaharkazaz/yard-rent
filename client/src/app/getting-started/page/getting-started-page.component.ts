@@ -62,9 +62,11 @@ export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
       this.snackbar.info('login-to-continue', { duration: 1500 });
     }
   }
+
   private navigateToAddItem() {
     this.router.navigate(['marketplace/add-item']);
   }
+
   openLoginDialog(view: 'login' | 'sign-up') {
     return this.dialog.open(LoginComponent, {
       data: { view },

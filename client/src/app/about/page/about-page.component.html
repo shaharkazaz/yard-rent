@@ -5,7 +5,7 @@
 <ng-container>
   <ul class="d-flex align-space-around-center mb-0">
     <li class="relative founder inline-block mx-20 d-flex-column align-center" *ngFor="let person of founders">
-      <img class="relative founder-img mb-20" [src]="getFounderImage(person.name)">
+      <img class="relative founder-img mb-20" [datoStaticSrc]="'/co-founders/' + person.name + '.jpg'">
       <div><b>{{person.name}}</b></div>
       <div>{{person.role}}</div>
     </li>

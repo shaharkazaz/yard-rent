@@ -4,9 +4,10 @@ import {MarketplaceService} from "../state/marketplace.service";
 import {allowedFileTypes, DatoSnackbar} from "@datorama/core";
 import {toBase64} from "../../shared/utils";
 import {finalize, switchMap, tap} from "rxjs/operators";
-import {from, Observable, of} from "rxjs";
+import {combineLatest, from, Observable, of} from "rxjs";
 import {untilDestroyed} from "ngx-take-until-destroy";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Category, Product} from "../marketplace.types";
 
 @Component({
   selector: 'marketplace-add-item',
@@ -25,45 +26,43 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
     category: [null, [Validators.required]],
     subCategory: [{value: null, disabled: true}, [Validators.required]],
     rewards: [1, [Validators.required]],
-    address: ["blabla"]
+    address: ['']
   });
   imageBase64: string;
-  imageSrc$: Observable<string>;
   loading = false;
   categories = [];
   subCategoriesMap = {};
   subCategories = [];
+  originalProduct: Product;
 
-  constructor(private fb: FormBuilder, private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef, private router: Router, private snackbar: DatoSnackbar) { }
+  constructor(private fb: FormBuilder, private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef, private router: Router, private snackbar: DatoSnackbar, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.imageSrc$ = this.productForm.get('image').valueChanges.pipe(switchMap(file => file ? from(toBase64(file)) : of('')), tap((base64) => {
+    this.initData();
+    this.productForm.get('image').valueChanges
+      .pipe(switchMap(file => file ? from(toBase64(file)) : of('')), untilDestroyed(this)).subscribe((base64) => {
       this.imageBase64 = base64;
-    }));
+      this.cdr.detectChanges();
+    });
     this.productForm.get('category').valueChanges.pipe(untilDestroyed(this)).subscribe(({name}) => {
       this.subCategories = this.subCategoriesMap[name];
       this.productForm.get('subCategory').enable();
       this.cdr.detectChanges();
     });
-    this.marketplaceService.getAllCategories().subscribe((categories) => {
-      this.categories = [];
-      categories.forEach(({_id, subCategories, name}) => {
-        this.categories.push({_id, name});
-        this.subCategoriesMap[name] = subCategories;
-      });
-    });
   }
 
   submit() {
     this.loading = true;
-    this.marketplaceService.addProduct({
-      ...this.productForm.value,
-      image: this.imageBase64
-    }).pipe(finalize(() => {
+    const {image, ...product} = this.productForm.value;
+    if (!this.originalProduct || this.imageBase64 !== this.originalProduct.image) {
+      product.image = this.imageBase64;
+    }
+    const serverAction = this.originalProduct ? this.marketplaceService.updateProduct(this.originalProduct._id, product) : this.marketplaceService.addProduct(product);
+    serverAction.pipe(finalize(() => {
       this.loading = false;
       this.cdr.detectChanges();
     })).subscribe(() => {
-      this.snackbar.success('add-item.successfully-added')
+      this.snackbar.success(this.originalProduct ? 'edit-item.successfully-updated' : 'add-item.successfully-added');
       this.router.navigate(['user/my-products']);
     });
   }
@@ -72,5 +71,37 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
 
   clearImage() {
     this.productForm.get('image').patchValue(null);
+    this.imageBase64 = null;
+  }
+
+  private initData() {
+    const serverRequests: Observable<any>[] = [this.marketplaceService.getAllCategories()];
+    const productId = this.route.snapshot.params.id;
+    if (productId) {
+      const getProduct = this.marketplaceService.getProduct(productId);
+      serverRequests.push(getProduct);
+    }
+    combineLatest(serverRequests).subscribe(([categories, product]: [Category[], Product?]) => {
+      this.categories = [];
+      categories.forEach(({_id, subCategories, name}) => {
+        this.categories.push({_id, name});
+        this.subCategoriesMap[name] = subCategories;
+      });
+      if (product) {
+        this.originalProduct = product;
+        const {image, name, description, rewards, category, subCategory} = product;
+        const selectedCategory = this.categories.find(({name}) => name === category.name);
+        const selectedSubCategory = this.subCategoriesMap[selectedCategory.name].find(({name}) => name === subCategory.name);
+        this.imageBase64 = image;
+        this.productForm.patchValue({
+          name,
+          description,
+          rewards,
+          category: selectedCategory,
+          subCategory: selectedSubCategory
+        });
+        this.productForm.get('image').patchValue(new File([],''), {emitEvent: false})
+      }
+    })
   }
 }
