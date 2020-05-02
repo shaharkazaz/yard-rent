@@ -33,5 +33,8 @@ export const URI_CONSTANTS = {
   development: {
     releaseRented: 'products/_releaseRented',
     releaseDeleted: 'products/_releaseDeleted'
+  },
+  shops: {
+    getAll: 'shops'
   }
 };

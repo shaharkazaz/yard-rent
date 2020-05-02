@@ -1,8 +1,12 @@
 import {Injectable} from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { URI_CONSTANTS } from '../../../shared/constants/uri.contants';
+import { parseUrl } from '../../../shared/utils';
 
 @Injectable({providedIn: "root"})
 export class BingMapService {
   private loaded;
+  constructor(private http: HttpClient) {}
 
   loadScript(): Promise<void> {
     if (!this.loaded) {
@@ -24,5 +28,8 @@ export class BingMapService {
 
     return this.loaded;
 
+  }
+  getAllShops(){
+    return this.http.get<any>(parseUrl(URI_CONSTANTS.shops.getAll));
   }
 }
