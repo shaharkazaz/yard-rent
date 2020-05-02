@@ -56,7 +56,7 @@
   </dato-button>
 </nav>
 
-<dato-menu #gettingStartedMenu="datoMenu" placement="bottom-center">
+<dato-menu #gettingStartedMenu="datoMenu" placement="bottom">
   <ng-template datoMenuContent>
     <button datoMenuItem *ngFor="let item of gettingStartedMenuItems" routerLink="getting-started" [fragment]="item">
       <div>{{ t(item) }}</div>
