@@ -9,6 +9,8 @@ import { CarouselConfig } from '@datorama/core/lib/carousel/carousel.types';
 import { fromEvent, merge, timer } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { debounceTime } from 'rxjs/operators';
+import {FormControl} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-page',
@@ -26,7 +28,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
     itemWidth: 0
   };
   carouselItems = [1, 2, 3];
-  constructor(private cdr: ChangeDetectorRef) {}
+  searchAnything = new FormControl();
+  constructor(private cdr: ChangeDetectorRef, private router: Router) {}
 
   ngOnInit(): void {
     merge(timer(100), fromEvent(window, 'resize'))
@@ -41,4 +44,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  search() {
+    if (!!this.searchAnything.value) {
+      this.router.navigate(['marketplace/all-items'], {queryParams: {text: this.searchAnything.value}});
+    }
+  }
 }

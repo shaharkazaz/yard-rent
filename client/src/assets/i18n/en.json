@@ -160,8 +160,6 @@
   "my-profile": "My profile",
   "rent-anything": "Rent anything",
   "from-anyone": "from anyone in Israel",
-  "no-results": "We're Sorry!",
-  "no-results-description": "We can't seem to find any products that match...",
   "management": "Management",
   "user-management": "User management",
   "statistics": "Statistics",
@@ -209,7 +207,11 @@
   "rewards-needed": "Rewards needed: {{rewards}} 🌟",
   "add-to-cart": "Add to cart",
   "view-item": "View item",
-  "item-page.suggestions": "You might also like",
+  "item-page": {
+    "oops": "Something went wrong",
+    "suggestions": "You might also like",
+    "no-match": "We can't seem to find this product"
+  },
   "item-added-to-cart": "Item added to cart",
   "item-removed-from-cart": "Item removed from cart",
   "session-expired": "Your session has expired, please re-login",
@@ -321,6 +323,7 @@
     "cancel": "Cancel",
     "updated-successfully": "User successfully updated"
   },
+  "no-results": "No results... try clearing your filters",
   "languages": {
     "en": "English",
     "es": "Spanish"

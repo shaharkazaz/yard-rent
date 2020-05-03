@@ -21,8 +21,8 @@
       </dato-input-number>
     </div>
     <div class="d-flex">
-      <dato-button class="mr-10" datoType="secondary" (click)="clear()">{{t('clear')}}</dato-button>
-      <dato-button (click)="apply()">{{t('apply')}}</dato-button>
+      <dato-button class="mr-10" datoType="secondary" [disabled]="!hasValues" (click)="clear()">{{t('clear')}}</dato-button>
+      <dato-button [disabled]="!hasValues" (click)="apply()">{{t('apply')}}</dato-button>
     </div>
     <ng-template #selection let-title="title" let-control="control" let-data="data">
       <div class="d-flex-column">

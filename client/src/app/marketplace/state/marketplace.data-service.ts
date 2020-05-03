@@ -8,8 +8,8 @@ import {Categories, NewProduct, Product, SubCategory} from "../marketplace.types
 export class MarketplaceDataService {
   constructor(private http: HttpClient) {}
 
-  getAllProducts() {
-    return this.http.get<Product[]>(parseUrl(URI_CONSTANTS.products.getAll));
+  getAllProducts(filter = {}) {
+    return this.http.post<Product[]>(parseUrl(URI_CONSTANTS.products.getAll), {...filter});
   }
 
   getProduct(id: string) {
