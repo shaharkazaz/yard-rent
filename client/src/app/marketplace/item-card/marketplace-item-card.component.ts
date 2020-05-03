@@ -1,6 +1,8 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Product} from "../marketplace.types";
 import {formatNumber} from '../../shared/utils';
+import {formatToKebab} from "../../shared/utils";
+
 
 @Component({
   selector: 'marketplace-item-card',
@@ -13,5 +15,10 @@ export class MarketplaceItemCardComponent {
 
   formatNumber(rewards: number) {
     return formatNumber(rewards);
+  }
+
+  formatToKebab(str: string): string{
+    console.log(formatToKebab(str));
+    return formatToKebab(str);
   }
 }
