@@ -2,6 +2,7 @@ import { HashMap } from '@datorama/core';
 
 const numberFormatter = Intl.NumberFormat();
 
+
 export function parseUrl(url: string, params: HashMap = {}): string {
   const parsed = Object.entries(params).reduce((acc, [key, value]) => {
     return acc.replace(`{${key}}`, value);
@@ -12,6 +13,14 @@ export function parseUrl(url: string, params: HashMap = {}): string {
 export function formatNumber(number: number): string {
     return number ? numberFormatter.format(number) : '0';
 }
+
+export function formatToKebab(str: string): string {
+  return str
+    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+    .map(x => x.toLowerCase())
+    .join('-');
+}
+
 
 export function toBase64(file): Promise<string> {
   return new Promise((resolve, reject) => {

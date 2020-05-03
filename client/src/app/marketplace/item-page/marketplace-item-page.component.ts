@@ -4,6 +4,8 @@ import {MarketplaceService} from "../state/marketplace.service";
 import {Product} from "../marketplace.types";
 import {untilDestroyed} from "ngx-take-until-destroy";
 import {finalize} from "rxjs/operators";
+import {formatToKebab} from "../../shared/utils";
+
 
 @Component({
   selector: 'marketplace-item-page',
@@ -37,4 +39,10 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+
+
+  formatToKebab(str: string): string{
+    console.log(formatToKebab(str));
+    return formatToKebab(str);
+  }
 }
