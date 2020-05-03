@@ -41,10 +41,20 @@
       </div>
     </div>
   </div>
-    <div class="d-flex-column width-100 align-center mb-400" *transloco="let t">
-      <h1 class="yardrent-titles mb-20">{{t('no-results')}}</h1>
-      <p class="text-center width-75 mt-0">{{t('no-results-description')}}</p>
-      <dato-link routerLink="/marketplace">{{t('back-to-marketplace')}}</dato-link>
+  <div *ngIf="product"
+    datoTooltip="back-to-marketplace"
+    datoTooltipPosition="bottom"
+    class="back-wing d-flex align-center primary-100-background-color accent-300-background-color:h primary-300-color primary-0-color:h absolute pointer"
+    routerLink="../">
+    <dato-icon datoSize="lg" datoIcon="arrow-left"></dato-icon>
+  </div>
+</ng-container>
 
-    </div>
+<ng-container *ngIf="isInvalidProduct">
+  <div class="d-flex-column width-100 align-center middle" *transloco="let t">
+    <h1 class="yardrent-titles">{{t('no-results')}}</h1>
+    <img [datoStaticSrc]="'/core/grid/no-results.svg'">
+    <p class="text-center width-75 mb-20">{{t('no-results-description')}}</p>
+    <dato-link class="mb-20" routerLink="/marketplace">{{t('back-to-marketplace')}}</dato-link>
+  </div>
 </ng-container>

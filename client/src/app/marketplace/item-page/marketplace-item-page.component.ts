@@ -14,6 +14,7 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
   product: Product;
   recommendation: Product[];
   private productId: string;
+  isInvalidProduct: boolean;
 
   constructor(private cdr: ChangeDetectorRef, private marketplaceService: MarketplaceService, private route: ActivatedRoute) {}
 
@@ -21,7 +22,13 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
     this.route.params.pipe(untilDestroyed(this)).subscribe(({id}) => {
       this.productId = id;
       this.marketplaceService.getProduct(this.productId).pipe(untilDestroyed(this)).subscribe((product) => {
-        this.product = product;
+        if(product)
+        {
+          this.product = product;
+        }
+        else{
+          this.isInvalidProduct = true;
+        }
         this.cdr.detectChanges();
       });
       this.marketplaceService.getProductRecommendation(this.productId).pipe(untilDestroyed(this)).subscribe((recommendation) => {
