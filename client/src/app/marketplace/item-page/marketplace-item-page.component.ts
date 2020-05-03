@@ -19,15 +19,8 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.productId = this.route.snapshot.params.id;
     this.marketplaceService.getProduct(this.productId).subscribe((product) => {
-      if(product)
-      {
         this.product = product;
         this.cdr.detectChanges();
-      }
-      else {
-        this.router.navigate(['/admin/management']);
-      }
-
     });
     this.marketplaceService.getProductRecommendation(this.productId).subscribe((recommendation) => {
       this.recommendation = recommendation;
