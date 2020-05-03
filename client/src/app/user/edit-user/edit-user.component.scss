@@ -1,0 +1,36 @@
+:host {
+  .image-container {
+    margin-left: 10%;
+
+    &.hide-default-content {
+      dato-icon {
+        display: none;
+      }
+    }
+    .file-upload {
+      transition: border .3s ease-in-out;
+      border: 3px dashed #CCCED3;
+      height: 200px;
+      width: 200px;
+      &:hover {
+        border-color: #09A0FF;
+      }
+    }
+  }
+  .form-container {
+    width: 350px;
+    .form-input {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+      & > div {
+        margin-bottom: 10px;
+        text-decoration: underline;
+      }
+    }
+  }
+  .uploaded-image {
+    z-index: -1;
+    max-width: 130px;
+  }
+}

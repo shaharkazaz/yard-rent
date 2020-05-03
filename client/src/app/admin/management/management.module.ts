@@ -9,7 +9,6 @@ import {
 } from '@datorama/core';
 import { CommonModule } from '@angular/common';
 import { UsersManagementComponent } from './users/users-management.component';
-import { ManagementUserDetailsComponent } from './users/user-details/management-user-details.component';
 import { RouterModule } from '@angular/router';
 import { StatisticsComponent } from './statistics/statistics/statistics.component';
 import { TranslocoModule } from '@ngneat/transloco';
@@ -19,7 +18,6 @@ const api = [
   StatisticsComponent,
   ManagementPieChartComponent,
   UsersManagementComponent,
-  ManagementUserDetailsComponent,
   ManagementBarChartComponent
 ];
 

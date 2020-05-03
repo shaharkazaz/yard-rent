@@ -24,16 +24,7 @@ export class ManagementDataService {
     return this.http.get<any>(parseUrl(URI_CONSTANTS.management.getAllUsers));
   }
 
-  deleteUser(id: string) {
-    return this.http.delete<any>(
-      parseUrl(URI_CONSTANTS.management.deleteUser, { id })
-    );
-  }
-
-  updateUser(id: string, value) {
-    return this.http.patch<any>(
-      parseUrl(URI_CONSTANTS.management.updateUser, { id }),
-      value
-    );
+  deleteUsers(users: string[]) {
+    return this.http.post<any>(parseUrl(URI_CONSTANTS.management.deleteUser), { users });
   }
 }

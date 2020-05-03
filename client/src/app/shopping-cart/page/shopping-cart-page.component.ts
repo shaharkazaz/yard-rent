@@ -11,8 +11,10 @@ import {
   DatoDialog,
   DatoGridColumnDef,
   DatoGridColumnTypes,
-  DatoGridControllerComponent, DatoGridFilterTypes,
-  DatoGridOptions, GeneralGridActions,
+  DatoGridControllerComponent,
+  DatoGridFilterTypes,
+  DatoGridOptions,
+  GeneralGridActions,
   RowAction,
   RowSelectionTypeV2
 } from "@datorama/core";
@@ -20,10 +22,11 @@ import {ShoppingCartQuery} from "../state/shopping-cart.query";
 import {take} from "rxjs/operators";
 import {ShoppingCartService} from "../state/shopping-cart.service";
 import {AuthQuery} from "../../auth/state/auth.query";
-import {User} from "../../auth/state/auth.model";
+import {UserInfo} from "../../auth/state/auth.model";
 import {OrdersService} from "../orders.service";
 import {Router} from "@angular/router";
 import {Product} from "../../marketplace/marketplace.types";
+import {formatNumber, stringAsCharSum} from "../../shared/utils";
 
 type ErroredItem = {_id: string, name: string};
 
@@ -47,7 +50,7 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
   gridActions: GeneralGridActions = {export: false};
   rowActions: RowAction[] = this.getRowActions();
   totalAmount: number;
-  user: User;
+  user: UserInfo;
   loading: boolean;
   private cartItems: Product[];
 
@@ -85,7 +88,7 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
       ({orderId}) => {
         this.shoppingCartService.clearCart();
         const route = this.router.config.find(r => r.path === 'order-complete');
-        const idAsNumber = [...orderId].reduce((acc, _, i) => acc + orderId.charCodeAt(i), 0);
+        const idAsNumber = stringAsCharSum(orderId);
         route.data = { orderId: idAsNumber, orderDetails  };
         this.router.navigateByUrl('/order-complete');
       },
@@ -128,7 +131,7 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
         headerName: 'cart-table.rewards',
         field: 'rewards',
         type: DatoGridColumnTypes.Number,
-        valueFormatter: ({data}) => data.rewards ? `${data.rewards} ⭐️` : ''
+        valueFormatter: ({value}) => value ? `${formatNumber(value)} ⭐️` : ''
       },
     ];
   }

@@ -1,0 +1,31 @@
+  <div class="d-flex-column align-start-center height-100" *transloco="let t;read: 'edit-user'" [formGroup]="userForm" datoForm>
+      <div class="form-container d-flex-column align-start primary-400-color">
+<!--        <div class="image-container align-center d-flex-column m-20"-->
+<!--             [class.hide-default-content]="imageBase64">-->
+<!--          <dato-file-input formControlName="image">-->
+<!--            <div class="file-upload relative d-flex align-center">-->
+<!--              <dato-icon height="150px" width="150px" class="pointer primary-400-color p-20" datoIcon="user"></dato-icon>-->
+<!--              <img class="uploaded-image fixed" *ngIf="imageBase64" [src]="imageBase64">-->
+<!--            </div>-->
+<!--          </dato-file-input>-->
+<!--          <dato-button class="mt-10" datoType="secondary" [disabled]="!imageBase64" (click)="clearImage()">{{t('clear-image')}}</dato-button>-->
+<!--        </div>-->
+        <dato-icon height="120px" width="120px" class="primary-400-color my-20 self-center" datoIcon="user"></dato-icon>
+        <div class="form-input">
+          <div class="dato-sub-headline">{{t('name')}}</div>
+          <dato-input formControlName="name" datoControlErrors></dato-input>
+        </div>
+        <div class="form-input">
+          <div class="dato-sub-headline">{{t('email')}}</div>
+          <dato-input formControlName="email" datoControlErrors></dato-input>
+        </div>
+        <div class="form-input">
+          <div class="dato-sub-headline">{{t('address')}}</div>
+          <dato-input formControlName="address" datoControlErrors></dato-input>
+        </div>
+      </div>
+    <div class="d-flex align-center width-100 mt-20">
+      <dato-button class="mr-10" (click)="cancel()" datoType="secondary">{{t('cancel')}}</dato-button>
+      <dato-button [disabled]="!userForm.valid" (click)="submit()" [loading]="loading">{{t('update')}}</dato-button>
+    </div>
+  </div>

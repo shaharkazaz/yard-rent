@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminPageComponent } from './page/admin-page.component';
 import { UsersManagementComponent } from './management/users/users-management.component';
 import { ManagementModule } from './management/management.module';
-import { ManagementUserDetailsComponent } from './management/users/user-details/management-user-details.component';
 import { StatisticsComponent } from './management/statistics/statistics/statistics.component';
 import { TranslocoModule } from '@ngneat/transloco';
 
@@ -23,16 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'management',
-        children: [
-          {
-            path: '',
-            component: UsersManagementComponent
-          },
-          {
-            path: ':id',
-            component: ManagementUserDetailsComponent
-          }
-        ]
+        component: UsersManagementComponent
       }
     ]
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { formatNumber } from '../../../shared/utils';
 import {AppAuthService} from "../../../auth/app-auth.service";
-import {User} from "../../../auth/state/auth.model";
+import {UserInfo} from "../../../auth/state/auth.model";
 import {AuthQuery} from "../../../auth/state/auth.query";
 
 @Component({
@@ -10,13 +10,12 @@ import {AuthQuery} from "../../../auth/state/auth.query";
   styleUrls: ['./user-menu.component.scss']
 })
 export class UserMenuComponent implements OnInit {
-  user: User;
+  user: UserInfo;
 
   constructor(private appAuthService: AppAuthService, private authQuery: AuthQuery) { }
 
   ngOnInit() {
-    this.authQuery
-      .select(state => state.user)
+    this.authQuery.select('user')
       .subscribe(user => {
         this.user = user;
       });
@@ -27,7 +26,7 @@ export class UserMenuComponent implements OnInit {
   }
 
   formatNumber(value: number) {
-    return value ? formatNumber(value) : 0;
+    return formatNumber(value);
   }
 
 }

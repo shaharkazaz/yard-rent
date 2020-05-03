@@ -1,15 +1,29 @@
 import { ID } from '@datorama/akita';
+import {UserRole} from "../auth.types";
 
 export type Creds = {
   email: string;
   password: string;
 };
 
+export type UserInfo = {
+  address: string;
+  email: string;
+  isDeleted: boolean;
+  name: string;
+  orderId: string[];
+  password: string[];
+  product: string[];
+  rewards: number;
+  role: UserRole;
+  _id: string;
+}
+
 export type User = {
   id: ID;
   name: string;
   token: string;
-  user: any;
+  user: UserInfo;
   rewards: number;
 };
 

@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   ConfirmationType,
   DatoDialog,
@@ -17,12 +11,13 @@ import {
   RowAction,
   RowSelectionTypeV2
 } from '@datorama/core';
-import { ManagementService } from '../state/management.service';
-import { ManagementQuery } from '../state/management.query';
-import { Router } from '@angular/router';
-import { translate } from '@ngneat/transloco';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { switchMap } from 'rxjs/operators';
+import {ManagementService} from '../state/management.service';
+import {ManagementQuery} from '../state/management.query';
+import {Router} from '@angular/router';
+import {untilDestroyed} from 'ngx-take-until-destroy';
+import {switchMap} from 'rxjs/operators';
+import {formatNumber} from "../../../shared/utils";
+import {UserInfo} from "../../../auth/state/auth.model";
 
 @Component({
   selector: 'users-management',
@@ -31,6 +26,7 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['./users-management.component.scss']
 })
 export class UsersManagementComponent implements OnInit, OnDestroy {
+  @ViewChild('deleteUsersDialog', { static: true }) private dialogTpl;
   @ViewChild(DatoGridControllerComponent, { static: true })
   private gridController: DatoGridControllerComponent;
   gridOptions: DatoGridOptions = {
@@ -38,7 +34,7 @@ export class UsersManagementComponent implements OnInit, OnDestroy {
     columnDefs: this.getColumns()
   };
   rowActions: RowAction[] = this.getRowActions();
-
+  deleteUsers;
   constructor(
     private managementService: ManagementService,
     private managementQuery: ManagementQuery,
@@ -92,7 +88,7 @@ export class UsersManagementComponent implements OnInit, OnDestroy {
         headerName: 'user-management-table.rewards',
         field: 'rewards',
         type: DatoGridColumnTypes.Number,
-        valueFormatter: ({ value }) => `${value}🌟`,
+        valueFormatter: ({ value }) => `${formatNumber(value)}🌟`,
         filtersConfig: { sections: DatoGridFilterSections.Conditional }
       }
     ];
@@ -106,29 +102,30 @@ export class UsersManagementComponent implements OnInit, OnDestroy {
         key: 'edit',
         visibleWhen: RowSelectionTypeV2.SINGLE,
         onClick: ([row]) =>
-          this.router.navigate(['/admin/management', row.data._id])
+          this.router.navigate(['/user/edit-user', row.data._id], {queryParams: {backTo: 'admin/management'}})
       },
       {
         icon: 'delete',
         label: 'delete',
         key: 'delete',
-        visibleWhen: RowSelectionTypeV2.SINGLE,
-        onClick: ([row]) => this.openDeleteUserDialog(row.data)
+        visibleWhen: RowSelectionTypeV2.ANY,
+        onClick: rows => this.openDeleteUserDialog(rows.map(({data}) => data))
       }
     ];
   }
 
-  private openDeleteUserDialog(data: any) {
+  private openDeleteUserDialog(data: (UserInfo & {_id: string})[]) {
+    this.deleteUsers = data;
     this.dialog
       .confirm({
         title: 'delete-users-dialog.title',
-        content: translate('delete-users-dialog.content', { name: data.name }),
+        content: this.dialogTpl,
         confirmationType: ConfirmationType.DISRUPTIVE_WARNING
       })
       .afterClosed()
       .pipe(
         filterDialogSuccess(),
-        switchMap(() => this.managementService.deleteUser(data._id))
+        switchMap(() => this.managementService.deleteUser(data.map(({_id}) => _id)))
       )
       .subscribe();
   }

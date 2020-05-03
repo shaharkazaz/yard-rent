@@ -10,7 +10,7 @@ export function parseUrl(url: string, params: HashMap = {}): string {
 }
 
 export function formatNumber(number: number): string {
-    return numberFormatter.format(number);
+    return number ? numberFormatter.format(number) : '0';
 }
 
 export function toBase64(file): Promise<string> {
@@ -20,4 +20,8 @@ export function toBase64(file): Promise<string> {
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = error => reject(error);
   });
+}
+
+export function stringAsCharSum(str: String): number {
+  return [...str].reduce((acc, _, i) => acc + str.charCodeAt(i), 0);
 }

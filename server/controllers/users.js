@@ -94,7 +94,7 @@ module.exports = {
 
     },
     getAllUsers: (req, res) => {
-        User.find({isDeleted: false}, {_id: 0}).populate('orderId').then((users) => {
+        User.find({isDeleted: false}).populate('orderId').then((users) => {
             res.status(200).json(users)
         }).catch((error) => {
             res.status(500).json({
@@ -104,7 +104,7 @@ module.exports = {
     },
     getUserById: (req, res) => {
         const userId = req.params.userId;
-        User.find({_id:userId,isDeleted: false}, {product:0,orderId:0,isDeleted:0,password:0,role:0,rewards:0}).then((user) => {
+        User.findOne({_id:userId,isDeleted: false}, {product:0,orderId:0,isDeleted:0,password:0,role:0,rewards:0}).then((user) => {
             res.status(200).json(user)
         }).catch((error) => {
             res.status(500).json({
