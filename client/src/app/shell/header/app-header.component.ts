@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {AuthQuery} from '../../auth/state/auth.query';
-import {DatoDialog, DatoSnackbar, filterDialogSuccess} from '@datorama/core';
-import {LoginComponent} from '../../auth/login/login.component';
+import {DatoDialog, DatoSnackbar} from '@datorama/core';
 import {Router} from '@angular/router';
 import {ShoppingCartQuery} from "../../shopping-cart/state/shopping-cart.query";
+import {AuthDialogService} from "../../auth/state/auth-dialog.service";
 
 @Component({
   selector: 'app-header',
@@ -17,33 +17,18 @@ export class AppHeaderComponent  {
 
   constructor(
     private authQuery: AuthQuery,
+    private authDialogService: AuthDialogService,
     private dialog: DatoDialog,
     private snackbar: DatoSnackbar,
     private router: Router,
     private shoppingCartQuery: ShoppingCartQuery
   ) {}
 
-  openLoginDialog(view: 'login' | 'sign-up') {
-    return this.dialog.open(LoginComponent, {
-      data: { view },
-      enableClose: true
-    });
-  }
-
   addNewItem() {
-    if (this.authQuery.isLoggedIn()) {
-      this.navigateToAddItem();
-    } else {
-      this.openLoginDialog('login')
-        .afterClosed()
-        .pipe(filterDialogSuccess())
-        .subscribe(() => this.navigateToAddItem());
-      this.snackbar.info('login-to-continue', { duration: 1500 });
-    }
+    this.authDialogService.verifyLoggedIn(() => this.router.navigate(['marketplace/add-item']));
   }
 
-  private navigateToAddItem() {
-    this.router.navigate(['marketplace/add-item']);
+  openLoginDialog(view: 'login' | 'sign-up') {
+    return this.authDialogService.openLoginDialog(view);
   }
-
 }
