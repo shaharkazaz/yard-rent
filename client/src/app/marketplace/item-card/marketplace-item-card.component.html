@@ -21,14 +21,14 @@
       >{{ item.user.name }}</span
     >
   </div>
-  <div class="d-flex align-space-between-center mb-10">
-    <div class="d-flex mr-20">
+  <div class="d-flex align-space-between-center width-100 mb-10">
+    <div class="d-flex width-50">
       <dato-icon class="mr-5" [datoIcon]="formatToKebab(item.category.name)"></dato-icon>
-      <div class="capitalize-first ellipsis">{{ item.category.name }}</div>
+      <div class="capitalize-first ellipsis" [datoTooltip]="item.category.name " datoTooltipOnTextOverflow="true">{{ item.category.name }}</div>
     </div>
-    <div class="d-flex">
+    <div class="d-flex width-50">
       <dato-icon class="mr-5" [datoIcon]="formatToKebab(item.subCategory.name)"></dato-icon>
-      <div class="capitalize-first ellipsis">{{ item.subCategory.name }}</div>
+      <div class="capitalize-first ellipsis" [datoTooltip]="item.subCategory.name " datoTooltipOnTextOverflow="true">{{ item.subCategory.name }}</div>
     </div>
   </div>
   <div class="dato-simple mb-10">
