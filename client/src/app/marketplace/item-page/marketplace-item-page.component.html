@@ -41,7 +41,10 @@
       </div>
     </div>
   </div>
-  <div>
-    <dato-icon datoSize="lg" datoIcon="no-results"></dato-icon>
-  </div>
+    <div class="d-flex-column width-100 align-center mb-400" *transloco="let t">
+      <h1 class="yardrent-titles mb-20">{{t('no-results')}}</h1>
+      <p class="text-center width-75 mt-0">{{t('no-results-description')}}</p>
+      <dato-link routerLink="/marketplace">{{t('back-to-marketplace')}}</dato-link>
+
+    </div>
 </ng-container>
