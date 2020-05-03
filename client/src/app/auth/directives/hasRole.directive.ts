@@ -1,4 +1,4 @@
-import {Directive, Input, OnDestroy, TemplateRef, ViewContainerRef} from '@angular/core';
+import {ChangeDetectorRef, Directive, Input, OnDestroy, TemplateRef, ViewContainerRef} from '@angular/core';
 import { AuthQuery } from '../state/auth.query';
 import { USER_ROLES, UserRole } from '../auth.types';
 import {Subscription} from "rxjs";
@@ -11,7 +11,8 @@ export class HasRoleDirective implements OnDestroy {
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainerRef: ViewContainerRef,
-    private authQuery: AuthQuery
+    private authQuery: AuthQuery,
+    private cdr: ChangeDetectorRef
   ) {}
 
   @Input()
@@ -22,6 +23,7 @@ export class HasRoleDirective implements OnDestroy {
       this.subscription = this.authQuery.selectUserRole().subscribe(role => {
           if (USER_ROLES[role] >= USER_ROLES[this.role]) {
             this.viewContainerRef.createEmbeddedView(this.templateRef);
+            this.cdr.detectChanges();
           } else {
             this.viewContainerRef.clear();
           }
