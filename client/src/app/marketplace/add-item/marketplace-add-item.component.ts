@@ -50,6 +50,7 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    if (!this.productForm.valid) return;
     this.loading = true;
     const {image, ...product} = this.productForm.value;
     if (!this.originalProduct || this.imageBase64 !== this.originalProduct.image) {
