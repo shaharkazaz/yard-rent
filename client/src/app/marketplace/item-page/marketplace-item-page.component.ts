@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MarketplaceService} from "../state/marketplace.service";
 import {Product} from "../marketplace.types";
 
@@ -14,13 +14,20 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
   recommendation: Product[];
   private productId: string;
 
-  constructor(private cdr: ChangeDetectorRef, private marketplaceService: MarketplaceService, private route: ActivatedRoute) {}
+  constructor(private cdr: ChangeDetectorRef, private marketplaceService: MarketplaceService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.productId = this.route.snapshot.params.id;
     this.marketplaceService.getProduct(this.productId).subscribe((product) => {
-      this.product = product;
-      this.cdr.detectChanges();
+      if(product)
+      {
+        this.product = product;
+        this.cdr.detectChanges();
+      }
+      else {
+        this.router.navigate(['/admin/management']);
+      }
+
     });
     this.marketplaceService.getProductRecommendation(this.productId).subscribe((recommendation) => {
       this.recommendation = recommendation;
