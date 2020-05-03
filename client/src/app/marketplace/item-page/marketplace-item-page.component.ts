@@ -25,12 +25,11 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
         if(product)
         {
           this.product = product;
-          this.cdr.detectChanges();
         }
         else{
           this.isInvalidProduct = true;
-          this.cdr.detectChanges();
         }
+        this.cdr.detectChanges();
       });
       this.marketplaceService.getProductRecommendation(this.productId).pipe(untilDestroyed(this)).subscribe((recommendation) => {
         this.recommendation = recommendation;
