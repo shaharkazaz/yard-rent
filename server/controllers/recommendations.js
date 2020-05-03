@@ -47,8 +47,8 @@ module.exports = {
                     recommendedProducts: ids
                 });
                 recommendation.save().then(async () => {
-                    const recommendation = await getProductPopulated(productId);
-                    res.status(200).json(recommendation.recommendedProducts)
+                    const savedRecommendation = await getProductPopulated(productId);
+                    res.status(200).json(savedRecommendation.recommendedProducts)
                 }).catch(error => {
                     res.status(500).json({
                         error
