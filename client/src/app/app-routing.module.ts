@@ -48,10 +48,6 @@ const routes: Routes = [
     loadChildren: () => import('./order-complete/order-complete.module').then(({ OrderCompleteModule }) => OrderCompleteModule)
   },
   {
-    path: 'no-results',
-    loadChildren: () => import('./contact/contact.module').then(({ ContactModule }) => ContactModule)
-  },
-  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full'
