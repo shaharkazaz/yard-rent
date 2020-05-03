@@ -42,7 +42,6 @@ export class MarketplaceItemPageComponent implements OnInit, OnDestroy {
 
 
   formatToKebab(str: string): string{
-    console.log(formatToKebab(str));
     return formatToKebab(str);
   }
 }

@@ -18,7 +18,6 @@ export class MarketplaceItemCardComponent {
   }
 
   formatToKebab(str: string): string{
-    console.log(formatToKebab(str));
     return formatToKebab(str);
   }
 }
