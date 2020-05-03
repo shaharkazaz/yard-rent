@@ -5,14 +5,17 @@ import { MyProductsPageComponent } from './my-products/my-products-page.componen
 import { ProfilePageComponent } from './profile/profile-page.component';
 import {
   DatoButtonModule,
-  DatoDirectivesModule,
-  DatoGridV2Module,
-  DatoIconModule,
+  DatoDirectivesModule, DatoEditableHeaderModule, DatoFileInputModule, DatoFormValidationModule,
+  DatoGridV2Module, DatoIconButtonModule,
+  DatoIconModule, DatoInputModule,
   DatoLinkButtonModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import {UserService} from "./user.service";
 import {UserDataService} from "./user.data-service";
+import {ReactiveFormsModule} from "@angular/forms";
+import { EditUserComponent } from './edit-user/edit-user.component';
+import {CommonModule} from "@angular/common";
 
 const routes: Routes = [
   {
@@ -26,6 +29,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfilePageComponent
+  },
+  {
+    path: 'edit-user/:id',
+    component: EditUserComponent
   }
 ];
 
@@ -37,12 +44,20 @@ const routes: Routes = [
     DatoDirectivesModule,
     TranslocoModule,
     DatoLinkButtonModule,
-    DatoButtonModule
+    DatoButtonModule,
+    DatoEditableHeaderModule,
+    ReactiveFormsModule,
+    DatoIconButtonModule,
+    DatoInputModule,
+    DatoFileInputModule,
+    CommonModule,
+    DatoFormValidationModule
   ],
   declarations: [
     MyOrdersPageComponent,
     MyProductsPageComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    EditUserComponent
   ],
   providers: [UserService, UserDataService],
   exports: [MyOrdersPageComponent]

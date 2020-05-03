@@ -14,12 +14,20 @@
     display: flex;
     justify-content: space-between;
     width: 800px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
   }
 
   li {
     display: inline-block;
   }
+}
 
+canvas {
+  border: 2px solid rgba(0,0,0,0.12);
+  transition: 300ms;
+  border-radius: 4px;
+}
 
+canvas:hover {
+  border: 2px solid rgba(0,0,0,0.54);
 }

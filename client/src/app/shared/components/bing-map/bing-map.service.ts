@@ -1,9 +1,9 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URI_CONSTANTS } from '../../../shared/constants/uri.contants';
 import { parseUrl } from '../../../shared/utils';
 
-@Injectable({providedIn: "root"})
+@Injectable({providedIn: 'root'})
 export class BingMapService {
   private loaded;
   constructor(private http: HttpClient) {}
@@ -18,7 +18,7 @@ export class BingMapService {
         };
 
         const node = document.createElement('script');
-        node.src = "https://www.bing.com/api/maps/mapcontrol?callback=__onBingLoaded&branch=release";
+        node.src = 'https://www.bing.com/api/maps/mapcontrol?callback=__onBingLoaded&branch=release';
         node.type = 'text/javascript';
         node.async = true;
         node.defer = true;

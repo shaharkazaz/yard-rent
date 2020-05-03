@@ -1,6 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MarketplaceService} from '../state/marketplace.service';
 import {Product} from "../marketplace.types";
+import {ActivatedRoute} from "@angular/router";
+import {untilDestroyed} from "ngx-take-until-destroy";
 
 @Component({
   selector: 'app-marketplace-all-items',
@@ -8,36 +10,59 @@ import {Product} from "../marketplace.types";
   styleUrls: ['./marketplace-all-items.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MarketplaceAllItemsComponent implements OnInit {
+export class MarketplaceAllItemsComponent implements OnInit, OnDestroy {
   items: Product[];
   loading = true;
-  allResults: Product[] = [];
-  loadersCount;
-
+  allProducts: Product[] = [];
+  filteredProducts: Product[] = [];
+  loadersCount: any[];
   private readonly LOAD_BUFFER = 20;
   private readonly CARD_WIDTH = 304;
+  private buffer = this.LOAD_BUFFER;
 
-  constructor(private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef) {}
+  constructor(private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.loadersCount = new Array(Math.floor(document.documentElement.clientWidth / this.CARD_WIDTH));
-    this.marketplaceService.getAllProducts().subscribe((products) => {
-      this.allResults = products;
-      this.loading = false;
-      this.items = this.allResults.slice(0, this.LOAD_BUFFER);
-      this.cdr.detectChanges();
+    this.route.queryParams.pipe(untilDestroyed(this)).subscribe((filter) => {
+      const parsedFilter = Object.entries(filter).reduce((parsed, [prop, rawVal]) => {
+        let value = rawVal;
+        if (/(min|max)Rewards/.test(prop)) {
+          value = +value;
+        }
+        parsed[prop] = value;
+        return parsed;
+      }, {});
+      this.filterProducts(parsedFilter);
     });
   }
 
+  ngOnDestroy(): void {}
+
   loadMore() {
-    this.items = this.allResults.slice(0, this.items.length + this.LOAD_BUFFER);
+    this.buffer += this.LOAD_BUFFER;
+    this.items = this.filteredProducts.slice(0, this.buffer);
   }
 
   filterProducts(filter) {
-    if (filter) {
-
+    if (filter || !this.allProducts) {
+      this.loadProducts(filter);
     } else {
-
+      this.filteredProducts = this.allProducts;
+      this.items = this.allProducts.slice(0, this.buffer);
     }
+    this.buffer = this.LOAD_BUFFER;
+  }
+
+  private loadProducts(filter?) {
+    this.loading = true;
+    this.marketplaceService.getAllProducts(filter).pipe(untilDestroyed(this)).subscribe((products) => {
+      !filter && (this.allProducts = products);
+      this.filteredProducts = products;
+      this.loading = false;
+      this.items = this.filteredProducts.slice(0, this.buffer);
+      this.cdr.detectChanges();
+    });
   }
 }
+

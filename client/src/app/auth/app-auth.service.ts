@@ -5,6 +5,7 @@ import {ShoppingCartQuery} from "../shopping-cart/state/shopping-cart.query";
 import {AuthService} from "./state/auth.service";
 import {Router} from "@angular/router";
 import {filter} from "rxjs/operators";
+import {ShoppingCartService} from "../shopping-cart/state/shopping-cart.service";
 
 @Injectable({providedIn: 'root'})
 export class AppAuthService {
@@ -12,7 +13,8 @@ export class AppAuthService {
   constructor(private authService: AuthService,
               private shoppingCartQuery: ShoppingCartQuery,
               private router: Router,
-              private dialog: DatoDialog) {}
+              private dialog: DatoDialog,
+              private shoppingCart: ShoppingCartService) {}
 
   logout(force = false) {
     const itemsInCart = this.shoppingCartQuery.getCount();
@@ -41,6 +43,7 @@ export class AppAuthService {
   }
 
   private _logout() {
+    this.shoppingCart.clearCart();
     this.authService.logout();
     this.router.navigate(['home']);
   }

@@ -16,8 +16,8 @@
           datoTooltip="home-search.help"
           datoTooltipPosition="top"
         ></dato-icon>
-        <dato-input placeholder="home-search.what-would-you-like-to-rent"></dato-input>
-        <dato-icon-button
+        <dato-input (keydown.enter)="search()" [formControl]="searchAnything" placeholder="home-search.what-would-you-like-to-rent"></dato-input>
+        <dato-icon-button (click)="search()"
           datoType="orange"
           datoIcon="search"
         ></dato-icon-button>

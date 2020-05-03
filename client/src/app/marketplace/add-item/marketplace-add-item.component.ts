@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {MarketplaceService} from "../state/marketplace.service";
 import {allowedFileTypes, DatoSnackbar} from "@datorama/core";
 import {toBase64} from "../../shared/utils";
-import {finalize, switchMap, tap} from "rxjs/operators";
+import {finalize, switchMap} from "rxjs/operators";
 import {combineLatest, from, Observable, of} from "rxjs";
 import {untilDestroyed} from "ngx-take-until-destroy";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -17,8 +17,6 @@ import {Category, Product} from "../marketplace.types";
 })
 export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
   private readonly ALLOWED_FORMATS = ['png', 'jpg', 'jpeg', 'gif', 'PNG', 'JPG', 'JPEG', 'GIF'];
-
-  control = new FormControl();
   productForm = this.fb.group({
     image: [null, [Validators.required, allowedFileTypes(this.ALLOWED_FORMATS)]],
     name: [null, [Validators.required]],
@@ -52,6 +50,7 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    if (!this.productForm.valid) return;
     this.loading = true;
     const {image, ...product} = this.productForm.value;
     if (!this.originalProduct || this.imageBase64 !== this.originalProduct.image) {

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {getProducts, addProduct, getProduct, updateProduct, deleteProduct, releaseRentedProducts, releaseDeletedProducts,addProductDataSet,releaseRentedProductsByUSer} = require('../controllers/products');
+const {getProducts, addProduct, getProduct, updateProduct, deleteProduct, releaseRentedProducts, releaseDeletedProducts,addProductDataSet,releaseRentedProductsByUSer,getIds} = require('../controllers/products');
 const checkAuth = require('../middlewares/checkAuth');
 
-router.get('/', getProducts);
+router.post('/', getProducts);
 router.get('/:productId', getProduct);
 router.post('/', checkAuth(), addProduct);
 router.patch('/update/:productId', checkAuth(), updateProduct);
@@ -14,6 +14,7 @@ router.post('/returnProducts', checkAuth(), releaseRentedProductsByUSer);
 router.post('/_releaseRented', checkAuth(), releaseRentedProducts);
 router.post('/_releaseDeleted', checkAuth(), releaseDeletedProducts);
 router.post('/_addProduct', checkAuth(), addProductDataSet);
+router.post('/only', getIds);
 
 
 module.exports = router;

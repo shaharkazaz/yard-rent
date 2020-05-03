@@ -9,8 +9,10 @@ import {
   DatoGridColumnTypes,
   DatoGridControllerComponent,
   DatoGridOptions,
-  RowAction
 } from '@datorama/core';
+import {UserService} from "../user.service";
+import {formatNumber, stringAsCharSum} from "../../shared/utils";
+import {format} from 'date-fns';
 
 @Component({
   selector: 'app-my-orders-page',
@@ -25,37 +27,39 @@ export class MyOrdersPageComponent implements OnInit {
     gridName: 'my-orders',
     columnDefs: this.getColumns()
   };
-  rowActions: RowAction[] = this.getRowActions();
-  constructor() {}
+  constructor(private userService: UserService,) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getOrdersList().subscribe(data => {
+      this.gridController.gridService.setRows(data);
+    });
+  }
 
   private getColumns(): DatoGridColumnDef[] {
     return [
       {
         headerName: 'orders-table.id',
         field: '_id',
-        type: DatoGridColumnTypes.Number
+        type: DatoGridColumnTypes.Number,
+        valueGetter: ({data}) => stringAsCharSum(data._id),
+        valueFormatter: ({value}) => `#${value}`
       },
       {
         headerName: 'orders-table.date',
         field: 'date',
-        type: DatoGridColumnTypes.Date
+        type: DatoGridColumnTypes.Date,
+        valueFormatter: ({value}) => format(new Date(value), 'MM/DD/YYYY HH:mm:ss')
       },
       {
         headerName: 'orders-table.products',
         field: 'products',
         type: DatoGridColumnTypes.String
-      }
-    ];
-  }
-
-  private getRowActions(): RowAction[] {
-    return [
+      },
       {
-        key: 'info',
-        label: 'orders-table.information',
-        icon: 'question'
+        headerName: 'orders-table.rewards-paid',
+        field: 'rewards',
+        type: DatoGridColumnTypes.Number,
+        valueFormatter: ({value}) => value ? `${formatNumber(value)} ⭐️` : ''
       }
     ];
   }

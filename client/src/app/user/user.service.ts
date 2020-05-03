@@ -5,8 +5,8 @@ import {UserDataService} from "./user.data-service";
 export class UserService {
   constructor(private dataService: UserDataService) {}
 
-  updateProfile() {
-    return this.dataService.updateProfile();
+  updateUser(id: string, user) {
+    return this.dataService.updateProfile(id, user);
   }
 
   getProductsList() {
@@ -17,4 +17,7 @@ export class UserService {
     return this.dataService.getOrdersList();
   }
 
+  getUser(id: string) {
+    return this.dataService.getUserById(id);
+  }
 }

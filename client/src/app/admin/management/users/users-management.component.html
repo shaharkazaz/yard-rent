@@ -6,3 +6,12 @@
   <dato-grid-toolbar-v2></dato-grid-toolbar-v2>
   <dato-grid-v2></dato-grid-v2>
 </dato-grid-controller>
+<ng-template #deleteUsersDialog let-dialogRef>
+  <ng-container *transloco="let t; read: 'delete-users-dialog'">
+    <div>{{t('content-1')}}</div>
+    <ul>
+      <li *ngFor="let user of deleteUsers">{{user.name}}</li>
+    </ul>
+    <div [innerHTML]="t('content-2')"></div>
+  </ng-container>
+</ng-template>

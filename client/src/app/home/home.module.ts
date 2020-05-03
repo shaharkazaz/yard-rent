@@ -10,21 +10,23 @@ import {
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {RouterModule} from "@angular/router";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [HomePageComponent],
   exports: [HomePageComponent],
-    imports: [
-        TranslocoModule,
-        DatoCarouselModule,
-        CommonModule,
-        BrowserAnimationsModule,
-        DatoInputModule,
-        DatoIconModule,
-        DatoIconButtonModule,
-        DatoDirectivesModule,
-        DatoLinkButtonModule,
-        RouterModule
-    ]
+  imports: [
+    TranslocoModule,
+    DatoCarouselModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    DatoInputModule,
+    DatoIconModule,
+    DatoIconButtonModule,
+    DatoDirectivesModule,
+    DatoLinkButtonModule,
+    RouterModule,
+    ReactiveFormsModule
+  ]
 })
 export class HomeModule {}

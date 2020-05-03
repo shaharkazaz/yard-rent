@@ -30,18 +30,14 @@ export class ManagementService {
       .pipe(tap(users => this.managementStore.update({ users })));
   }
 
-  deleteUser(id: string) {
-    return this.dataService.deleteUser(id).pipe(
+  deleteUser(ids: string[]) {
+    return this.dataService.deleteUsers(ids).pipe(
       tap(() => {
         const currentUsers = this.managementQuery.getValue().users;
         this.managementStore.update({
-          users: currentUsers.filter(user => user._id !== id)
+          users: currentUsers.filter(user => !ids.includes(user._id))
         });
       })
     );
-  }
-
-  updateUser(id, value) {
-    return this.dataService.updateUser(id, value);
   }
 }

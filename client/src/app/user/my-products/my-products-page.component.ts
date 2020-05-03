@@ -7,7 +7,7 @@ import {
   DatoGridControllerComponent,
   DatoGridFilterSections,
   DatoGridFilterTypes,
-  DatoGridOptions, DialogResultStatus, GeneralGridActions,
+  DatoGridOptions, DialogResultStatus,
   RowAction,
   RowSelectionTypeV2
 } from '@datorama/core';
@@ -17,6 +17,7 @@ import {filter, switchMap} from "rxjs/operators";
 import {RowNode} from "ag-grid-community";
 import {MyProductsService} from "./my-products.service";
 import {Router} from "@angular/router";
+import {formatNumber} from "../../shared/utils";
 
 @Component({
   selector: 'app-my-products',
@@ -76,7 +77,7 @@ export class MyProductsPageComponent implements OnInit {
         headerName: 'cart-table.rewards',
         field: 'rewards',
         type: DatoGridColumnTypes.Number,
-        valueFormatter: ({value}) => value ? `${value} ⭐️` : ''
+        valueFormatter: ({value}) => value ? `${formatNumber(value)} ⭐️` : ''
       },
     ];
   }

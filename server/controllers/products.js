@@ -50,7 +50,7 @@ module.exports = {
     },
     getProduct: (req, res) => {
         const productId = req.params.productId;
-        Products.findById({_id: productId, isDeleted: false}, {isDeleted: 0}).populate('user', {
+        Products.findOne({_id: productId, isDeleted: false}, {isDeleted: 0}).populate('user', {
             name: 1,
             _id: 0
         }).populate('category', {
@@ -247,5 +247,14 @@ module.exports = {
                 error
             })
         });
+    },
+    getIds: (req,res) => {
+        Products.find({isDeleted: false, isRented: false},{_id: 1}).then((products) => {
+            res.status(200).json(products);
+        }).catch(error => {
+            res.status(500).json({
+                error
+            })
+        })
     }
 };

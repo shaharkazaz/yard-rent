@@ -1,27 +1,27 @@
 <ng-container *transloco="let c; read: 'categories'">
-<div class="d-flex-column height-100" *transloco="let t;read: 'add-item'" [formGroup]="productForm">
+<form class="d-flex-column height-100" *transloco="let t;read: 'add-item'" [formGroup]="productForm" datoForm>
   <div class="d-flex align-center">
     <div class="form-container d-flex-column align-start height-100 primary-400-color">
       <div class="form-input">
         <div class="dato-sub-headline">{{t('product-name')}}</div>
-        <dato-input formControlName="name"></dato-input>
+        <dato-input formControlName="name" datoControlErrors></dato-input>
       </div>
       <ng-container *ngTemplateOutlet="selection; context: {title: 'category', control: 'category', data: categories}"></ng-container>
       <ng-container *ngTemplateOutlet="selection; context: {title: 'sub-category', control: 'subCategory', data: subCategories}"></ng-container>
       <div class="form-input">
         <div class="dato-sub-headline">{{t('product-description')}}</div>
-        <textarea style="resize: none" formControlName="description"></textarea>
+        <textarea style="resize: none" formControlName="description" datoControlErrors></textarea>
       </div>
       <div class="form-input">
         <div class="dato-sub-headline">{{t('rewards-amount')}}</div>
         <dato-input-number min="1">
-          <input style="box-sizing: border-box" type="number" formControlName="rewards" datoInputNumber/>
+          <input type="number" formControlName="rewards" datoInputNumber/>
         </dato-input-number>
       </div>
     </div>
     <div class="image-container align-center d-flex-column m-20"
          [class.hide-default-content]="imageBase64">
-      <dato-file-input formControlName="image">
+      <dato-file-input formControlName="image" datoControlErrors datoControlErrorContainer>
         <dato-file-input-default datoSize="md">{{t('upload-image')}}</dato-file-input-default>
       </dato-file-input>
       <dato-button class="mt-10" datoType="secondary" [disabled]="!imageBase64" (click)="clearImage()">{{t('clear-image')}}</dato-button>
@@ -35,12 +35,12 @@
   <ng-template #selection let-title="title" let-control="control" let-data="data">
     <div class="form-input">
       <div class="dato-sub-headline">{{t(title)}}</div>
-      <dato-select [formControlName]="control" idKey="_id" labelKey="name" [dataSet]="data" #select>
+      <dato-select [formControlName]="control" idKey="_id" labelKey="name" [dataSet]="data" #select datoControlErrors>
         <dato-option *ngFor="let option of select.data | searchResultsSort: select.searchTerm: {labelKey: 'name'}" [option]="option">
           <span [innerHTML]="c(option.name) | datoHighlight: select.searchTerm"></span>
         </dato-option>
       </dato-select>
     </div>
   </ng-template>
-</div>
+</form>
 </ng-container>

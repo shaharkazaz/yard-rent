@@ -176,14 +176,16 @@
   "delete": "Delete",
   "delete-users-dialog": {
     "title": "Delete users",
-    "content": "You are about to delete the user {{name}}.<br> Are you sure you want to proceed?"
+    "content-1": "You are about to delete the following users:",
+    "content-2": "All the products that were posted by these users will also be deleted.<br> Are you sure you want to proceed?"
   },
   "user-name": "User name",
   "orders-table": {
     "information": "Order information",
     "id": "Order ID",
     "date": "Order date",
-    "products": "Products"
+    "products": "Products ordered",
+    "rewards-paid": "Rewards paid"
   },
   "cart-table": {
     "name": "Product Name",
@@ -205,7 +207,11 @@
   "rewards-needed": "Rewards needed: {{rewards}} 🌟",
   "add-to-cart": "Add to cart",
   "view-item": "View item",
-  "item-page.suggestions": "You might also like",
+  "item-page": {
+    "oops": "Something went wrong",
+    "suggestions": "You might also like",
+    "no-match": "We can't seem to find this product"
+  },
   "item-added-to-cart": "Item added to cart",
   "item-removed-from-cart": "Item removed from cart",
   "session-expired": "Your session has expired, please re-login",
@@ -275,8 +281,49 @@
       "content-plural": "You are about to remove these items from the marketplace, are you sure?"
     }
   },
+  "form-validation": {
+    "required": "This field is required",
+    "valid-email": "Please enter a valid email",
+    "min-length": "Min length is {{requiredLength}} characters"
+  },
   "yes": "Yes",
   "no": "No",
+  "categories": {
+    "Furniture": "Furniture",
+    "Sports & Fitness": "Sports & Fitness",
+    "Jewellery": "Jewellery",
+    "Mobiles & Accessories": "Mobiles & Accessories",
+    "Sofa": "Sofa",
+    "Chairs": "Chairs",
+    "Laptop Tables": "Laptop Tables",
+    "Golf": "Golf",
+    "Basketball": "Basketball",
+    "Camping & Hiking": "Camping & Hiking",
+    "Hiking": "Hiking",
+    "Table Tennis": "Table Tennis",
+    "Watches": "Watches",
+    "Rings": "Rings",
+    "Earrings": "Earrings",
+    "Cufflink": "Cufflink",
+    "Necklaces": "Necklaces",
+    "Speakers": "Speakers",
+    "Headphones Mobiles": "Headphones Mobiles",
+    "Mobile Chargers": "Mobile Chargers"
+  },
+  "profile": {
+    "summary": "You made {{orders}} orders and posted {{products}} products",
+    "edit": "Edit profile"
+  },
+  "edit-user": {
+    "name": "Full name:",
+    "email": "Email address:",
+    "address": "Address:",
+    "clear-image": "Clear profile image",
+    "update": "Update",
+    "cancel": "Cancel",
+    "updated-successfully": "User successfully updated"
+  },
+  "no-results": "No results... try clearing your filters",
   "languages": {
     "en": "English",
     "es": "Spanish"

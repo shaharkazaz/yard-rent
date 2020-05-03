@@ -4,7 +4,7 @@ import { MarketplacePageComponent } from './page/marketplace-page.component';
 import { TranslocoModule } from '@ngneat/transloco';
 import {
   DatoButtonModule, DatoCoreModule,
-  DatoDirectivesModule, DatoFileInputModule,
+  DatoDirectivesModule, DatoFileInputModule, DatoFormValidationModule,
   DatoIconModule, DatoInfiniteScrollModule, DatoInputModule, DatoInputNumberModule, DatoPipesModule, DatoSelectModule
 } from '@datorama/core';
 import { MarketplaceFiltersComponent } from './filters/marketplace-filters.component';
@@ -14,10 +14,10 @@ import { MarketplaceService } from './state/marketplace.service';
 import { CommonModule } from '@angular/common';
 import { MarketplaceItemPageComponent } from './item-page/marketplace-item-page.component';
 import { MarketplaceAllItemsComponent } from './all-items/marketplace-all-items.component';
-import {BingMapModule} from "../shared/components/bing-map/bing-map.module";
+import {BingMapModule} from '../shared/components/bing-map/bing-map.module';
 import { MarketplaceAddItemComponent } from './add-item/marketplace-add-item.component';
-import {ReactiveFormsModule} from "@angular/forms";
-import {ContentLoaderModule} from "@ngneat/content-loader";
+import {ReactiveFormsModule} from '@angular/forms';
+import {ContentLoaderModule} from '@ngneat/content-loader';
 import { ItemCardLoaderComponent } from './item-card/item-card-loader/item-card-loader.component';
 import { ItemCartTogglerComponent } from './item-cart-toggler/item-cart-toggler.component';
 
@@ -69,6 +69,7 @@ const routes: Routes = [
     DatoPipesModule,
     ContentLoaderModule,
     DatoInfiniteScrollModule,
+    DatoFormValidationModule,
     DatoCoreModule,
   ],
   declarations: [

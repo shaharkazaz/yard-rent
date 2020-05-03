@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     address: '',
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    retypePassword: ['', Validators.minLength(6)]
+    retypePassword: ['']
   });
   constructor(
     private ref: DatoDialogRef,
@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.form.valid)
-    {
+    Object.values(this.form.controls).forEach(control => control.updateValueAndValidity());
+    if (this.form.valid) {
       this.loading = true;
       this.isLogin() ? this.login() : this.signup();
     }
@@ -61,7 +61,9 @@ export class LoginComponent implements OnInit {
   {
     const { email, password } = this.form.value;
     this.authService.login({ email, password }).subscribe(
-      ({ success }) => (success ? this.ref.close() : this.hideLoader()),
+      ({ success }) => {
+        (success ? this.ref.close() : this.hideLoader())
+      },
       () => this.hideLoader()
     );
   }
@@ -88,9 +90,12 @@ export class LoginComponent implements OnInit {
       address.setValidators(Validators.required);
       retype.setValidators([Validators.required, Validators.minLength(6)]);
     } else {
-      [name, address, retype].forEach(control => control.clearValidators());
+      [name, address, retype].forEach(control => {
+        control.clearValidators();
+        control.updateValueAndValidity();
+        control.setErrors(null);
+      });
     }
-    this.form.updateValueAndValidity();
   }
 
   private nameValidator(

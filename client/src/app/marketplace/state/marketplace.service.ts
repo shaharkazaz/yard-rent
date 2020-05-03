@@ -6,8 +6,8 @@ import {NewProduct} from "../marketplace.types";
 export class MarketplaceService {
   constructor(private dataService: MarketplaceDataService) {}
 
-  getAllProducts() {
-    return this.dataService.getAllProducts();
+  getAllProducts(filter) {
+    return this.dataService.getAllProducts(filter);
   }
 
   getProduct(id: string) {
@@ -28,5 +28,9 @@ export class MarketplaceService {
 
   getSubCategories(id: string) {
     return this.dataService.getSubCategories(id);
+  }
+
+  getProductRecommendation(id: string) {
+    return this.dataService.getProductRecommendation(id);
   }
 }

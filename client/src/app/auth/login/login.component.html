@@ -3,19 +3,22 @@
     <div class="d-flex align-center yardrent-titles">{{ t('welcome') }}</div>
   </dato-dialog-header>
   <dato-dialog-content>
+    <div class="d-flex-column d-flex-grow align-center">
     <div
-      class="content d-flex-column d-flex-grow align-start-center"
+      class="content d-flex-column width-100 align-start-center"
       [class.login]="isLogin()"
+      datoForm
       [formGroup]="form"
     >
       <div class="d-flex-column width-100 mb-20 full-name">
         <div>{{ t('full-name') }}</div>
-        <dato-input formControlName="name" placeholder="Yard Rent"></dato-input>
+        <dato-input formControlName="name" placeholder="Yard Rent" datoControlErrors></dato-input>
       </div>
       <div class="d-flex-column width-100 mb-20 address">
         <div>{{ t('address') }}</div>
         <dato-input
           formControlName="address"
+          datoControlErrors
           placeholder="address"
         ></dato-input>
       </div>
@@ -23,6 +26,7 @@
         <div>{{ t('email') }}</div>
         <dato-input
           formControlName="email"
+          datoControlErrors
           placeholder="yard.rent@provider.com"
         ></dato-input>
       </div>
@@ -30,6 +34,7 @@
         <div>{{ t('password') }}</div>
         <dato-input
           formControlName="password"
+          datoControlErrors
           type="password"
           (keydown.enter)="submitForm()"
         ></dato-input>
@@ -38,12 +43,15 @@
         <div>{{ t('retype-password') }}</div>
         <dato-input
           formControlName="retypePassword"
+          datoControlErrors
           type="password"
         ></dato-input>
       </div>
+      <div class="d-flex-grow"></div>
       <dato-button class="mb-5" (click)="submitForm()" [loading]="loading">{{
         t(view)
       }}</dato-button>
+    </div>
       <dato-button datoType="none" datoSize="sm" (click)="changeView()">{{
         t(isLogin() ? 'not-a-member-yet' : 'already-a-member')
       }}</dato-button>

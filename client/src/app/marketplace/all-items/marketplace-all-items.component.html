@@ -1,15 +1,25 @@
+<ng-container *transloco="let t">
 <div class="d-flex align-center pb-20 title">
   <div class="mr-20 yardrent-titles ">
-    {{ 'start-renting' | transloco }}
+    {{ t('start-renting') }}
   </div>
   <dato-icon width="50px" height="70px" datoIcon="market"></dato-icon>
 </div>
-<marketplace-filters (filterChanged)="filterProducts($event)"></marketplace-filters>
+<marketplace-filters></marketplace-filters>
 <dato-infinite-scroll class="d-flex align-space-around-center d-flex-wrap mt-20 overflow-auto" [datoInfiniteScrollOffset]="400" (datoInfiniteScroll)="loadMore()">
   <ng-container *ngIf="!loading; else loaders">
+    <ng-container *ngIf="items.length; else noData">
       <marketplace-item-card *ngFor="let item of items" [item]="item"></marketplace-item-card>
+    </ng-container>
+    <ng-template #noData>
+      <div class="d-flex-column mt-20">
+        <img class="mb-20" datoStaticSrc="core/grid/no-results.svg">
+        <div class="dato-sub-headline">{{t('no-results')}}</div>
+      </div>
+    </ng-template>
   </ng-container>
   <ng-template #loaders>
     <item-card-loader *ngFor="let i of loadersCount"></item-card-loader>
   </ng-template>
 </dato-infinite-scroll>
+</ng-container>

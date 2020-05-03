@@ -8,7 +8,7 @@ export const URI_CONSTANTS = {
     getWeeklyData: 'statistics/weekly-data',
     getOrdersPerCategory: 'statistics/orders-per-category',
     getAllUsers: 'users/getAll',
-    deleteUser: 'users/deleteuser/{id}',
+    deleteUser: 'users//delete',
     updateUser: 'users/updateuser/{id}'
   },
   products: {
@@ -17,7 +17,8 @@ export const URI_CONSTANTS = {
     add: 'products',
     update: 'products/update/{id}',
     delete: 'products/delete',
-    returnItems: 'products/returnProducts'
+    returnItems: 'products/returnProducts',
+    getRecommendations: 'recommendations/{id}'
   },
   categories: {
     getAll: 'categories',
@@ -30,7 +31,10 @@ export const URI_CONSTANTS = {
     postTwitt: 'twitter'
   },
   users: {
-    productsList: 'users/productsList'
+    productsList: 'users/productsList',
+    ordersList: 'users/ordersList',
+    getUserById: 'users/getUserById/{id}',
+    updateUser: 'users/update/{id}'
   },
   development: {
     releaseRented: 'products/_releaseRented',

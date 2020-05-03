@@ -13532,6 +13532,7 @@ dato-input input:disabled:hover {
 }
 
 .dato-grid .ag-header .ag-header-cell {
+  padding-right: 0;
   line-height: 27px;
 }
 
@@ -13845,8 +13846,8 @@ dato-popover.dato-grid-columns-display-menu .footer, .dark dato-popover.dato-gri
   border-top: 1px solid rgba(var(--primary-100), 1);
 }
 
-dato-popover.dato-grid-columns-display-menu dato-list > div {
-  max-height: 255px;
+dato-popover.dato-grid-columns-display-menu dato-list-v2 .list-container {
+  max-height: 190px;
 }
 
 dato-grid-toolbar-button dato-button[datoType='none'] button, .dark dato-grid-toolbar-button dato-button[datoType='none'] button {

@@ -1,15 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {untilDestroyed} from "ngx-take-until-destroy";
 import {MarketplaceService} from "../state/marketplace.service";
+import {deepEqual} from "@datorama/core";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'marketplace-filters',
@@ -29,14 +23,18 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
   categories = [];
   subCategoriesMap = {};
   subCategories = [];
-  @Output() filterChanged = new EventEmitter();
+  previousFilter;
 
-  constructor(private fb: FormBuilder, private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.filterForm.get('category').valueChanges.pipe(untilDestroyed(this)).subscribe(({name}) => {
-      this.subCategories = this.subCategoriesMap[name];
-      this.filterForm.get('subCategory').enable();
+    const predefined = this.route.snapshot.queryParams;
+    if (predefined) {
+      this.filterForm.patchValue(predefined);
+    }
+    this.filterForm.get('category').valueChanges.pipe(untilDestroyed(this)).subscribe((category) => {
+      this.filterForm.get('subCategory').reset();
+      this.subCategories = category ? this.subCategoriesMap[category.name] : [];
       this.cdr.detectChanges();
     });
     this.marketplaceService.getAllCategories().subscribe((categories) => {
@@ -49,12 +47,32 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
   }
 
   apply() {
-    this.filterChanged.emit(this.filterForm.value);
+    if (!deepEqual(this.previousFilter, this.filterForm.value) && this.hasValues) {
+    const filledValues = {};
+    for (const control in this.filterForm.value) {
+      const controlValue = this.filterForm.value[control];
+      if (!!controlValue) {
+        let value = controlValue;
+        if (/category|subCategory/.test(control)) {
+          value = controlValue.name
+        }
+        filledValues[control] = value;
+      }
+    }
+      this.previousFilter = this.filterForm.value;
+      this.router.navigate([], {relativeTo: this.route, queryParams: filledValues});
+    }
   }
 
   clear() {
-    this.filterChanged.emit(null);
+    this.previousFilter = null;
+    this.filterForm.reset();
+    this.router.navigate([], {relativeTo: this.route, queryParams: {}});
   }
 
   ngOnDestroy(): void {}
+
+  get hasValues() {
+    return Object.values(this.filterForm.value).some(v => !!v);
+  }
 }
