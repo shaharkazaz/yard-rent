@@ -51,7 +51,7 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
     const filledValues = {};
     for (const control in this.filterForm.value) {
       const controlValue = this.filterForm.value[control];
-      if (!!controlValue) {
+      if (isNumber(controlValue) || !!controlValue) {
         let value = controlValue;
         if (/category|subCategory/.test(control)) {
           value = controlValue.name
