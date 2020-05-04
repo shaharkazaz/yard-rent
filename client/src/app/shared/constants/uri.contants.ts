@@ -12,7 +12,7 @@ export const URI_CONSTANTS = {
     updateUser: 'users/updateuser/{id}'
   },
   products: {
-    getAll: 'products',
+    getAll: 'products/get',
     get: 'products/{id}',
     add: 'products',
     update: 'products/update/{id}',

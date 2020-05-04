@@ -10,7 +10,7 @@ import {Observable} from 'rxjs';
 })
 export class PollutionIndicatorComponent implements OnInit {
   airPollution: Observable<number>;
-  color: string;
+  color = '#DFEC12';
 
   constructor(private pollutionIndicatorService: PollutionIndicatorService) { }
 

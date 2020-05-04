@@ -324,6 +324,7 @@
     "updated-successfully": "User successfully updated"
   },
   "no-results": "No results... try clearing your filters",
+  "online-users": "Online users: {{count}}",
   "languages": {
     "en": "English",
     "es": "Spanish"
