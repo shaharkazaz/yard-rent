@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {MarketplaceService} from "../state/marketplace.service";
 import {allowedFileTypes, DatoSnackbar} from "@datorama/core";
 import {toBase64} from "../../shared/utils";
-import {finalize, switchMap} from "rxjs/operators";
+import {filter, finalize, switchMap} from "rxjs/operators";
 import {combineLatest, from, Observable, of} from "rxjs";
 import {untilDestroyed} from "ngx-take-until-destroy";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -38,7 +38,7 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initData();
     this.productForm.get('image').valueChanges
-      .pipe(switchMap(file => file ? from(toBase64(file)) : of('')), untilDestroyed(this)).subscribe((base64) => {
+      .pipe(filter(file => file.name !== 'fake.jpeg'), switchMap(file => file ? from(toBase64(file)) : of('')), untilDestroyed(this)).subscribe((base64) => {
       this.imageBase64 = base64;
       this.cdr.detectChanges();
     });
@@ -99,7 +99,8 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
           category: selectedCategory,
           subCategory: selectedSubCategory
         });
-        this.productForm.get('image').patchValue(new File([],''), {emitEvent: false})
+        this.productForm.get('image').patchValue(new File([],'fake.jpeg', {type: "image/jpeg"}), {emitEvent: false});
+        Object.values(this.productForm.controls).forEach(control => control.updateValueAndValidity());
       }
     })
   }
