@@ -9,7 +9,7 @@ import * as io from 'socket.io-client';
 })
 export class OnlineUsersComponent implements OnInit {
   socket;
-  numberOfOnlineUsers: number;
+  usersCount: number;
 
   constructor() {
     this.socket = io('http://127.0.0.1:3000');
@@ -17,7 +17,7 @@ export class OnlineUsersComponent implements OnInit {
 
   ngOnInit() {
     this.socket.on('numClients', (numberOfOnlineUsers) => {
-      this.numberOfOnlineUsers = numberOfOnlineUsers.numClients;
+      this.usersCount = numberOfOnlineUsers.numClients;
     });
   }
 
