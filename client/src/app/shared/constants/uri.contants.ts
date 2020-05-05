@@ -12,7 +12,7 @@ export const URI_CONSTANTS = {
     updateUser: 'users/updateuser/{id}'
   },
   products: {
-    getAll: 'products',
+    getAll: 'products/get',
     get: 'products/{id}',
     add: 'products',
     update: 'products/update/{id}',
@@ -41,6 +41,11 @@ export const URI_CONSTANTS = {
     releaseDeleted: 'products/_releaseDeleted'
   },
   shops: {
-    getAll: 'shops'
+    getAll: 'shops',
+    getAllProducts: 'products',
+    getProduct: 'products/{productId}'
+  },
+  pollutionIndicator: {
+    getAirPollution: 'airPollution'
   }
 };

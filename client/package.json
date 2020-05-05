@@ -28,7 +28,7 @@
     "@angular/router": "~8.2.14",
     "@datorama/akita": "^4.20.1",
     "@datorama/akita-cli": "^6.1.0",
-    "@datorama/core": "6.23.0",
+    "@datorama/core": "6.23.2",
     "@datorama/themify": "^1.0.5",
     "@ngneat/content-loader": "^4.1.0",
     "@ngneat/transloco": "2.14.0",

@@ -1,3 +1,6 @@
+@import url(~tippy.js/dist/tippy.css);
+@import url(~tippy.js/themes/light.css);
+@import url(~tippy.js/animations/scale.css);
 :root {
   --primary-700: 46, 47, 48;
   --primary-600: 55, 56, 58;
@@ -5126,6 +5129,12 @@ dato-list-v2 .checkmark {
   line-height: 46px;
 }
 
+.large-headline {
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 60px;
+}
+
 .sub-headline {
   font-size: 18px;
   font-weight: 600;
@@ -10210,6 +10219,49 @@ dato-group .dato-select__option:not(.dato-select__group), .dato-group-option .da
   }
 }
 
+.tippy-content {
+  position: relative;
+}
+
+.tippy-close, .dark .tippy-close {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: 9px;
+  right: 9px;
+  fill: rgba(var(--primary-300), 1);
+  cursor: pointer;
+  z-index: 10000000;
+}
+
+.tippy-box {
+  background-color: rgba(var(--primary-500), 0.9);
+  color: rgba(var(--primary-0), 1);
+  border-radius: 4px;
+  font-size: 11px;
+}
+
+.tippy-box .tippy-content {
+  padding: 4px 6px;
+}
+
+.tippy-box[data-theme~=light], .dark .tippy-box[data-theme~=light] {
+  font-size: 12px;
+  word-break: break-word;
+  border-radius: 0;
+  background-color: rgba(var(--primary-0), 1);
+  box-shadow: 0 2px 14px 0 rgba(0, 0, 0, 0.2);
+  color: rgba(var(--primary-500), 1);
+}
+
+.tippy-box[data-theme~=light] .tippy-content {
+  padding: 13px 48px 13px 20px;
+}
+
+.tippy-arrow::before {
+  box-shadow: -4px 4px 14px -4px rgba(0, 0, 0, 0.2);
+}
+
 .dato-highlight {
   background-color: rgba(var(--yellow-200), 1);
 }
@@ -10275,6 +10327,10 @@ dato-slider .label, .dark dato-slider .label {
 
 [datoMenuItem]:hover {
   background: rgba(var(--primary-100), 1);
+  color: rgba(var(--primary-700), 1);
+}
+
+[datoMenuItem] dato-icon {
   color: rgba(var(--primary-700), 1);
 }
 
@@ -10453,6 +10509,7 @@ dato-input-number[datoSize="sm"] .controls {
 }
 
 dato-input-number .controls button, .dark dato-input-number .controls button {
+  border: none;
   border-left: 1px solid rgba(var(--primary-200), 1);
 }
 
@@ -10745,6 +10802,12 @@ dato-button-group dato-button {
   font-size: 34px;
   font-weight: 300;
   line-height: 46px;
+}
+
+.large-headline {
+  font-size: 48px;
+  font-weight: 300;
+  line-height: 60px;
 }
 
 .sub-headline {
@@ -13938,161 +14001,165 @@ dato-list-v2 .accordion-list .dato-select__group.group-open, .dark dato-list-v2 
   background-color: rgba(var(--primary-300), 1);
 }
 
-.dark dato-button button {
+.dark dato-button button{
   color: rgba(var(--primary-700), 1);
 }
 
-.dark dato-button button:hover {
+.dark dato-button button:hover{
   background-color: rgba(var(--accent-350), 1);
 }
 
-.dark dato-button button:active {
+.dark dato-button button:active{
   background-color: rgba(var(--accent-300), 1);
 }
 
-.dark dato-list .dato-list__options dato-option:hover .dato-select__option,.dark dato-list .dato-list__options dato-option-v2:hover .dato-select__option,.dark dato-list-v2 .dato-list__options dato-option:hover .dato-select__option,.dark dato-list-v2 .dato-list__options dato-option-v2:hover .dato-select__option {
+.dark dato-list .dato-list__options dato-option:hover .dato-select__option,.dark dato-list .dato-list__options dato-option-v2:hover .dato-select__option,.dark dato-list-v2 .dato-list__options dato-option:hover .dato-select__option,.dark dato-list-v2 .dato-list__options dato-option-v2:hover .dato-select__option{
   color: rgba(var(--primary-0), 1);
 }
 
-.dark dato-checkbox .checkmark:after,.dark .dato-checkbox .checkmark:after {
+.dark dato-checkbox .checkmark:after,.dark .dato-checkbox .checkmark:after{
   border-color: rgba(var(--primary-700), 1);
 }
 
-.dark .dato-radio input[type="radio"]:checked:not(:disabled):hover + .radio-label:before {
+.dark .dato-radio input[type="radio"]:checked:not(:disabled):hover + .radio-label:before{
   background-color: rgba(var(--accent-350), 1);
   border: rgba(var(--accent-350), 1) 1px solid;
 }
 
-.dark .dato-radio input[type="radio"]:checked:not(:disabled):active + .radio-label:before {
+.dark .dato-radio input[type="radio"]:checked:not(:disabled):active + .radio-label:before{
   background-color: rgba(var(--accent-300), 1);
   border: rgba(var(--accent-300), 1) 1px solid;
 }
 
-.dark dato-toggler .dato-toggle__ball {
+.dark dato-toggler .dato-toggle__ball{
   background-color: rgba(var(--primary-700), 1);
 }
 
-.dark dato-snackbar.dato-snackbar-error .dato-snackbar-circle svg {
+.dark dato-snackbar.dato-snackbar-error .dato-snackbar-circle svg{
   fill: rgba(var(--primary-700), 1);
 }
 
-.dark dato-snackbar.dato-snackbar-success .dato-snackbar-circle svg {
+.dark dato-snackbar.dato-snackbar-success .dato-snackbar-circle svg{
   fill: rgba(var(--primary-700), 1);
 }
 
-.dark .dato-select__dropdown-container {
+.dark .dato-select__dropdown-container{
   background-color: rgba(var(--primary-700), 1);
 }
 
-.dark .dato-option--active {
+.dark .dato-option--active{
   background-color: rgba(var(--accent-700), 1);
 }
 
-.dark .dato-option--keyboard-active {
+.dark .dato-option--keyboard-active{
   background-color: rgba(var(--primary-500), 1);
 }
 
-.dark .dato-select__option--simple:not(.dato-select__option--disabled) {
+.dark .dato-select__option--simple:not(.dato-select__option--disabled){
   color: rgba(var(--primary-100), 1);
 }
 
-.dark .dato-select--disabled .dato-select__placeholder {
+.dark .dato-select--disabled .dato-select__placeholder{
   color: rgba(var(--primary-400), 1);
 }
 
-.dark .dato-select--disabled .dato-trigger-multi__active {
+.dark .dato-select--disabled .dato-trigger-multi__active{
   color: rgba(var(--primary-400), 1);
 }
 
-.dark .dato-select--disabled .dato-trigger-multi__active .dato-icon-close {
+.dark .dato-select--disabled .dato-trigger-multi__active .dato-icon-close{
   fill: rgba(var(--primary-400), 1);
 }
 
-.dark .dato-select--disabled .dato-multi-search::-webkit-input-placeholder {
+.dark .dato-select--disabled .dato-multi-search::-webkit-input-placeholder{
   color: rgba(var(--primary-400), 1);
 }
 
-.dark .dato-select--disabled .dato-multi-search:-moz-placeholder {
+.dark .dato-select--disabled .dato-multi-search:-moz-placeholder{
   color: rgba(var(--primary-400), 1);
 }
 
-.dark .dato-select--disabled .dato-multi-search::-moz-placeholder {
+.dark .dato-select--disabled .dato-multi-search::-moz-placeholder{
   color: rgba(var(--primary-400), 1);
 }
 
-.dark .dato-select--disabled .dato-multi-search:-ms-input-placeholder {
+.dark .dato-select--disabled .dato-multi-search:-ms-input-placeholder{
   color: rgba(var(--primary-400), 1);
 }
 
-.dark .dato-select__footer {
+.dark .dato-select__footer{
   background-color: rgba(var(--primary-700), 1);
   border-top: 1px solid rgba(var(--primary-500), 1);
 }
 
-.dark .dato-select__header {
+.dark .dato-select__header{
   border-bottom: 2px solid rgba(var(--primary-500), 1);
 }
 
-.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header) {
+.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header){
   color: rgba(var(--primary-0), 1);
 }
 
-.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header) .dato-checkbox p {
+.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header) .dato-checkbox p{
   color: rgba(var(--primary-0), 1);
 }
 
-.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header) .dato-checkbox label > input:not(:checked) ~ .checkmark {
+.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header) .dato-checkbox label > input:not(:checked) ~ .checkmark{
   background: rgba(var(--primary-700), 1);
 }
 
-.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header):hover:not(.dato-option--active):not(.dato-select__group):not(.dato-select__not-found) {
+.dark .dato-select__dropdown-container .dato-select__option:not(.dato-select__option--disabled):not(.dato-select__header):hover:not(.dato-option--active):not(.dato-select__group):not(.dato-select__not-found){
   background: rgba(var(--primary-500), 1);
   color: rgba(var(--primary-0), 1);
 }
 
-.dark .dato-select__header label > input:not(:checked) ~ .checkmark:not(.indeterminately-checked) {
+.dark .dato-select__header label > input:not(:checked) ~ .checkmark:not(.indeterminately-checked){
   background: rgba(var(--primary-700), 1);
 }
 
-.dark dato-trigger-multi .dato-trigger-multi__active {
+.dark dato-trigger-multi .dato-trigger-multi__active{
   color: rgba(var(--primary-700), 1);
 }
 
-.dark dato-trigger-multi .dato-trigger-multi__active:hover {
+.dark dato-trigger-multi .dato-trigger-multi__active:hover{
   background-color: rgba(var(--accent-350), 1);
 }
 
-.dark dato-trigger-multi .dato-trigger-multi__active:hover .dato-icon-close {
+.dark dato-trigger-multi .dato-trigger-multi__active:hover .dato-icon-close{
   color: rgba(var(--accent-700), 1);
 }
 
-.dark dato-trigger-multi .dato-trigger-multi__active .dato-icon-close {
+.dark dato-trigger-multi .dato-trigger-multi__active .dato-icon-close{
   color: rgba(var(--accent-600), 1);
 }
 
-.dark .dato-trigger-multi--focused {
+.dark .dato-trigger-multi--focused{
   border-color: rgba(var(--accent-500), 1);
 }
 
-.dark [datoMenuItem] {
+.dark [datoMenuItem]{
   background-color: rgba(var(--primary-50), 1);
   color: rgba(var(--primary-400), 1);
 }
 
-.dark [datoMenuItem]:hover {
+.dark [datoMenuItem]:hover{
   background: rgba(var(--primary-0), 1);
   color: rgba(var(--primary-500), 1);
 }
 
-.dark .dato-form-submitted .ng-invalid[datoControlErrors]:not([formGroupName]):not([formArrayName]) [datoErrorValidationBorderAnchor],.dark [datoForm] .ng-touched.ng-invalid[datoControlErrors]:not([formGroupName]):not([formArrayName]) [datoErrorValidationBorderAnchor],.dark [datoControlErrors]:not(form):not([formGroupName]):not([formArrayName]).ng-touched.ng-invalid [datoErrorValidationBorderAnchor],.dark .input-error-border [datoErrorValidationBorderAnchor] {
+.dark [datoMenuItem] dato-icon{
+  color: rgba(var(--primary-300), 1);
+}
+
+.dark .dato-form-submitted .ng-invalid[datoControlErrors]:not([formGroupName]):not([formArrayName]) [datoErrorValidationBorderAnchor],.dark [datoForm] .ng-touched.ng-invalid[datoControlErrors]:not([formGroupName]):not([formArrayName]) [datoErrorValidationBorderAnchor],.dark [datoControlErrors]:not(form):not([formGroupName]):not([formArrayName]).ng-touched.ng-invalid [datoErrorValidationBorderAnchor],.dark .input-error-border [datoErrorValidationBorderAnchor]{
   border: 1px solid null;
 }
 
-.dark dato-grid-column-header-more-menu button {
+.dark dato-grid-column-header-more-menu button{
   color: rgba(var(--primary-0), 1);
 }
 
-.dark dato-grid-column-header-more-menu button:hover {
+.dark dato-grid-column-header-more-menu button:hover{
   background: rgba(var(--primary-500), 1);
   color: rgba(var(--primary-0), 1);
 }

@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit
 import {FormBuilder} from "@angular/forms";
 import {untilDestroyed} from "ngx-take-until-destroy";
 import {MarketplaceService} from "../state/marketplace.service";
-import {deepEqual} from "@datorama/core";
+import {deepEqual, isNumber} from "@datorama/core";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
@@ -51,7 +51,7 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
     const filledValues = {};
     for (const control in this.filterForm.value) {
       const controlValue = this.filterForm.value[control];
-      if (!!controlValue) {
+      if (isNumber(controlValue) || !!controlValue) {
         let value = controlValue;
         if (/category|subCategory/.test(control)) {
           value = controlValue.name
@@ -73,6 +73,6 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   get hasValues() {
-    return Object.values(this.filterForm.value).some(v => !!v);
+    return Object.values(this.filterForm.value).some(v => isNumber(v) || !!v);
   }
 }
