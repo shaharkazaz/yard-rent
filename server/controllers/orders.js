@@ -44,6 +44,11 @@ module.exports = {
                 products,
                 rewards
             });
+            // Check if user has enough rewards
+            if(rewards > user.rewards)
+            {
+                return res.status(500).json({message: "You do not have enough Rewards !"})
+            }
             order.save().then(() => {
                 User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(() => {
                     // Decrease the rewards from user amount
