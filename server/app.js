@@ -4,6 +4,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const schedule = require('node-schedule');
+
 
 mongoose.connect('mongodb://uy9uxa5ensvbjwshje2a:KzfvYuOnKVCaQrZ26jpJ@bytcreskhtan8ld-mongodb.services.clever-cloud.com:27017/bytcreskhtan8ld',
     {
@@ -76,6 +78,10 @@ app.use((error, req, res, next) => {
       message: error.message
     }
   })
+});
+
+schedule.scheduleJob('30 * * * * *', function(){
+    console.log(new Date(), "Somthing important is going to happen today!");
 });
 
 module.exports = app;
