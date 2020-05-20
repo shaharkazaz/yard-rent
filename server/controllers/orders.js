@@ -11,7 +11,7 @@ cron.schedule('*/2 * * * *', () => {
     const now = new Date();
     const oneDayInMilliseconds = 86400000;
 
-    Order.find({}, {_id: 0}).populate('user', {_id: 1}).then((orders) => {
+    Order.find({}, {_id: 1}).populate('user', {_id: 1}).then((orders) => {
         for(let order of orders)
         {
             if((order.returnDate - now) < oneDayInMilliseconds)

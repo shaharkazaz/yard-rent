@@ -244,10 +244,9 @@ module.exports = {
             })
         })
     },
-
     getUserMessages: (req, res) => {
         const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}, {product:0,orderId:0,isDeleted:0,password:0,role:0,rewards:0}).then((user) => {
+        User.findOne({_id:userId,isDeleted: false}, {_id: 0, notification: 1}).then((user) => {
             res.status(200).json(user)
         }).catch((error) => {
             res.status(500).json({
