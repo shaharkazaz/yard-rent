@@ -14,5 +14,7 @@ router.get('/productsList', checkAuth(), getAllProductsOfUser);
 router.get('/ordersList', checkAuth(), getAllOrdersOfUser);
 router.patch('/update/:userId', checkAuth(), updateUser);
 router.get('/getUserById/:userId', checkAuth(), getUserById);
+router.get('/messages/:userId', checkAuth(), getUserMessages);
+
 
 module.exports = router;

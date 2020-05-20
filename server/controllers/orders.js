@@ -4,6 +4,36 @@ const User = require('../model/user');
 const Product = require('../model/product');
 const getUserId = require('../utils/getUserId');
 const {removeProductsFromDataSet} = require('../utils/updateDataSet');
+const cron = require('node-cron');
+
+// orderIsAboutToExpire24H cron job every 2 minutes
+cron.schedule('*/2 * * * *', () => {
+    const now = new Date();
+    const oneDayInMilliseconds = 86400000;
+
+    Order.find({}, {_id: 0}).populate('user', {_id: 1}).then((orders) => {
+        for(let order of orders)
+        {
+            if((order.returnDate - now) < oneDayInMilliseconds)
+            {
+                const notificationId = new mongoose.Types.ObjectId();
+                const notification = new Notification({
+                    _id: notificationId,
+                    order: order,
+                    type: "orderIsAboutToExpire24H"
+                });
+                User.findOneAndUpdate({_id: order.user._id},{$push: {notification: notification._id}}).then(() => {
+                    }).catch(error => {
+                        //TODO: error handling
+                })
+            }
+        }
+    }).catch((error) => {
+        //TODO: error handling
+        console.log(error);
+    })
+});
+
 
 module.exports = {
     getAllOrders: (req, res) => {
