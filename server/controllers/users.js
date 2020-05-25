@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const getUserId = require('../utils/getUserId');
+const uploadToGCP = require('../utils/uploadToGCP');
+
 
 function getToken({_id, role}) {
     return jwt.sign({
@@ -232,9 +234,14 @@ module.exports = {
             })
         })
     },
-    updateUser: (req, res) => {
+    updateUser: async (req, res) => {
         const userId = req.params.userId;
-        User.updateOne({_id: userId}, req.body).then(() => {
+        const uploadedImage = await uploadToGCP(req, res);
+        const newUser = req.body;
+        if (uploadedImage){
+            newUser.image = uploadedImage
+        }
+        User.updateOne({_id: userId}, newUser).then(() => {
             User.findById({_id: userId}, {product: 0, orderId: 0,isDeleted:0,password:0,role:0}).then((user)=>{
                 res.status(200).json(user);
                 })
