@@ -10,6 +10,9 @@ async function uploadImage(req,res){
     return new Promise(resolve => {
         const bucketName = 'yard-rent.appspot.com';
         const encodedImage = req.body.image;
+        if (!encodedImage) {
+            return null
+        }
 
         // Decode the image
         const generateId = uniqid();
