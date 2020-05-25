@@ -261,4 +261,24 @@ module.exports = {
             })
         })
     },
+    },
+    getUserFavorites: async (req, res) => {
+        const userId = await getUserId(req);
+        User.findById({_id:userId},{favorites:1}).populate({
+            path: 'favorites', match: {isDeleted: false}, select: {
+                isDeleted: 0
+            }, populate: [{path: 'user', select: {name: 1, _id: 0}}, {
+                path: 'category', select: {
+                    name: 1,
+                    _id: 0
+                }
+            }, {path: 'subCategory', select: {name: 1, _id: 0}}]
+        }).then((favorites)=>{
+            res.status(200).json(favorites ? favorites.favorites : []);
+        }).catch((error) => {
+            res.status(500).json({
+                error
+            })
+        })
+    }
 };

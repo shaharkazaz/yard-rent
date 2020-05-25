@@ -18,10 +18,10 @@ const userSchema = mongoose.Schema({
     orderId: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false }],
     isDeleted: {type: Boolean, default: false, required: true},
     notification: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Notification', required: false }],
-    isDeleted: {type: Boolean, default: false, required: true },
     phone: { type: String, default: false, required: true },
     image: { type: String, default: false, required: false },
     rating: { type: Number, required: true, default: 0, min: 0, max: 5 }
+    favorites: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false }]
 });
 
 module.exports = mongoose.model('User', userSchema);
