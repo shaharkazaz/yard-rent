@@ -233,9 +233,9 @@ module.exports = {
             })
         })
     },
-    updateUser: (req, res) => {
+    updateUser: async (req, res) => {
         const userId = req.params.userId;
-        const uploadedImage = uploadToGCP(req, res);
+        const uploadedImage = await uploadToGCP(req, res);
         const newUser = req.body;
         if (uploadedImage){
             newUser.image = uploadedImage
