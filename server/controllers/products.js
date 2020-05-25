@@ -3,7 +3,7 @@ const Products = require('../model/product');
 const User = require('../model/user');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
-const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet,clearDataSet} = require('../utils/updateDataSet');
+const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet, clearDataSet} = require('../utils/updateDataSet');
 
 module.exports = {
     addProduct: async (req, res) => {
@@ -101,7 +101,6 @@ module.exports = {
         });
     },
     //User.findByIdAndUpdate(product.user, {$pull: {product: productId}}).then(() => {
-    //TODO: return a populated product and decide on the filter
     getProducts: (req, res) => {
         let {text = "", minRewards = 1, maxRewards = Number.MAX_SAFE_INTEGER, category, subCategory} = req.body;
         const pipeline = [
@@ -248,13 +247,37 @@ module.exports = {
             })
         });
     },
-    getIds: (req,res) => {
-        Products.find({isDeleted: false, isRented: false},{_id: 1}).then((products) => {
+    getIds: (req, res) => {
+        Products.find({isDeleted: false, isRented: false}, {_id: 1}).then((products) => {
             res.status(200).json(products);
         }).catch(error => {
             res.status(500).json({
                 error
             })
+        })
+    },
+    addToFavorites: async (req, res) => {
+        const {products} = req.body;
+        const userId = await getUserId(req);
+        const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
+        User.findByIdAndUpdate({_id: userId}, {$push: {favorites: objectIdProducts}}).then(() => {
+            res.status(200).json();
+        }).catch(error => {
+            res.status(500).json({
+                error
+            });
+        })
+    },
+    removeFromFavorites: async (req, res) => {
+        const {products} = req.body;
+        const userId = await getUserId(req);
+        const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
+        User.findByIdAndUpdate({_id: userId}, {$pullAll: {favorites: objectIdProducts}}).then(() => {
+            res.status(200).json();
+        }).catch(error => {
+            res.status(500).json({
+                error
+            });
         })
     }
 };
