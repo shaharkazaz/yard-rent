@@ -1,4 +1,5 @@
 const {clearDataSet} = require('../utils/updateDataSet');
+const Notification = require('../model/notification');
 const User = require('../model/user');
 const Products = require('../model/product');
 const bcrypt = require('bcrypt');
@@ -242,5 +243,15 @@ module.exports = {
                 error
             })
         })
-    }
+    },
+    getUserMessages: (req, res) => {
+        const userId = req.params.userId;
+        User.findOne({_id:userId,isDeleted: false}, {_id: 0, notification: 1}).then((user) => {
+            res.status(200).json(user)
+        }).catch((error) => {
+            res.status(500).json({
+                error
+            })
+        })
+    },
 };
