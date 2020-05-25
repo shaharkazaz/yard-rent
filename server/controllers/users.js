@@ -261,7 +261,6 @@ module.exports = {
             })
         })
     },
-    },
     getUserFavorites: async (req, res) => {
         const userId = await getUserId(req);
         User.findById({_id:userId},{favorites:1}).populate({
