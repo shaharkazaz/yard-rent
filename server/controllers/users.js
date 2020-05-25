@@ -18,7 +18,7 @@ function getToken({_id, role}) {
 
 module.exports = {
     signup: (req, res) => {
-        const {name, email, password, address} = req.body;
+        const {name, email, password, address, phone} = req.body;
         User.find({email}).then((users) => {
             if (users.length >= 1) {
                 return res.status(200).json({
@@ -40,7 +40,8 @@ module.exports = {
                     password: hash,
                     address,
                     role: 'user',
-                    rewards: 200
+                    rewards: 200,
+                    phone
                 });
 
                 user.save().then(() => {
