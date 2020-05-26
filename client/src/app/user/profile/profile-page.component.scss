@@ -2,4 +2,10 @@
   height: calc(100% - 40px);
   display: flex;
   padding: 20px;
+  .profile-image {
+    height: 120px;
+    width: 120px;
+    background-position: center;
+    background-size: contain;
+  }
 }

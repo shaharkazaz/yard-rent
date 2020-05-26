@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {UserDataService} from "./user.data-service";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserService {
   constructor(private dataService: UserDataService) {}
 
@@ -19,5 +19,9 @@ export class UserService {
 
   getUser(id: string) {
     return this.dataService.getUserById(id);
+  }
+
+  getMessages(id: string) {
+    return this.dataService.getMessages(id);
   }
 }

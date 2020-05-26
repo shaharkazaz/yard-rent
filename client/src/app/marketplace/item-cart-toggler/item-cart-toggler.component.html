@@ -1,2 +1,2 @@
 <dato-button [attr.datoType]="inCart ? 'orange' : 'primary'" (click)="toggleItemInCart()"
->+ {{ (inCart ? 'remove-from-cart' : 'add-to-cart') | transloco }}</dato-button>
+>{{inCart ? '-' : '+'}} {{ (inCart ? 'remove-from-cart' : 'add-to-cart') | transloco }}</dato-button>

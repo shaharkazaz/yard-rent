@@ -59,7 +59,7 @@ const routes: Routes = [
     ProfilePageComponent,
     EditUserComponent
   ],
-  providers: [UserService, UserDataService],
+  providers: [],
   exports: [MyOrdersPageComponent]
 })
 export class UserModule {}

@@ -68,8 +68,7 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  private signup()
-  {
+  private signup() {
     this.authService
       .signup(this.form.value)
       .pipe(filter(({ success }) => success))

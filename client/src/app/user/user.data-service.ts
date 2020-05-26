@@ -5,7 +5,7 @@ import {URI_CONSTANTS} from "../shared/constants/uri.contants";
 import {Product} from "../marketplace/marketplace.types";
 import {UserInfo} from "../auth/state/auth.model";
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserDataService {
   constructor(private http: HttpClient) {}
 
@@ -23,5 +23,9 @@ export class UserDataService {
 
   getUserById(id: string) {
     return this.http.get<Partial<UserInfo>>(parseUrl(URI_CONSTANTS.users.getUserById, {id}));
+  }
+
+  getMessages(id: string) {
+    return this.http.get<any>(parseUrl(URI_CONSTANTS.users.messages, {id}));
   }
 }

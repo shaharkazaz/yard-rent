@@ -38,7 +38,7 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initData();
     this.productForm.get('image').valueChanges
-      .pipe(filter(file => file.name !== 'fake.jpeg'), switchMap(file => file ? from(toBase64(file)) : of('')), untilDestroyed(this)).subscribe((base64) => {
+      .pipe(filter(file => file && file.name !== 'fake.jpeg'), switchMap(file => file ? from(toBase64(file)) : of('')), untilDestroyed(this)).subscribe((base64) => {
       this.imageBase64 = base64;
       this.cdr.detectChanges();
     });

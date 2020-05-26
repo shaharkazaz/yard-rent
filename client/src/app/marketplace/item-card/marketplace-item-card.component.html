@@ -39,8 +39,8 @@
       tabindex="-1"
       [routerLink]="'../' + item._id"
       datoType="none"
-      >{{ t('view-item') }}</dato-button
-    >
+      >{{ t('view-item') }}</dato-button>
     <marketplace-item-cart-toggler [product]="item"></marketplace-item-cart-toggler>
+    <app-favorite></app-favorite>
   </div>
 </div>

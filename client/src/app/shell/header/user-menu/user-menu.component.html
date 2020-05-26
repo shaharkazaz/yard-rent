@@ -1,52 +1,68 @@
-<ng-container *transloco="let t">
-
-<div class="profile mr-20 pointer"
-     datoPopoverPlacement="bottom"
-     datoPopoverClassName="shared"
-     [datoPopoverContent]="userMenu">
-  <dato-icon
-    height="40px"
-    width="40px"
-    class="primary-400-color"
-    datoIcon="user"
-  ></dato-icon>
-</div>
-<ng-template #userMenu>
-  <div class="d-flex-column">
-    <div class="dato-sub-headline mb-10">
-      {{ t('hello', { name: user.name }) }}
+<ng-container *datoSubscribe="user$ as user">
+  <ng-container *transloco="let t">
+    <div class="profile mr-20 pointer relative"
+         datoPopoverPlacement="bottom"
+         datoPopoverClassName="shared"
+         [datoPopoverContent]="userMenu">
+      <div class="profile-image" [style.backgroundImage]="'url(' + user.image + ')'"
+           *ngIf="user.image; else defaultImage"></div>
+      <ng-template #defaultImage>
+        <dato-icon
+          height="40px"
+          width="40px"
+          class="primary-400-color"
+          datoIcon="user"
+        ></dato-icon>
+      </ng-template>
+      <div class="orange-300-background-color notification p-3 absolute" *ngIf="newMessages > 0">
+        <dato-icon height="16px" width="16px" datoSize="sm" datoIcon="letter"></dato-icon>
+      </div>
     </div>
-    <div class="dato-simple-bold mb-10">
-      {{ t('you-have-rewards', { rewards: formatNumber(user.rewards) }) }}
-    </div>
-    <dato-link
-      datoPopoverClose
-      class="my-5"
-      datoType="secondary"
-      routerLink="user/my-products"
-    >{{ t('my-products') }}</dato-link
-    >
-    <dato-link
-      datoPopoverClose
-      class="my-5"
-      datoType="secondary"
-      routerLink="user/my-orders"
-    >{{ t('my-orders') }}</dato-link
-    >
-    <dato-link
-      datoPopoverClose
-      class="my-5"
-      datoType="secondary"
-      routerLink="user/profile"
-    >{{ t('my-profile') }}</dato-link
-    >
-    <dato-button
-      datoPopoverClose
-      class="mt-10"
-      datoType="secondary"
-      (click)="logout()"
-    >{{ t('logout') }}</dato-button
-    >
-  </div>
-</ng-template>
+    <ng-template #userMenu>
+      <div class="d-flex-column">
+        <div class="dato-sub-headline mb-10">
+          {{ t('hello', {name: user.name}) }}
+        </div>
+        <div class="dato-simple-bold mb-10">
+          {{ t('you-have-rewards', {rewards: formatNumber(user.rewards)}) }}
+        </div>
+        <dato-link
+          datoPopoverClose
+          class="my-5"
+          datoType="secondary"
+          routerLink="user/watchlist"
+        >{{ t('watchlist') }}</dato-link>
+        <dato-link
+          datoPopoverClose
+          class="my-5"
+          datoType="secondary"
+          routerLink="user/my-products"
+        >{{ t('my-products') }}</dato-link>
+        <dato-link
+          datoPopoverClose
+          class="my-5"
+          datoType="secondary"
+          routerLink="user/my-orders"
+        >{{ t('my-orders') }}</dato-link>
+        <dato-link
+          datoPopoverClose
+          class="my-5"
+          datoType="secondary"
+          routerLink="user/messages"
+        >{{ t('message-center') }}&nbsp;<span *ngIf="newMessages > 0">({{ newMessages }})</span></dato-link>
+        <dato-link
+          datoPopoverClose
+          class="my-5"
+          datoType="secondary"
+          routerLink="user/profile"
+        >{{ t('my-profile') }}</dato-link>
+        <dato-button
+          datoPopoverClose
+          class="mt-10"
+          datoType="secondary"
+          (click)="logout()"
+        >{{ t('logout') }}</dato-button>
+      </div>
+    </ng-template>
+  </ng-container>
 </ng-container>

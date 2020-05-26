@@ -34,7 +34,8 @@ export const URI_CONSTANTS = {
     productsList: 'users/productsList',
     ordersList: 'users/ordersList',
     getUserById: 'users/getUserById/{id}',
-    updateUser: 'users/update/{id}'
+    updateUser: 'users/update/{id}',
+    messages: 'users/messages/{id}'
   },
   development: {
     releaseRented: 'products/_releaseRented',

@@ -254,7 +254,7 @@ module.exports = {
     getUserMessages: (req, res) => {
         const userId = req.params.userId;
         User.findOne({_id:userId,isDeleted: false}, {_id: 0, notification: 1}).then((user) => {
-            res.status(200).json(user)
+            res.status(200).json(user.notification)
         }).catch((error) => {
             res.status(500).json({
                 error

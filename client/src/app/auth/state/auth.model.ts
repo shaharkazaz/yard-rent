@@ -16,6 +16,7 @@ export type UserInfo = {
   product: string[];
   rewards: number;
   role: UserRole;
+  image: string;
   _id: string;
 }
 

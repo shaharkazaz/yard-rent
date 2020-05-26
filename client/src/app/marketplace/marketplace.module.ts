@@ -20,6 +20,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ContentLoaderModule} from '@ngneat/content-loader';
 import { ItemCardLoaderComponent } from './item-card/item-card-loader/item-card-loader.component';
 import { ItemCartTogglerComponent } from './item-cart-toggler/item-cart-toggler.component';
+import {SharedModule} from "../shared/components/shared.module";
 
 const routes: Routes = [
   {
@@ -53,25 +54,26 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    TranslocoModule,
-    DatoIconModule,
-    CommonModule,
-    DatoDirectivesModule,
-    DatoButtonModule,
-    BingMapModule,
-    DatoFileInputModule,
-    ReactiveFormsModule,
-    DatoInputModule,
-    DatoInputNumberModule,
-    DatoSelectModule,
-    DatoPipesModule,
-    ContentLoaderModule,
-    DatoInfiniteScrollModule,
-    DatoFormValidationModule,
-    DatoCoreModule,
-  ],
+    imports: [
+        RouterModule.forChild(routes),
+        TranslocoModule,
+        DatoIconModule,
+        CommonModule,
+        DatoDirectivesModule,
+        DatoButtonModule,
+        BingMapModule,
+        DatoFileInputModule,
+        ReactiveFormsModule,
+        DatoInputModule,
+        DatoInputNumberModule,
+        DatoSelectModule,
+        DatoPipesModule,
+        ContentLoaderModule,
+        DatoInfiniteScrollModule,
+        DatoFormValidationModule,
+        DatoCoreModule,
+        SharedModule,
+    ],
   declarations: [
     MarketplacePageComponent,
     MarketplaceFiltersComponent,

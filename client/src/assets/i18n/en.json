@@ -327,5 +327,7 @@
   "languages": {
     "en": "English",
     "es": "Spanish"
-  }
+  },
+  "message-center": "Message center",
+  "watchlist": "Watchlist"
 }

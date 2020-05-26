@@ -17,6 +17,7 @@ import { DeveloperOptionsComponent } from './header/developer-options/developer-
 import { UserMenuComponent } from './header/user-menu/user-menu.component';
 import { NavComponent } from './header/nav/nav.component';
 import { LanguageSelectorComponent } from './header/language-selector/language-selector.component';
+import {SharedModule} from "../shared/components/shared.module";
 
 @NgModule({
     imports: [
@@ -30,7 +31,8 @@ import { LanguageSelectorComponent } from './header/language-selector/language-s
         RouterModule,
         DatoLinkButtonModule,
         AuthModule,
-        DatoPopoverModule
+        DatoPopoverModule,
+        SharedModule
     ],
   declarations: [AppHeaderComponent, AppFooterComponent, DeveloperOptionsComponent, UserMenuComponent, NavComponent, LanguageSelectorComponent],
   exports: [AppHeaderComponent, AppFooterComponent]
