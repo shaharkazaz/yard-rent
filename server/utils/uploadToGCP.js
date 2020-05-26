@@ -11,7 +11,7 @@ async function uploadImage(req,res){
         const bucketName = 'yard-rent.appspot.com';
         const encodedImage = req.body.image;
         if (!encodedImage) {
-            return null
+            return resolve(null)
         }
 
         // Decode the image
