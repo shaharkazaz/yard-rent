@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
+const getCoordinatesByAddress = require('../utils/gpsApi');
 
 
 function getToken({_id, role}) {
@@ -22,13 +23,31 @@ function getToken({_id, role}) {
 module.exports = {
     signup: (req, res) => {
         const {name, email, password, address, phone} = req.body;
-        User.find({email}).then((users) => {
+        User.find({email}).then(async (users) => {
             if (users.length >= 1) {
                 return res.status(200).json({
                     success: false,
                     message: 'Email already exists'
                 })
             }
+            const splittedAddress = address.split(",").map(item => item.trim());
+            const street = splittedAddress[0]
+            const city = splittedAddress[1]
+            const country = splittedAddress[2]
+            const coordinates = await getCoordinatesByAddress(street, city, country);
+            if(!coordinates) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Please Enter Vaild Address'
+                })
+            }
+            const newAddress = {
+                street,
+                city,
+                country,
+                coordinates
+            };
+
             bcrypt.hash(password, 10, (error, hash) => {
                 if (error) {
                     return res.status(500).json({
@@ -41,7 +60,7 @@ module.exports = {
                     name,
                     email,
                     password: hash,
-                    address,
+                    address: newAddress,
                     role: 'user',
                     rewards: 200,
                     phone
@@ -238,6 +257,27 @@ module.exports = {
         const userId = req.params.userId;
         const uploadedImage = await uploadToGCP(req, res);
         const newUser = req.body;
+        const { address } = req.body
+        if(address){
+            const splittedAddress = address.split(",").map(item => item.trim());
+            const street = splittedAddress[0]
+            const city = splittedAddress[1]
+            const country = splittedAddress[2]
+            const coordinates = await getCoordinatesByAddress(street, city, country);
+            if(!coordinates) {
+                return res.status(500).json({
+                    success: false,
+                    message: 'Please Enter Vaild Address'
+                })
+            }
+            const newAddress = {
+                street,
+                city,
+                country,
+                coordinates
+            };
+            newUser.address = newAddress
+        }
         if (uploadedImage){
             newUser.image = uploadedImage
         }

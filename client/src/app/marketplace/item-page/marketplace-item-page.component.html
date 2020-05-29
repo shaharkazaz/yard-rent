@@ -23,8 +23,8 @@
         </div>
         <aside class="height-100 side-container d-flex-column align-center">
           <div class="image width-100 mb-20" [style.background-image]="'url(' + product.image + ')'"></div>
-          <div class="width-100 height-30">
-            <!--        <bing-map></bing-map>-->
+          <div class="width-100 height-100">
+            <bing-map [addresses]="[product.address]"></bing-map>
           </div>
         </aside>
       </div>

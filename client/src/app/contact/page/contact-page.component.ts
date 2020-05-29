@@ -1,15 +1,24 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ContactService} from '../contact.service';
 
 @Component({
   selector: 'app-contact-page',
   templateUrl: './contact-page.component.html',
   styleUrls: ['./contact-page.component.scss']
 })
-export class ContactPageComponent implements AfterViewInit {
+export class ContactPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('canvasEl', {static: true}) canvasEl: ElementRef;
+  addresses: [];
 
-  constructor() {}
+
+  constructor(private contactService : ContactService) {}
+
+  ngOnInit()  {
+    this.contactService.getAllShops().subscribe(shops => {
+      this.addresses = shops
+    })
+  }
 
   ngAfterViewInit() {
     this.drawCanvas();
