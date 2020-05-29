@@ -3,15 +3,10 @@ const http = require("http");
 const configBing = require('../utils/configBing');
 
 
-async function getCoordinatesByAddress(req){
+async function getCoordinatesByAddress(street, city, country){
     return new Promise(resolve => {
-
-        const address = req.body.address;
-        const city = req.body.city;
-        const country = req.body.country;
-
         // Prepare url string
-        const fullAddressSplitted = (address + " " + city + " " + country).split(" ");
+        const fullAddressSplitted = (street + " " + city + " " + country).split(" ");
         let addressToSubmit = "";
         fullAddressSplitted.forEach((i) => {
             addressToSubmit += " ";

@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
     password: {type: String, required: true},
     permissions: {type: {}, required: false},
     role: {type: String, required: true},
-    address: {type: String, required: true},
+    address: {type: {}, required: true},
     rewards: {type: Number, required: true},
     product: [{type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false}],
     orderId: [{type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false}],

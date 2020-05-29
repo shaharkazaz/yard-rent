@@ -7,8 +7,9 @@ const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet, c
 
 module.exports = {
     addProduct: async (req, res) => {
-        const {name, category, subCategory, rewards, address, description} = req.body;
+        const {name, category, subCategory, rewards, description} = req.body;
         const userId = await getUserId(req);
+        const { address }  = await User.findById(userId)
         const imageUrl = await uploadToGCP(req, res);
         const product = new Products({
             _id: new mongoose.Types.ObjectId(),
@@ -17,7 +18,7 @@ module.exports = {
             category,
             subCategory,
             rewards,
-            address, //check it address is empty put user.address
+            address,
             description,
             image: imageUrl
         });

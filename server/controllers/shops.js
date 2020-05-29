@@ -13,11 +13,11 @@ module.exports = {
         })
     },
     addShop: async (req, res) => {
-        const {address, city, country} = req.body;
-        const coordinates = await getCoordinatesByAddress(req);
+        const {street, city, country} = req.body;
+        const coordinates = await getCoordinatesByAddress(street, city, country);
         const shop = new Shop({
             _id: new mongoose.Types.ObjectId(),
-            address,
+            street,
             city,
             country,
             coordinates

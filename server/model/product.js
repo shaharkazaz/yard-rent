@@ -7,7 +7,7 @@ const productSchema = mongoose.Schema({
         category: {type: mongoose.Schema.Types.ObjectID, ref: 'Category', required: true},
         subCategory: {type: mongoose.Schema.Types.ObjectID, ref: 'SubCategory', required: true},
         rewards: {type: Number, required: true},
-        address: {type: String, required: true}, //TODO:write in the UI if its a different address if not we will take the address of the user
+        address: {type: {}, required: true},
         description: {type: String, required: true},
         image: {type: String, required: true},
         isDeleted: {type: Boolean, default: false, required: true},
