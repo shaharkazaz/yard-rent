@@ -5,6 +5,8 @@ const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet, clearDataSet} = require('../utils/updateDataSet');
 
+const shuffle = async (array) => array.sort(() => Math.random() - 0.5)
+
 module.exports = {
     addProduct: async (req, res) => {
         const {name, category, subCategory, rewards, description} = req.body;
@@ -101,7 +103,6 @@ module.exports = {
             })
         });
     },
-    //User.findByIdAndUpdate(product.user, {$pull: {product: productId}}).then(() => {
     getProducts: (req, res) => {
         let {text = "", minRewards = 1, maxRewards = Number.MAX_SAFE_INTEGER, category, subCategory} = req.body;
         const pipeline = [
@@ -164,8 +165,9 @@ module.exports = {
             pipeline.push({$match: {'subCategory.name': subCategory}},);
         }
 
-        Products.aggregate(pipeline).then(products => {
-            res.status(200).json(products)
+        Products.aggregate(pipeline).then(async products => {
+            const shuffledProducts = await shuffle(products)
+            res.status(200).json(shuffledProducts)
         }).catch(error => {
             return res.status(500).json({
                 error
