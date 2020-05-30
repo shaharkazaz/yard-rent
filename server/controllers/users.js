@@ -282,7 +282,8 @@ module.exports = {
             newUser.image = uploadedImage
         }
         User.updateOne({_id: userId}, newUser).then(() => {
-            User.findById({_id: userId}, {isDeleted:0,password:0}).then((user)=>{
+            User.findById({_id: userId}, {isDeleted:0,password:0}).then(async (user)=>{
+                await Products.updateMany({_id: {$in: user.product}},{$set:{address: newUser.address}})
                 res.status(200).json(user);
                 })
         }).catch((error) => {
