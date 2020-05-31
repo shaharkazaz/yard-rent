@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
     product: [{type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false}],
     orderId: [{type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false}],
     isDeleted: {type: Boolean, default: false, required: true},
-    notification: [{type: mongoose.Schema.Types.ObjectID, ref: 'Notification', required: false}],
+    message: [{type: mongoose.Schema.Types.ObjectID, ref: 'Message', required: false}],
     phone: {type: String, required: true, unique: true, match: /^\d{10}$/},
     image: {type: String, required: false},
     rating: {type: Number, required: false, default: 0, min: 0, max: 5},

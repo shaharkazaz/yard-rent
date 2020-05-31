@@ -16,13 +16,13 @@ cron.schedule('*/2 * * * *', () => {
         {
             if((order.returnDate - now) < oneDayInMilliseconds)
             {
-                const notificationId = new mongoose.Types.ObjectId();
-                const notification = new Notification({
-                    _id: notificationId,
+                const messageId = new mongoose.Types.ObjectId();
+                const message = new Message({
+                    _id: messageId,
                     order: order,
                     type: "orderIsAboutToExpire24H"
                 });
-                User.findOneAndUpdate({_id: order.user._id},{$push: {notification: notification._id}}).then(() => {
+                User.findOneAndUpdate({_id: order.user._id},{$push: {message: message._id}}).then(() => {
                     }).catch(error => {
                         //TODO: error handling
                 })
