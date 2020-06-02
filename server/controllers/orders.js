@@ -15,7 +15,7 @@ cron.schedule('0 0 0 * * *', async () => {
     const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
     for(let order of orders)
     {
-        if (order.returnDate && ((order.returnDate - now) < oneDayInMilliseconds))
+        if (order.returnDate && (order.returnDate - now > 0) && (order.returnDate - now < oneDayInMilliseconds));
         {
             flag = false;
             for(const product of order.products)
