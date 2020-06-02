@@ -304,7 +304,11 @@ module.exports = {
     },
     getUserNewMessages: (req, res) => {
         const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false, isOpened: false}, {_id: 0, message: 1}).then((user) => {
+        User.findOne({_id:userId,isDeleted: false}).populate(
+            {
+                path:'message',
+                match: { isOpened: false }
+            }).then((user) => {
             res.status(200).json(user.message)
         }).catch((error) => {
             res.status(500).json({

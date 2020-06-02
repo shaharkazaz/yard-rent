@@ -7,8 +7,8 @@ const getUserId = require('../utils/getUserId');
 const {removeProductsFromDataSet} = require('../utils/updateDataSet');
 const cron = require('node-cron');
 
-// orderIsAboutToExpire24H cron job every 2 minutes
-cron.schedule('* * * * *', async () => {
+// orderIsAboutToExpire24H cron job every day at 00:00
+cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
     let flag = false;
     const oneDayInMilliseconds = 86400000;
@@ -32,6 +32,43 @@ cron.schedule('* * * * *', async () => {
                     _id: messageId,
                     order: order,
                     type: "orderIsAboutToExpire24H"
+                });
+                await message.save();
+                User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
+                }).catch(error => {
+                    //TODO: error handling
+                })
+            }
+        }
+    }
+});
+
+// orderIsAboutToExpire48H cron job every day at 00:00
+cron.schedule('0 0 0 * * *', async () => {
+    const now = new Date();
+    let flag = false;
+    const oneDayInMilliseconds = 86400000;
+    const twoDaysInMilliseconds = 17800000;
+    const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
+    for(let order of orders)
+    {
+        if (order.returnDate && ((order.returnDate - now) < twoDaysInMilliseconds) &&((order.returnDate - now) > oneDayInMilliseconds))
+        {
+            flag = false;
+            for(const product of order.products)
+            {
+                if(product.isRented === true){
+                    flag = true
+                }
+            }
+            // TODO: Remove order.user != null
+            if (flag && order.user != null)
+            {
+                const messageId = new mongoose.Types.ObjectId();
+                const message = new Message({
+                    _id: messageId,
+                    order: order,
+                    type: "orderIsAboutToExpire48H"
                 });
                 await message.save();
                 User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
