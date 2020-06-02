@@ -16,7 +16,7 @@ router.patch('/update/:userId', checkAuth(), updateUser);
 router.get('/getUserById/:userId', checkAuth(), getUserById);
 router.get('/messages/:userId', checkAuth(), getUserMessages);
 router.get('/newMessages/:userId', checkAuth(), getUserNewMessages);
-router.get('/messagesOpened/:messageId', checkAuth(), updateMessages);
+router.get('/updateMessages/:messageId', checkAuth(), updateMessages);
 router.get('/getUserFavorites', checkAuth(), getUserFavorites);
 
 module.exports = router;
