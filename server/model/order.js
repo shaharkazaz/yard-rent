@@ -6,7 +6,8 @@ const orderSchema = mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectID, ref: 'User', required: true },
     products: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: true }],
     rewards: {type: Number, required: true},
-    returnDate: {type: Date, required: true}
+    returnDate: {type: Date, required: true},
+    isReturnedAll: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Order', orderSchema);
