@@ -317,8 +317,8 @@ module.exports = {
         })
     },
     updateMessages: (req, res) => {
-        if ( Array.isArray(req.body) ) {
-            req.body.foreach(id => {
+        if ( Array.isArray(req.params.messages) ) {
+            req.params.messages.foreach(id => {
                 Message.findByIdAndUpdate({_id: id}, { $set: { isOpened : true }}).then((user) => {
                     res.status(200).json(user.message)
                 }).catch((error) => {
@@ -329,7 +329,7 @@ module.exports = {
             })
         }
         else{
-            Message.findByIdAndUpdate({_id: req.body}, { $set: { isOpened : true }}).then((user) => {
+            Message.findByIdAndUpdate({_id: req.params.messageId}, { $set: { isOpened : true }}).then((user) => {
                 res.status(200).json(user.message)
             }).catch((error) => {
                 res.status(500).json({
