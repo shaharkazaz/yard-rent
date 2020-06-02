@@ -43,7 +43,7 @@ cron.schedule('0 0 0 * * *', async () => {
     }
 });
 
-// orderIsAboutToExpire24H cron job every day at 00:00
+// orderIsAboutToExpire48H cron job every day at 00:00
 cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
     let flag = false;
