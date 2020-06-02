@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Message = require('../model/message');
 const Order = require('../model/order');
 const User = require('../model/user');
 const Product = require('../model/product');
@@ -7,30 +8,39 @@ const {removeProductsFromDataSet} = require('../utils/updateDataSet');
 const cron = require('node-cron');
 
 // orderIsAboutToExpire24H cron job every 2 minutes
-cron.schedule('*/2 * * * *', () => {
+cron.schedule('* * * * *', async () => {
     const now = new Date();
+    let flag = false;
     const oneDayInMilliseconds = 86400000;
-
-    Order.find({}, {_id: 1}).populate('user', {_id: 1}).then((orders) => {
-        for(let order of orders)
+    const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
+    for(let order of orders)
+    {
+        if (order.returnDate && ((order.returnDate - now) < oneDayInMilliseconds))
         {
-            if((order.returnDate - now) < oneDayInMilliseconds)
+            flag = false;
+            for(const product of order.products)
             {
-                const notificationId = new mongoose.Types.ObjectId();
-                const notification = new Notification({
-                    _id: notificationId,
+                if(product.isRented === true){
+                    flag = true
+                }
+            }
+            // TODO: Remove order.user != null
+            if (flag && order.user != null)
+            {
+                const messageId = new mongoose.Types.ObjectId();
+                const message = new Message({
+                    _id: messageId,
                     order: order,
                     type: "orderIsAboutToExpire24H"
                 });
-                User.findOneAndUpdate({_id: order.user._id},{$push: {notification: notification._id}}).then(() => {
-                    }).catch(error => {
-                        //TODO: error handling
+                await message.save();
+                User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
+                }).catch(error => {
+                    //TODO: error handling
                 })
             }
         }
-    }).catch((error) => {
-        //TODO: error handling
-    })
+    }
 });
 
 cron.schedule('* * * * *', async () => {
