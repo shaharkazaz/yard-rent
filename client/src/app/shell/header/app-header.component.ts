@@ -25,7 +25,9 @@ export class AppHeaderComponent  {
   ) {}
 
   addNewItem() {
-    this.authDialogService.verifyLoggedIn(() => this.router.navigate(['marketplace/add-item']));
+    this.authDialogService.verifyLoggedIn(() =>
+      this.router.navigate(['marketplace/add-item'], {queryParams: {backTo: this.router.url}})
+    );
   }
 
   openLoginDialog(view: 'login' | 'sign-up') {

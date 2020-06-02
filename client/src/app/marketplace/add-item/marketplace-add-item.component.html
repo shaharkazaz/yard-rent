@@ -30,6 +30,7 @@
   </div>
   <div class="d-flex-grow"></div>
   <div class="d-flex align-center">
+    <dato-button class="mr-10" (click)="cancel()" datoType="secondary">{{'back' | transloco}}</dato-button>
     <dato-button (click)="submit()" [loading]="loading">{{t('submit')}}</dato-button>
   </div>
   <ng-template #selection let-title="title" let-control="control" let-data="data">

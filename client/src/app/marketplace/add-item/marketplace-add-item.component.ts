@@ -66,6 +66,11 @@ export class MarketplaceAddItemComponent implements OnInit, OnDestroy {
     });
   }
 
+  cancel() {
+    const {backTo} = this.route.snapshot.queryParams;
+    this.router.navigate([backTo]);
+  }
+
   ngOnDestroy(): void {}
 
   clearImage() {
