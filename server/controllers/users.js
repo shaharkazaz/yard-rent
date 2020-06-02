@@ -312,6 +312,15 @@ module.exports = {
             })
         })
     },
+    getOpenedMessages: (req, res) => {
+        if ( Array.isArray(req.body) ) {
+            // do stuff
+        }
+        const messageId = req.params.userId;
+        Message.findByIdAndUpdate({_id: messageId}, {$push: {product: product._id}})
+
+    },
+
     getUserFavorites: async (req, res) => {
         const userId = await getUserId(req);
         User.findById({_id:userId},{favorites:1}).populate({

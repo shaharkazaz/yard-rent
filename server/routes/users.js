@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {signup, login, getAllUsers, getUserByToken, getUserByNameEmailAddress, deleteUsers, getAllProductsOfUser, getAllOrdersOfUser,updateUser,getUserById,getUserFavorites,getUserMessages, getUserNewMessages} = require('../controllers/users');
+const {signup, login, getAllUsers, getUserByToken, getUserByNameEmailAddress, deleteUsers, getAllProductsOfUser, getAllOrdersOfUser,updateUser,getUserById,getUserFavorites,getUserMessages, getUserNewMessages, getOpenedMessages} = require('../controllers/users');
 const checkAuth = require('../middlewares/checkAuth');
 
 router.get('/getAll', checkAuth(), getAllUsers);
@@ -16,6 +16,7 @@ router.patch('/update/:userId', checkAuth(), updateUser);
 router.get('/getUserById/:userId', checkAuth(), getUserById);
 router.get('/messages/:userId', checkAuth(), getUserMessages);
 router.get('/newMessages/:userId', checkAuth(), getUserNewMessages);
+router.get('/messagesOpened/:messageId', checkAuth(), getOpenedMessages);
 router.get('/getUserFavorites', checkAuth(), getUserFavorites);
 
 module.exports = router;
