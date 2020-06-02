@@ -7,8 +7,8 @@ const getUserId = require('../utils/getUserId');
 const {removeProductsFromDataSet} = require('../utils/updateDataSet');
 const cron = require('node-cron');
 
-// orderIsAboutToExpire24H cron job every 2 minutes
-cron.schedule('* * * * *', async () => {
+// orderIsAboutToExpire24H cron job every day at 00:00
+cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
     let flag = false;
     const oneDayInMilliseconds = 86400000;
