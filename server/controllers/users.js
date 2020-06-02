@@ -316,13 +316,27 @@ module.exports = {
             })
         })
     },
-    getOpenedMessages: (req, res) => {
+    updateMessages: (req, res) => {
         if ( Array.isArray(req.body) ) {
-            // do stuff
+            req.body.foreach(id => {
+                Message.findByIdAndUpdate({_id: id}, { $set: { isOpened : true }}).then((user) => {
+                    res.status(200).json(user.message)
+                }).catch((error) => {
+                    res.status(500).json({
+                        error
+                    })
+                })
+            })
         }
-        const messageId = req.params.userId;
-        Message.findByIdAndUpdate({_id: messageId}, {$push: {product: product._id}})
-
+        else{
+            Message.findByIdAndUpdate({_id: req.body}, { $set: { isOpened : true }}).then((user) => {
+                res.status(200).json(user.message)
+            }).catch((error) => {
+                res.status(500).json({
+                    error
+                })
+            })
+        }
     },
 
     getUserFavorites: async (req, res) => {
