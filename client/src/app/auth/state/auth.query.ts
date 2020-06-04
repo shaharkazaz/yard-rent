@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthStore } from './auth.store';
-import { User } from './auth.model';
+import {User, UserInfo} from './auth.model';
 import { Query } from '@datorama/akita';
 import { UserRole } from '../auth.types';
 import {Observable} from "rxjs";
@@ -29,6 +29,10 @@ export class AuthQuery extends Query<User> {
 
   selectUserRole(): Observable<UserRole> {
     return this.select(state => state.user.role);
+  }
+
+  getUserInfo(): UserInfo {
+    return this.getValue().user;
   }
 }
 

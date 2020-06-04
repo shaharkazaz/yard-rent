@@ -4,7 +4,7 @@ import {AuthDataService} from './auth.data-service';
 import {Credentials, SignupParams} from '../auth.types';
 import {tap} from 'rxjs/operators';
 import {AuthStore, clearStorage, saveInStorage} from './auth.store';
-import {createEmptyUser} from './auth.model';
+import {createEmptyUser, UserInfo} from './auth.model';
 
 @Injectable()
 export class AuthService {
@@ -55,6 +55,12 @@ export class AuthService {
       name: user.name,
       user,
       token: user.token
+    });
+  }
+
+  updateUserInfo(userInfo: UserInfo) {
+    this.authStore.update({
+      user: userInfo,
     });
   }
 }

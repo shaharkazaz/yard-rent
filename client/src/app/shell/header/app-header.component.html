@@ -20,7 +20,9 @@
       }}</dato-button>
     </ng-container>
     <ng-template #loggedIn>
-<!--      <app-developer-options *hasRole="'admin'"></app-developer-options>-->
+      <ng-container *ngIf="isDevMode()">
+        <app-developer-options *hasRole="'admin'"></app-developer-options>
+      </ng-container>
       <app-user-menu></app-user-menu>
       <div class="cart relative d-flex align-center-end pointer mr-20 no-select"
         routerLink="shopping-cart" *datoSubscribe="itemsCount$ as itemsCount">

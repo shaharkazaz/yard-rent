@@ -41,6 +41,6 @@
       datoType="none"
       >{{ t('view-item') }}</dato-button>
     <marketplace-item-cart-toggler [product]="item"></marketplace-item-cart-toggler>
-    <app-favorite></app-favorite>
+    <app-favorite [productId]="item._id"></app-favorite>
   </div>
 </div>

@@ -262,7 +262,7 @@ module.exports = {
     addToFavorites: async (req, res) => {
         const {products} = req.body;
         const userId = await getUserId(req);
-        const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
+        const objectIdProducts = (Array.isArray(products) ? products : [products]).map(product => mongoose.Types.ObjectId(product));
         User.findByIdAndUpdate({_id: userId}, {$push: {favorites: objectIdProducts}}).then(() => {
             res.status(200).json();
         }).catch(error => {

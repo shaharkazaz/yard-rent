@@ -3,6 +3,7 @@ import {MarketplaceService} from '../state/marketplace.service';
 import {Product} from "../marketplace.types";
 import {ActivatedRoute} from "@angular/router";
 import {untilDestroyed} from "ngx-take-until-destroy";
+import { CARD_WIDTH } from '../item-card/item-card-loader/item-card-loader.component';
 
 @Component({
   selector: 'app-marketplace-all-items',
@@ -17,13 +18,12 @@ export class MarketplaceAllItemsComponent implements OnInit, OnDestroy {
   filteredProducts: Product[] = [];
   loadersCount: any[];
   private readonly LOAD_BUFFER = 20;
-  private readonly CARD_WIDTH = 304;
   private buffer = this.LOAD_BUFFER;
 
   constructor(private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.loadersCount = new Array(Math.floor(document.documentElement.clientWidth / this.CARD_WIDTH));
+    this.loadersCount = new Array(Math.floor(document.documentElement.clientWidth / CARD_WIDTH));
     this.route.queryParams.pipe(untilDestroyed(this)).subscribe((filter) => {
       const parsedFilter = Object.entries(filter).reduce((parsed, [prop, rawVal]) => {
         let value = rawVal;

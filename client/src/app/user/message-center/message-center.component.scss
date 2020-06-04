@@ -1,0 +1,23 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .container {
+    width: 80%;
+    height: 90%;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.75);
+  }
+  .message {
+    height: 50px;
+    width: 250px;
+    border: 1px solid black;
+    &.selected {
+      border-right: none;
+    }
+  }
+  .preview {
+    border: 1px solid black;
+    height: 600px;
+    width: 600px;
+  }
+}

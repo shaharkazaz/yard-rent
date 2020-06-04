@@ -330,5 +330,11 @@
     "es": "Spanish"
   },
   "message-center": "Message center",
-  "watchlist": "Watchlist"
+  "watchlist": "Watchlist",
+  "watchlist-page": {
+    "title": "Watchlist",
+    "no-items-title": "You don't have any watched items yet",
+    "no-items-subtitle-1": "Go to the",
+    "no-items-subtitle-2": "and click on the hearts to start watching items"
+  }
 }

@@ -7,6 +7,7 @@ import {UserInfo} from "../auth/state/auth.model";
 
 @Injectable({providedIn: 'root'})
 export class UserDataService {
+
   constructor(private http: HttpClient) {}
 
   updateProfile(id: string, user) {
@@ -25,7 +26,19 @@ export class UserDataService {
     return this.http.get<Partial<UserInfo>>(parseUrl(URI_CONSTANTS.users.getUserById, {id}));
   }
 
-  getMessages(id: string) {
-    return this.http.get<any>(parseUrl(URI_CONSTANTS.users.messages, {id}));
+  getNewMessages(id: string) {
+    return this.http.get<any>(parseUrl(URI_CONSTANTS.users.newMessages, {id}));
+  }
+
+  getWatchlist() {
+    return this.http.get<any>(parseUrl(URI_CONSTANTS.users.getWatchlist));
+  }
+
+  removeFromWatchlist(productId: string) {
+    return this.http.post(parseUrl(URI_CONSTANTS.products.removeFromWatchlist), {products: [productId]});
+  }
+
+  addToWatchlist(productId: string) {
+    return this.http.post(parseUrl(URI_CONSTANTS.products.addToWatchlist), {products: [productId]});
   }
 }

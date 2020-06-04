@@ -7,15 +7,16 @@ import {
   DatoButtonModule,
   DatoDirectivesModule, DatoEditableHeaderModule, DatoFileInputModule, DatoFormValidationModule,
   DatoGridV2Module, DatoIconButtonModule,
-  DatoIconModule, DatoInputModule,
+  DatoIconModule, DatoInfiniteScrollModule, DatoInputModule,
   DatoLinkButtonModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import {UserService} from "./user.service";
-import {UserDataService} from "./user.data-service";
 import {ReactiveFormsModule} from "@angular/forms";
 import { EditUserComponent } from './edit-user/edit-user.component';
 import {CommonModule} from "@angular/common";
+import { MessageCenterComponent } from './message-center/message-center.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
+import {MarketplaceModule} from "../marketplace/marketplace.module";
 
 const routes: Routes = [
   {
@@ -33,6 +34,14 @@ const routes: Routes = [
   {
     path: 'edit-user/:id',
     component: EditUserComponent
+  },
+  {
+    path: 'watchlist',
+    component: WatchlistComponent
+  },
+  {
+    path: 'messages',
+    component: MessageCenterComponent
   }
 ];
 
@@ -51,13 +60,17 @@ const routes: Routes = [
     DatoInputModule,
     DatoFileInputModule,
     CommonModule,
-    DatoFormValidationModule
+    DatoFormValidationModule,
+    DatoInfiniteScrollModule,
+    MarketplaceModule
   ],
   declarations: [
     MyOrdersPageComponent,
     MyProductsPageComponent,
     ProfilePageComponent,
-    EditUserComponent
+    EditUserComponent,
+    MessageCenterComponent,
+    WatchlistComponent
   ],
   providers: [],
   exports: [MyOrdersPageComponent]

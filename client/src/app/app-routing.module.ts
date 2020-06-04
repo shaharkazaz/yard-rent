@@ -17,8 +17,8 @@ const routes: Routes = [
   {
     path: 'marketplace',
     loadChildren: () =>
-      import('./marketplace/marketplace.module').then(
-        ({ MarketplaceModule }) => MarketplaceModule
+      import('./marketplace/marketplace-routing.module').then(
+        ({ MarketplaceRoutingModule }) => MarketplaceRoutingModule
       )
   },
   {

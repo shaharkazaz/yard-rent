@@ -14,9 +14,11 @@ export type UserInfo = {
   orderId: string[];
   password: string[];
   product: string[];
+  favorites: string[];
   rewards: number;
   role: UserRole;
   image: string;
+  phone: string;
   _id: string;
 }
 

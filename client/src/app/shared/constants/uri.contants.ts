@@ -18,7 +18,9 @@ export const URI_CONSTANTS = {
     update: 'products/update/{id}',
     delete: 'products/delete',
     returnItems: 'products/returnProducts',
-    getRecommendations: 'recommendations/{id}'
+    getRecommendations: 'recommendations/{id}',
+    addToWatchlist: 'products/addToFavorites',
+    removeFromWatchlist: 'products/removeFromFavorites'
   },
   categories: {
     getAll: 'categories',
@@ -35,7 +37,8 @@ export const URI_CONSTANTS = {
     ordersList: 'users/ordersList',
     getUserById: 'users/getUserById/{id}',
     updateUser: 'users/update/{id}',
-    messages: 'users/messages/{id}'
+    newMessages: 'users/messages/{id}',
+    getWatchlist: 'users/getUserFavorites'
   },
   development: {
     releaseRented: 'products/_releaseRented',

@@ -22,59 +22,28 @@ import { ItemCardLoaderComponent } from './item-card/item-card-loader/item-card-
 import { ItemCartTogglerComponent } from './item-cart-toggler/item-cart-toggler.component';
 import {SharedModule} from "../shared/components/shared.module";
 
-const routes: Routes = [
-  {
-    path: '',
-    component: MarketplacePageComponent,
-    children: [
-      {
-        path: 'add-item',
-        component: MarketplaceAddItemComponent
-      },
-      {
-        path: 'edit-item/:id',
-        component: MarketplaceAddItemComponent
-      },
-      {
-        path: 'all-items',
-        component: MarketplaceAllItemsComponent
-      },
-
-      {
-        path: ':id',
-        component: MarketplaceItemPageComponent
-      },
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'all-items'
-      }
-    ]
-  }
-];
-
 @NgModule({
-    imports: [
-        RouterModule.forChild(routes),
-        TranslocoModule,
-        DatoIconModule,
-        CommonModule,
-        DatoDirectivesModule,
-        DatoButtonModule,
-        BingMapModule,
-        DatoFileInputModule,
-        ReactiveFormsModule,
-        DatoInputModule,
-        DatoInputNumberModule,
-        DatoSelectModule,
-        DatoPipesModule,
-        ContentLoaderModule,
-        DatoInfiniteScrollModule,
-        DatoFormValidationModule,
-        DatoCoreModule,
-        SharedModule,
-        BingMapModule,
-    ],
+  imports: [
+    TranslocoModule,
+    DatoIconModule,
+    CommonModule,
+    DatoDirectivesModule,
+    DatoButtonModule,
+    BingMapModule,
+    DatoFileInputModule,
+    ReactiveFormsModule,
+    DatoInputModule,
+    DatoInputNumberModule,
+    DatoSelectModule,
+    DatoPipesModule,
+    ContentLoaderModule,
+    DatoInfiniteScrollModule,
+    DatoFormValidationModule,
+    DatoCoreModule,
+    SharedModule,
+    BingMapModule,
+    RouterModule,
+  ],
   declarations: [
     MarketplacePageComponent,
     MarketplaceFiltersComponent,
@@ -85,7 +54,7 @@ const routes: Routes = [
     ItemCardLoaderComponent,
     ItemCartTogglerComponent
   ],
-  exports: [MarketplacePageComponent],
+  exports: [MarketplacePageComponent, MarketplaceFiltersComponent, MarketplaceItemCardComponent, ItemCardLoaderComponent],
   providers: [MarketplaceDataService, MarketplaceService]
 })
 export class MarketplaceModule {}

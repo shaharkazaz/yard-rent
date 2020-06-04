@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, isDevMode} from '@angular/core';
 import {AuthQuery} from '../../auth/state/auth.query';
 import {DatoDialog, DatoSnackbar} from '@datorama/core';
 import {Router} from '@angular/router';
@@ -32,5 +32,9 @@ export class AppHeaderComponent  {
 
   openLoginDialog(view: 'login' | 'sign-up') {
     return this.authDialogService.openLoginDialog(view);
+  }
+
+  isDevMode() {
+    return isDevMode();
   }
 }
