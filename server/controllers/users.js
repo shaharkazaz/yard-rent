@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 const getCoordinatesByAddress = require('../utils/gpsApi');
-
+const sendMail = require( '../utils/mailer');
 
 function getToken({_id, role}) {
     return jwt.sign({
@@ -338,7 +338,6 @@ module.exports = {
             })
         }
     },
-
     getUserFavorites: async (req, res) => {
         const userId = await getUserId(req);
         User.findById({_id:userId},{favorites:1}).populate({
@@ -357,5 +356,15 @@ module.exports = {
                 error
             })
         })
+    },
+    verifyEmail: async (req, res) => {
+        const { email } = req.body
+        try {
+            await sendMail(email)
+        } catch (e) {
+            return res.status(500).json({error:e})
+        }
+        res.sendStatus(200)
     }
+
 };
