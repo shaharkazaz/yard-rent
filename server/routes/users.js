@@ -1,10 +1,16 @@
 const express = require('express');
 const router = express.Router();
-
-const {signup, login, getAllUsers, getUserByToken, getUserByNameEmailAddress, deleteUsers, getAllProductsOfUser, getAllOrdersOfUser,updateUser,getUserById,getUserFavorites,getUserMessages, getUserNewMessages, updateMessages} = require('../controllers/users');
+const {
+    signup, login, getAllUsers,
+    getUserByToken, getUserByNameEmailAddress,
+    deleteUsers, getAllProductsOfUser, getAllOrdersOfUser,
+    updateUser, getUserById, getUserFavorites, getUserMessages,
+    getUserNewMessages, updateMessages, verifyEmail
+} = require('../controllers/users');
 const checkAuth = require('../middlewares/checkAuth');
 
 router.get('/getAll', checkAuth(), getAllUsers);
+router.post('/emailVerification', verifyEmail);
 router.post('/login', login);
 router.post('/signup', signup);
 router.get('/getuser', getUserByToken);

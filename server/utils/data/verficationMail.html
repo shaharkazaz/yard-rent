@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta name="x-apple-disable-message-reformatting">  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,300&display=swap');
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+        .email-container {
+            height: 100%;
+            width: 100%;
+            background-color: #f6f6f6;
+        }
+        .message-header {
+            width: 100%;
+            height: 40px;
+            background-color: #3e7afc;
+            border-radius: 8px 8px 0 0;
+        }
+        .message-body {
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+        }
+        .message-header-img {
+            width: 14px;
+            height: 16px;
+            margin-right: 9px;
+            vertical-align: middle;
+        }
+        .message-header-text {
+            width: 166px;
+            height: 19px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+            vertical-align: middle;
+        }
+        .yardrent-logo {
+            width: 250px;
+            height: 100px;
+            object-fit: contain;
+            margin-top: 26px;
+        }
+        .message-body-header {
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.15px;
+        }
+        .message-body-image {
+            width: 85px;
+            height: 88px;
+            object-fit: contain;
+            margin: 30px 0;
+        }
+        .message-body-text {
+            opacity: 0.6;
+            font-size: 12px;
+            font-family: Poppins;
+            letter-spacing: 0.4px;
+            line-height: 1.33;
+            color: #021d3d;
+            margin: 0;
+        }
+        @media only screen and (min-device-width: 320px) and (max-device-width: 800px) {
+            .email-container {
+                background-color: transparent;
+            }
+            .message-container {
+                width: 360px !important;
+            }
+            .message-header {
+                border-radius: 0;
+            }
+        }
+        @media (prefers-color-scheme: dark) {
+            .message-header-text {
+                filter: invert(1) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+<table class="email-container">
+    <tbody>
+    <tr>
+        <td align="center" valign="top">
+            <table  class="message-container"  width="620" align="center" border="0" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td align="center">
+                        <table class="message-header" align="center" border="0" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <img class="message-header-img" src="cid:bell.png"/>
+                                    <span class="message-header-text">Email Verification From Yard Rent</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <table class="message-body">
+                            <tbody>
+                            <tr>
+                                <td align="center">
+                                    <img class="yardrent-logo" src="cid:yardrent.png"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <img class="message-body-image" src="cid:sent.png"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <span class="message-body-header">Verification Code: 445571</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div style="height: 16px"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <p class="message-body-text">
+                                        Made with ❤ Yard Rent Crew
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div style="height: 50px"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
