@@ -5,12 +5,13 @@ const {
     getUserByToken, getUserByNameEmailAddress,
     deleteUsers, getAllProductsOfUser, getAllOrdersOfUser,
     updateUser, getUserById, getUserFavorites, getUserMessages,
-    getUserNewMessages, updateMessages, verifyEmail
+    getUserNewMessages, updateMessages, sendEmailVerification, verifyCode
 } = require('../controllers/users');
 const checkAuth = require('../middlewares/checkAuth');
 
 router.get('/getAll', checkAuth(), getAllUsers);
-router.post('/emailVerification', verifyEmail);
+router.post('/sendVerification', sendEmailVerification);
+router.post('/verifyCode', verifyCode);
 router.post('/login', login);
 router.post('/signup', signup);
 router.get('/getuser', getUserByToken);
