@@ -1,6 +1,7 @@
 const {clearDataSet} = require('../utils/updateDataSet');
 const Message = require('../model/message');
 const User = require('../model/user');
+const Verification = require('../model/verification')
 const Products = require('../model/product');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -357,14 +358,37 @@ module.exports = {
             })
         })
     },
-    verifyEmail: async (req, res) => {
+    sendEmailVerification: async (req, res) => {
         const { email } = req.body
+        const code = Math.floor(100000 + Math.random() * 900000)
+
+        const verification = new Verification({
+            _id: new mongoose.Types.ObjectId(),
+            email,
+            code
+        });
+        verification.save()
         try {
-            await sendMail(email)
+            await sendMail(email, code)
+            res.status(200).json(verification._id)
         } catch (e) {
             return res.status(500).json({error:e})
         }
-        res.sendStatus(200)
-    }
 
+    },
+    verifyCode: async (req, res) => {
+        const { code, id } = req.body
+        try {
+           const verificationObj = await Verification.findOne({_id:id})
+           if(verificationObj && parseInt(code) === verificationObj.code){
+               res.status(200).json()
+           }
+           else {
+               res.status(500).json({error: 'code is not valid'})
+           }
+        } catch (e) {
+            return res.status(500).json({error:e})
+        }
+
+    }
 };

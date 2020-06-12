@@ -42,9 +42,12 @@ const getMailerMessage = async to => {
     }
 }
 
-const sendMail = async to => {
+const sendMail = async (to, code) => {
     const transporter = getMailerObject()
     const message = await getMailerMessage(to)
+    let { html } = message
+    html = html.replace(RegExp(`{{code}}`, 'g'), code);
+    message.html = html
     await transporter.sendMail(message)
 }
 
