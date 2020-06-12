@@ -40,6 +40,14 @@ export class AuthService {
     );
   }
 
+  sendVerificationEmail(email: string) {
+    return this.authDataService.sendVerificationEmail(email);
+  }
+
+  verifyEmailCode(info: {code: string, id: string}){
+    return this.authDataService.verifyEmailCode(info);
+  }
+
   logout() {
     clearStorage();
     this.authStore.update(createEmptyUser());

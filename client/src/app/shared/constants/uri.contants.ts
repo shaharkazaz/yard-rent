@@ -2,7 +2,9 @@ export const URI_CONSTANTS = {
   auth: {
     login: 'users/login',
     signup: 'users/signup',
-    getUser: 'users/getuser'
+    getUser: 'users/getuser',
+    sendVerification: 'users/sendVerification',
+    verifyCode: 'users/verifyCode',
   },
   management: {
     getWeeklyData: 'statistics/weekly-data',

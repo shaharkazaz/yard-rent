@@ -4,10 +4,12 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { DatoDialogRef, DatoSnackbar } from '@datorama/core';
+import {DatoDialog, DatoDialogRef, DatoDialogResult, DatoSnackbar} from '@datorama/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../state/auth.service';
 import { filter } from 'rxjs/operators';
+import {MailVerificationComponent} from "./mail-verification/mail-verification.component";
+import {DialogResultStatus} from "@datorama/core";
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,7 @@ export class LoginComponent implements OnInit {
     retypePassword: ['']
   });
   constructor(
+    private dialog: DatoDialog,
     private ref: DatoDialogRef,
     private fb: FormBuilder,
     private authService: AuthService,
@@ -51,10 +54,10 @@ export class LoginComponent implements OnInit {
 
   submitForm() {
     Object.values(this.form.controls).forEach(control => control.updateValueAndValidity());
-    if (this.form.valid) {
+    // if (this.form.valid) {
       this.loading = true;
       this.isLogin() ? this.login() : this.signup();
-    }
+    // }
   }
 
   private login()
@@ -69,13 +72,25 @@ export class LoginComponent implements OnInit {
   }
 
   private signup() {
-    this.authService
-      .signup(this.form.value)
-      .pipe(filter(({ success }) => success))
-      .subscribe(
-        () => this.ref.close(),
-        () => this.hideLoader()
-      );
+    this.dialog.open(MailVerificationComponent, {
+      data: {
+        email: this.form.value.email
+      }
+    })
+      .afterClosed()
+      .subscribe(({status}: DatoDialogResult) => {
+        if (status === DialogResultStatus.SUCCESS) {
+          this.authService
+            .signup(this.form.value)
+            .pipe(filter(({ success }) => success))
+            .subscribe(
+              () => this.ref.close(),
+              () => this.hideLoader()
+            );
+        } else {
+          this.hideLoader();
+        }
+      })
   }
 
   private setSignupValidators(action: 'add' | 'remove') {

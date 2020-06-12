@@ -1,0 +1,28 @@
+<ng-container *transloco="let t; read: 'mail-verification'">
+  <dato-dialog-header>
+    <div class="d-flex align-center">
+      <div class="mr-5">{{ t('title') }}</div>
+      <dato-icon datoIcon="verified"></dato-icon>
+    </div>
+  </dato-dialog-header>
+  <dato-dialog-content>
+    <div class="d-flex d-flex-column align-center">
+      <div [innerHTML]="t('complete-registration', {email: email})"></div>
+      <div class="d-flex my-20">
+        <input type="number" [datoAutoFocus]="isFirst" class="digit mx-10" min="0" (keydown)="moveToNext($event)" *ngFor="let control of code.controls; first as isFirst" [formControl]="control">
+      </div>
+      <div class="d-flex align-center verifying mb-10" [class.invisible]="!codeSent">
+        <div>{{ t(error ? 'try-again' : 'verifying')}}</div>
+        <dato-icon *ngIf="error; else loading" datoIcon="close" class="red-400-color"></dato-icon>
+        <ng-template #loading>
+          <div class="ml-10 dato-spinner-loader md-loader"></div>
+        </ng-template>
+      </div>
+      <div class="d-flex" [class.invisible]="!showResend">
+        <div>{{t('resend-1')}}</div>
+        <dato-link class="mx-5" (click)="resend()">{{t('click-here')}}</dato-link>
+        <div>{{t('resend-2')}}</div>
+      </div>
+    </div>
+  </dato-dialog-content>
+</ng-container>

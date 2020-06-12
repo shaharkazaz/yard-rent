@@ -25,4 +25,12 @@ export class AuthDataService {
   getUserByToken() {
     return this.http.get<any>(parseUrl(URI_CONSTANTS.auth.getUser));
   }
+
+  sendVerificationEmail(email: string) {
+    return this.http.post<string>(parseUrl(URI_CONSTANTS.auth.sendVerification), {email});
+  }
+
+  verifyEmailCode(info: { code: string; id: string }) {
+    return this.http.post<void>(parseUrl(URI_CONSTANTS.auth.verifyCode), info);
+  }
 }

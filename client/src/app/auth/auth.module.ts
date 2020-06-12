@@ -1,11 +1,11 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { TranslocoModule } from '@ngneat/transloco';
 import {
-    DatoButtonModule,
-    DatoDialogModule, DatoFormValidationModule,
-    DatoInputModule,
-    DatoSnackbarComponent,
-    DatoSnackbarModule
+  DatoButtonModule,
+  DatoDialogModule, DatoDirectivesModule, DatoFormValidationModule, DatoIconModule,
+  DatoInputModule, DatoLinkButtonModule,
+  DatoSnackbarComponent,
+  DatoSnackbarModule
 } from '@datorama/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,22 +15,26 @@ import { JWTInterceptor } from './auth.interceptor';
 import { AuthService } from './state/auth.service';
 import { IsLoggedInDirective } from './directives/isLoggedIn.directive';
 import { HasRoleDirective } from './directives/hasRole.directive';
+import {MailVerificationComponent} from "./login/mail-verification/mail-verification.component";
 
-const api = [LoginComponent, IsLoggedInDirective, HasRoleDirective];
+const api = [MailVerificationComponent, LoginComponent, IsLoggedInDirective, HasRoleDirective];
 
 @NgModule({
-    imports: [
-        TranslocoModule,
-        DatoInputModule,
-        CommonModule,
-        ReactiveFormsModule,
-        DatoButtonModule,
-        DatoDialogModule,
-        DatoSnackbarModule,
-        DatoFormValidationModule,
-    ],
+  imports: [
+    TranslocoModule,
+    DatoInputModule,
+    CommonModule,
+    ReactiveFormsModule,
+    DatoButtonModule,
+    DatoDialogModule,
+    DatoSnackbarModule,
+    DatoFormValidationModule,
+    DatoLinkButtonModule,
+    DatoIconModule,
+    DatoDirectivesModule,
+  ],
   declarations: api,
-  entryComponents: [LoginComponent, DatoSnackbarComponent],
+  entryComponents: [MailVerificationComponent, LoginComponent, DatoSnackbarComponent],
   exports: api,
   providers: [AuthService]
 })

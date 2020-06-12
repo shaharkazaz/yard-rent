@@ -336,5 +336,15 @@
     "no-items-title": "You don't have any watched items yet",
     "no-items-subtitle-1": "Go to the",
     "no-items-subtitle-2": "and click on the hearts to start watching items"
+  },
+  "mail-verification": {
+    "title": "Mail verification",
+    "complete-registration": "In order to complete the registration, an email was sent to <span class=\"dato-sub-headline\">{{email}}</span> containing a verification code.",
+    "resend-1": "Didn't get it?",
+    "click-here": "click here",
+    "resend-2": "to resend",
+    "verifying": "Verifying code",
+    "try-again": "Seems like something is wrong, try again",
+    "email-resent": "A new email was sent"
   }
 }
