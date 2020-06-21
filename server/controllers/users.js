@@ -294,7 +294,7 @@ module.exports = {
     },
     getUserMessages: (req, res) => {
         const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).then((user) => {
+        User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).populate('message').then((user) => {
             res.status(200).json(user.message)
         }).catch((error) => {
             res.status(500).json({
@@ -316,27 +316,14 @@ module.exports = {
             })
         })
     },
-    updateMessages: (req, res) => {
-        if ( Array.isArray(req.params.messages) ) {
-            req.params.messages.foreach(id => {
-                Message.findByIdAndUpdate({_id: id}, { $set: { isOpened : true }}).then((user) => {
-                    res.status(200).json(user.message)
-                }).catch((error) => {
-                    res.status(500).json({
-                        error
-                    })
-                })
-            })
-        }
-        else{
-            Message.findByIdAndUpdate({_id: req.params.messageId}, { $set: { isOpened : true }}).then((user) => {
+    updateMessageStatus: (req, res) => {
+            Message.findByIdAndUpdate({_id: req.params.messageId}, { $set: { isOpened : req.params.flag }}).then((user) => {
                 res.status(200).json(user.message)
             }).catch((error) => {
                 res.status(500).json({
                     error
                 })
             })
-        }
     },
 
     getUserFavorites: async (req, res) => {
