@@ -293,39 +293,6 @@ module.exports = {
             })
         })
     },
-    getUserMessages: (req, res) => {
-        const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).populate('message').then((user) => {
-            res.status(200).json(user.message)
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
-    getUserNewMessages: (req, res) => {
-        const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}).populate(
-            {
-                path:'message',
-                match: { isOpened: false }
-            }).then((user) => {
-            res.status(200).json(user.message)
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
-    updateMessageStatus: (req, res) => {
-        Message.findByIdAndUpdate({_id: req.params.messageId}, { $set: { isOpened : req.params.flag }}).then((user) => {
-            res.status(200).json(user.message)
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
     getUserFavorites: async (req, res) => {
         const userId = await getUserId(req);
         User.findById({_id:userId},{favorites:1}).populate({

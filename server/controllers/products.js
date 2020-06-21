@@ -239,6 +239,9 @@ module.exports = {
         })
     },
     releaseRentedProductsByUSer: (req, res) => {
+        // TODO: on each product released -> send message to product owner to verify if product returned
+        // add new route - message action
+        // under messages - reply to message
         const {products} = req.body;
         const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
         Products.updateMany({_id: {$in: objectIdProducts}}, {$set: {isRented: false}}).then(() => {
