@@ -5,7 +5,7 @@ const {
     getUserByToken, getUserByNameEmailAddress,
     deleteUsers, getAllProductsOfUser, getAllOrdersOfUser,
     updateUser, getUserById, getUserFavorites, getUserMessages,
-    getUserNewMessages, updateMessages, sendEmailVerification, verifyCode
+    getUserNewMessages, updateMessageStatus, sendEmailVerification, verifyCode
 } = require('../controllers/users');
 const checkAuth = require('../middlewares/checkAuth');
 
@@ -23,7 +23,7 @@ router.patch('/update/:userId', checkAuth(), updateUser);
 router.get('/getUserById/:userId', checkAuth(), getUserById);
 router.get('/messages/:userId', checkAuth(), getUserMessages);
 router.get('/newMessages/:userId', checkAuth(), getUserNewMessages);
-router.get('/updateMessages/:messageId', checkAuth(), updateMessages);
+router.get('/updateMessageStatus/:messageId/flag', checkAuth(), updateMessageStatus);
 router.get('/getUserFavorites', checkAuth(), getUserFavorites);
 
 module.exports = router;
