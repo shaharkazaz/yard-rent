@@ -3,6 +3,7 @@ const Message = require('../model/message');
 const User = require('../model/user');
 const Verification = require('../model/verification')
 const Products = require('../model/product');
+const Order = require('../model/order');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
@@ -87,7 +88,7 @@ module.exports = {
     },
     login: (req, res) => {
         const {email, password} = req.body;
-        User.find({email}).then((users) => {
+        User.find({email: email}).then((users) => {
             if (users.length === 0) {
                 return res.status(200).json({
                     success: false,
@@ -192,6 +193,49 @@ module.exports = {
             res.status(500).json(error)
         })
     },
+    getAllRentedProductsOfUser: async (req, res) => {
+        const userId = await getUserId(req);
+        const pipeline = [
+            {
+                "$unwind": "$products"
+            },
+            {
+                "$match": {
+                    "user": mongoose.Types.ObjectId(userId)
+                }
+            },
+            {
+                "$project": {
+                    "products": 1 , "_id": 0
+                }
+            }
+        ];
+        let productIDs = [];
+
+        Order.aggregate(pipeline)
+        .then((products) => {
+            products.forEach(product => {
+                productIDs.push(product.products)
+            })
+            Products.find({_id: {$in: productIDs}}, {_id: 1, isDeleted: 0}).populate({
+                path: 'category', select: {
+                    name: 1,
+                    _id: 0
+                }}).populate({
+                path: 'subCategory', select: {name: 1, _id: 0}
+            }).populate({
+                path: 'user', select: {name: 1, _id: 0}
+            }).then(result => {
+                res.status(200).json(result ? result : []);
+                productIDs = []
+            }).catch(error => {
+                res.status(500).json(error)
+            })
+            //res.status(200).json(product ? product.product : []);
+        }).catch(error => {
+            res.status(500).json(error)
+        })
+    },
     //TODO: need to check if the user isDeleted
     getUserByNameEmailAddress: (req, res) => {
         let {name, email, address} = req.body;
@@ -287,39 +331,6 @@ module.exports = {
                 await Products.updateMany({_id: {$in: user.product}},{$set:{address: newUser.address}})
                 res.status(200).json(user);
                 })
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
-    getUserMessages: (req, res) => {
-        const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).populate('message').then((user) => {
-            res.status(200).json(user.message)
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
-    getUserNewMessages: (req, res) => {
-        const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}).populate(
-            {
-                path:'message',
-                match: { isOpened: false }
-            }).then((user) => {
-            res.status(200).json(user.message)
-        }).catch((error) => {
-            res.status(500).json({
-                error
-            })
-        })
-    },
-    updateMessageStatus: (req, res) => {
-        Message.findByIdAndUpdate({_id: req.params.messageId}, { $set: { isOpened : req.params.flag }}).then((user) => {
-            res.status(200).json(user.message)
         }).catch((error) => {
             res.status(500).json({
                 error

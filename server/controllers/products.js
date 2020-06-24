@@ -1,6 +1,9 @@
+
 const mongoose = require('mongoose');
 const Products = require('../model/product');
 const User = require('../model/user');
+const Order = require('../model/order');
+const Message = require('../model/message');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet, clearDataSet} = require('../utils/updateDataSet');
@@ -239,16 +242,56 @@ module.exports = {
         })
     },
     releaseRentedProductsByUSer: (req, res) => {
+        // TODO: on each product released -> send message to product owner to verify if product returned
+        // add new route - message action
+        // under messages - reply to message
+/*        const {products} = req.body;
+        const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
+        Order.find({products: {$in: objectIdProducts}}).populate('products', {isRented: 1}).then(orders => {
+            orders.forEach(order => {
+                let orderProducts = order.products
+                orderProducts.forEach(product => {
+                    const found =
+                    if()
+                })
+
+            })
+        }).catch()*/
+
+
         const {products} = req.body;
         const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
-        Products.updateMany({_id: {$in: objectIdProducts}}, {$set: {isRented: false}}).then(() => {
-            clearDataSet();
-            res.status(200).json();
-        }).catch(error => {
-            res.status(500).json({
-                error
+        Products.find({_id: {$in: objectIdProducts}},{_id: 1, user: 1}).then(productsList => {
+            productsList.forEach(product => {
+                Products.findOneAndUpdate({_id: product.id},{$set: {isRented: false}}).then(() => {
+                    Order.find({ "products._id" : mongoose.Types.ObjectId(product.id)},{_id: 1, user: 1}).then(order => {
+                        console.log(order);
+                        const messageId = new mongoose.Types.ObjectId();
+                        const message = new Message({
+                            _id: messageId,
+                            productToReturn: product,
+                            productOwner: product.user,
+                            productRenter: order.user,
+                            order: order,
+                            type: "productReturned"
+                    });
+                        message.save().then(messageId => {
+                            User.findOneAndUpdate({_id: product.user}, {$push: {message: messageId}}).then(() => {
+                            }).catch(error => {
+                                //TODO: error handling
+                            })
+                        }).catch(error => {
+                            res.status(500).json(error);
+                        });
+                    }).catch(error => {
+                        res.status(500).json(error);
+                    })
+                }).catch(error => {
+                    res.status(500).json(error);
             })
-        });
+            res.status(200).json();
+        })
+    })
     },
     getIds: (req, res) => {
         Products.find({isDeleted: false, isRented: false}, {_id: 1}).then((products) => {
