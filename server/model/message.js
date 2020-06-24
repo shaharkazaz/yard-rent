@@ -5,8 +5,12 @@ const messageSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectID,
     date: {type: Date, default: Date.now(), required: true},
     order: { type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false },
+    productToReturn: { type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false },
+    productOwner: { type: mongoose.Schema.Types.ObjectID, ref: 'User', required: false },
+    productRenter: { type: mongoose.Schema.Types.ObjectID, ref: 'User', required: false },
     isOpened: { type: Boolean, default: false },
-    type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H"]
+    isArchived: { type: Boolean, default: false },
+    type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H", "productReturned", "test"]
 });
 
 module.exports = mongoose.model('Message', messageSchema);

@@ -3,6 +3,7 @@ const Message = require('../model/message');
 const User = require('../model/user');
 const Verification = require('../model/verification')
 const Products = require('../model/product');
+const Order = require('../model/order');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
@@ -87,7 +88,7 @@ module.exports = {
     },
     login: (req, res) => {
         const {email, password} = req.body;
-        User.find({email}).then((users) => {
+        User.find({email: email}).then((users) => {
             if (users.length === 0) {
                 return res.status(200).json({
                     success: false,
@@ -188,6 +189,49 @@ module.exports = {
             }, {path: 'subCategory', select: {name: 1, _id: 0}}]
         }).then((product) => {
             res.status(200).json(product ? product.product : []);
+        }).catch(error => {
+            res.status(500).json(error)
+        })
+    },
+    getAllRentedProductsOfUser: async (req, res) => {
+        const userId = await getUserId(req);
+        const pipeline = [
+            {
+                "$unwind": "$products"
+            },
+            {
+                "$match": {
+                    "user": mongoose.Types.ObjectId(userId)
+                }
+            },
+            {
+                "$project": {
+                    "products": 1 , "_id": 0
+                }
+            }
+        ];
+        let productIDs = [];
+
+        Order.aggregate(pipeline)
+        .then((products) => {
+            products.forEach(product => {
+                productIDs.push(product.products)
+            })
+            Products.find({_id: {$in: productIDs}}, {_id: 1, isDeleted: 0}).populate({
+                path: 'category', select: {
+                    name: 1,
+                    _id: 0
+                }}).populate({
+                path: 'subCategory', select: {name: 1, _id: 0}
+            }).populate({
+                path: 'user', select: {name: 1, _id: 0}
+            }).then(result => {
+                res.status(200).json(result ? result : []);
+                productIDs = []
+            }).catch(error => {
+                res.status(500).json(error)
+            })
+            //res.status(200).json(product ? product.product : []);
         }).catch(error => {
             res.status(500).json(error)
         })

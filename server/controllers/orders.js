@@ -7,6 +7,24 @@ const getUserId = require('../utils/getUserId');
 const {removeProductsFromDataSet} = require('../utils/updateDataSet');
 const cron = require('node-cron');
 
+// fake messages
+/*
+cron.schedule('5 * * * * *', async () => {
+    const testUser = "5e7f7758eb6b0a4ef05046f7";
+    const messageId = new mongoose.Types.ObjectId();
+    const message = new Message({
+        _id: messageId,
+        type: "test"
+    });
+    await message.save();
+    User.findOneAndUpdate({_id: testUser}, {$push: {message: message._id}}).then((result) => {
+        console.log(result);
+    }).catch(error => {
+        //TODO: error handling
+    })
+});
+*/
+
 // orderIsAboutToExpire24H cron job every day at 00:00
 cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
@@ -136,51 +154,48 @@ module.exports = {
         }
         Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}}).then(() => {
         });
-        User.findById(userId).then((user) => {
+        User.findById(userId).then(async (user) => {
             const orderId = new mongoose.Types.ObjectId();
+            const now = new Date();
             const order = new Order({
                 _id: orderId,
                 user: user._id,
                 products,
-                rewards
+                rewards,
+                returnDate: now
             });
             // Check if user has enough rewards
             if(rewards > user.rewards)
             {
                 return res.status(500).json({message: "You do not have enough Rewards !"})
             }
-            order.save().then(() => {
-                User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(() => {
-                    // Decrease the rewards from user amount
-                    const rewardsAsNegative = (-1) * rewards;
-                    User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsAsNegative}}).then(() => {
-                        // Increase rewards to all products owners
-                        for(let product of products)
-                        {
-                            Product.findById(product).then(product => {
-                                let userIdToIncreaseRewards = product.user;
-                                let rewardsAmount = product.rewards;
-                                User.findOneAndUpdate({_id: userIdToIncreaseRewards},{$inc: {rewards: rewardsAmount}}).then(() => {
-                                }).catch(error =>{
-                                    return res.status(500).json({error})
-                                });
-                            }).catch(error => {
+            await order.save();
+            User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(() => {
+                // Decrease the rewards from user amount
+                const rewardsAsNegative = (-1) * rewards;
+                User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsAsNegative}}).then(() => {
+                    // Increase rewards to all products owners
+                    for(let product of products)
+                    {
+                        Product.findById(product).then(product => {
+                            let userIdToIncreaseRewards = product.user;
+                            let rewardsAmount = product.rewards;
+                            User.findOneAndUpdate({_id: userIdToIncreaseRewards},{$inc: {rewards: rewardsAmount}}).then(() => {
+                            }).catch(error =>{
                                 return res.status(500).json({error})
                             });
-                        }
-                    }).catch(error => {
-                        return res.status(500).json({error})
-                    })
+                        }).catch(error => {
+                            return res.status(500).json({error})
+                        });
+                    }
                 }).catch(error => {
                     return res.status(500).json({error})
-                });
-                res.status(200).json({orderId});
-                removeProductsFromDataSet(products);
-            }).catch(error => {
-                return res.status(500).json({
-                    error
                 })
-            })
+            }).catch(error => {
+                return res.status(500).json({error})
+            });
+            res.status(200).json({orderId});
+            removeProductsFromDataSet(products);
         }).catch(error => {
             return res.status(500).json({
                 error
