@@ -14,9 +14,9 @@ const recommender = new ContentBasedRecommender({
 //TODO: error handling
 const getProductPopulated = async productId => {
     const result = Recommendation.findById(productId).populate({
-        path: 'recommendedProducts', select: {
-            isDeleted: 0
-        }, populate: [{path: 'user', select: {name: 1, _id: 0}}, {
+        path: 'recommendedProducts',
+        select: { isDeleted: 0},
+        populate: [{path: 'user', select: {name: 1, _id: 0}}, {
             path: 'category', select: {
                 name: 1,
                 _id: 0

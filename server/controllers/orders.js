@@ -30,32 +30,39 @@ cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
     let flag = false;
     const oneDayInMilliseconds = 86400000;
-    const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
+    const orders = await Order.find({}).populate('user', {_id: 1}).populate({
+        path: 'products',
+        select: { isDeleted: 0 },
+        populate: [{path: 'user'}]
+    });
     for(let order of orders)
     {
         if (order.returnDate && (order.returnDate - now > 0) && (order.returnDate - now < oneDayInMilliseconds));
         {
-            flag = false;
             for(const product of order.products)
             {
-                if(product.isRented === true){
+                if(product.isRented === true)
+                {
                     flag = true
                 }
-            }
-            // TODO: Remove order.user != null
-            if (flag && order.user != null)
-            {
-                const messageId = new mongoose.Types.ObjectId();
-                const message = new Message({
-                    _id: messageId,
-                    order: order,
-                    type: "orderIsAboutToExpire24H"
-                });
-                await message.save();
-                User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
-                }).catch(error => {
-                    //TODO: error handling
-                })
+                if (flag && order.user != null)
+                {
+                    const messageId = new mongoose.Types.ObjectId();
+                    const message = new Message({
+                        _id: messageId,
+                        order: order,
+                        type: "orderIsAboutToExpire24H",
+                        productToReturn: product,
+                        productOwner: product.user,
+                        productRenter: order.user
+                    });
+                    await message.save();
+                    User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
+                    }).catch(error => {
+                        //TODO: error handling
+                    })
+                }
+                flag = false;
             }
         }
     }
@@ -67,32 +74,39 @@ cron.schedule('0 0 0 * * *', async () => {
     let flag = false;
     const oneDayInMilliseconds = 86400000;
     const twoDaysInMilliseconds = 17800000;
-    const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
+    const orders = await Order.find({}).populate('user', {_id: 1}).populate({
+        path: 'products',
+        select: { isDeleted: 0 },
+        populate: [{path: 'user'}]
+    });
     for(let order of orders)
     {
         if (order.returnDate && ((order.returnDate - now) < twoDaysInMilliseconds) &&((order.returnDate - now) > oneDayInMilliseconds))
         {
-            flag = false;
             for(const product of order.products)
             {
-                if(product.isRented === true){
+                if(product.isRented === true)
+                {
                     flag = true
                 }
-            }
-            // TODO: Remove order.user != null
-            if (flag && order.user != null)
-            {
-                const messageId = new mongoose.Types.ObjectId();
-                const message = new Message({
-                    _id: messageId,
-                    order: order,
-                    type: "orderIsAboutToExpire48H"
-                });
-                await message.save();
-                User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
-                }).catch(error => {
-                    //TODO: error handling
-                })
+                if (flag && order.user != null)
+                {
+                    const messageId = new mongoose.Types.ObjectId();
+                    const message = new Message({
+                        _id: messageId,
+                        order: order,
+                        type: "orderIsAboutToExpire48H",
+                        productToReturn: product,
+                        productOwner: product.user,
+                        productRenter: order.user
+                    });
+                    await message.save();
+                    User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
+                    }).catch(error => {
+                        //TODO: error handling
+                    })
+                }
+                flag = false;
             }
         }
     }
@@ -152,6 +166,19 @@ module.exports = {
         if (unfitProducts.rentedItems || unfitProducts.missingItems > 0) {
             return res.status(409).json(unfitProducts);
         }
+
+        await Product.find({_id: {$in: products}}, {_id: 0, isDeleted: 0, user: 1}).then(result => {
+            console.log(result)
+            result.forEach(id => {
+                if(id == userId)
+                {
+                    return res.status(500).json({message: "You cant Rent your own products !"})
+                }
+            })
+        }).catch(error =>{
+            return res.status(500).json({error})
+        })
+
         Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}}).then(() => {
         });
         User.findById(userId).then(async (user) => {
