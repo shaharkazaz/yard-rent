@@ -241,7 +241,7 @@ module.exports = {
             });
         })
     },
-    releaseRentedProductsByUSer: (req, res) => {
+    releaseRentedProductsByUser: (req, res) => {
         // TODO: on each product released -> send message to product owner to verify if product returned
 
         const {products} = req.body;
