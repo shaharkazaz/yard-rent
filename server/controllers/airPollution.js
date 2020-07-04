@@ -2,7 +2,7 @@ const https = require('https');
 
 module.exports = {
     getAirPollution: (req, res) => {
-        https.get('https://api.airvisual.com/v2/city?city=Tel%20Aviv-Yafo&state=Tel%20Aviv&country=israel&key=2387c42e-f4db-41da-b467-c2b735d72f16', (resp) => {
+        https.get('https://c4qp859qid.execute-api.us-east-1.amazonaws.com/start/pollution', (resp) => {
                     let data = '';
 
                     // A chunk of data has been recieved.
@@ -12,7 +12,7 @@ module.exports = {
 
                     // The whole response has been received. Print out the result.
                     resp.on('end', () => {
-                        res.status(200).json(JSON.parse(data).data.current.pollution.aqius)
+                        res.status(200).json(data)
                     });
 
                 }).on("error", (error) => {

@@ -12,7 +12,7 @@ export class OnlineUsersComponent implements OnInit {
   numberOfOnlineUsers: number;
 
   constructor() {
-    this.socket = io('http://127.0.0.1:3000');
+    this.socket = io('http://PUBLIC_DNS_PLACEHOLDER:3000');
   }
 
   ngOnInit() {

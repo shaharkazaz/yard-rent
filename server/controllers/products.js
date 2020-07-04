@@ -17,7 +17,7 @@ module.exports = {
             category,
             subCategory,
             rewards,
-            address, //check it address is empty put user.address
+            address: 'ssss', //check it address is empty put user.address
             description,
             image: imageUrl
         });

@@ -6,7 +6,7 @@
     "release": "standard-version",
     "commit": "git-cz",
     "ng": "ng",
-    "start": "npm run svg-to-ts && ng serve --port=8888",
+    "start": "npm run svg-to-ts && ng serve --port=4005 --host=0.0.0.0 --disable-host-check",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

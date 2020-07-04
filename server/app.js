@@ -4,10 +4,14 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const fs = require('fs');
 
-mongoose.connect('mongodb://uy9uxa5ensvbjwshje2a:KzfvYuOnKVCaQrZ26jpJ@bytcreskhtan8ld-mongodb.services.clever-cloud.com:27017/bytcreskhtan8ld',
+mongoose.connect('mongodb://cloudnews:cloudnews123@docdb-2020-06-05-17-54-31.czejrkh0utbn.us-east-1.docdb.amazonaws.com:27017/test',
     {
       useNewUrlParser:true,
+      ssl: true,
+      sslValidate: false,
+      sslCA: fs.readFileSync('./rds-combined-ca-bundle.pem'),
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false
@@ -38,7 +42,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8888");
+  res.header("Access-Control-Allow-Origin", "http://yardrentlb-824635089.us-east-1.elb.amazonaws.com");
   res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   if (req.method === "OPTIONS") {
@@ -47,6 +51,7 @@ app.use((req, res, next) => {
   }
   next();
 });
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
