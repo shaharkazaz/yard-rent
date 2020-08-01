@@ -11,7 +11,9 @@ const productSchema = mongoose.Schema({
         description: {type: String, required: true},
         image: {type: String, required: true},
         isDeleted: {type: Boolean, default: false, required: true},
-        isRented: {type: Boolean, default: false, required: true}
+        isRented: {type: Boolean, default: false, required: true},
+        orderDate: {type: Date, required: false},
+        orderReturnDate: {type: Date, required: false},
     });
 
 module.exports = mongoose.model('Product', productSchema);

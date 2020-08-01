@@ -166,16 +166,18 @@ module.exports = {
             return res.status(500).json({error})
         });
 
-        await Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}});
+        const now = new Date();
+        const returnDate = new Date(Date.now() + 12096e5);
+        await Product.updateMany({_id: {$in: products}}, {$set: {isRented: true, orderDate: now,orderReturnDate: returnDate}});
         await User.findById(userId).then(async (user) => {
             const orderId = new mongoose.Types.ObjectId();
-            const now = new Date();
             const order = new Order({
                 _id: orderId,
                 user: user._id,
                 products,
                 rewards,
-                returnDate: now
+                date: now,
+                returnDate: returnDate
             });
             // Check if user has enough rewards
             if (rewards > user.rewards) {

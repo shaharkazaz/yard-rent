@@ -183,7 +183,7 @@ module.exports = {
         })
     },
     releaseRentedProducts: (req, res) => {
-        Products.updateMany({isRented: true}, {$set: {isRented: false}}).then(() => {
+        Products.updateMany({isRented: true}, {$set: {isRented: false, orderDate: null, orderReturnDate: null}}).then(() => {
             clearDataSet();
             res.status(200).json();
         }).catch(error => {
