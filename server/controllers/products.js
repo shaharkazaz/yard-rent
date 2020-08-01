@@ -256,7 +256,7 @@ module.exports = {
                             _id: messageId,
                             order: order,
                             type: "productReturned",
-                            productToReturn: product,
+                            productToReturn: product.name,
                             productOwner: product.user,
                             productRenter: order.user
                     });

@@ -52,7 +52,7 @@ cron.schedule('0 0 0 * * *', async () => {
                         _id: messageId,
                         order: order,
                         type: "orderIsAboutToExpire24H",
-                        productToReturn: product,
+                        productToReturn: product.name,
                         productOwner: product.user,
                         productRenter: order.user
                     });
@@ -96,7 +96,7 @@ cron.schedule('0 0 0 * * *', async () => {
                         _id: messageId,
                         order: order,
                         type: "orderIsAboutToExpire48H",
-                        productToReturn: product,
+                        productToReturn: product.name,
                         productOwner: product.user,
                         productRenter: order.user
                     });
