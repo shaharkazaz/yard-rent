@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const DataSet = require('../model/productsDataSet');
 const Recommendation = require('../model/recommendation');
+const Products = require('../model/product');
 const formatData = require('../utils/contentProduct');
 const {clearDataSet} = require('../utils/updateDataSet');
 
@@ -25,17 +26,21 @@ const getProductPopulated = async productId => {
     });
     return result
 };
-//TODO: make sure Shahar never send productID of a deleted product (need to put validation or counting on Shahar to do so)
+//TODO: make sure the error if the product is deleted is okay
 module.exports = {
     getRecommendation: async (req, res) => {
         const productId = req.params.productId;
+        await Products.find({_id: {$in: productId}, isDeleted: true}, {name: 1}).then(async (alreadyDeletedProduct) => {
+            if (await alreadyDeletedProduct.length > 0) {
+                return res.status(409).json('the product is deleted');
+            }
+        });
         const recommendation = await getProductPopulated(productId);
         if (recommendation) {
             res.status(200).json(recommendation.recommendedProducts)
         }
         else {
             DataSet.findOne({}).then(async (dataSet) => {
-                //TODO: the recommender.train dosent wait for the data set creation
                 if(dataSet==null){
                     await formatData();
                 }

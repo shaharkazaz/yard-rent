@@ -1,7 +1,7 @@
 const {clearDataSet} = require('../utils/updateDataSet');
 const Message = require('../model/message');
 const User = require('../model/user');
-const Verification = require('../model/verification')
+const Verification = require('../model/verification');
 const Products = require('../model/product');
 const Order = require('../model/order');
 const bcrypt = require('bcrypt');
@@ -33,9 +33,9 @@ module.exports = {
                 })
             }
             const splittedAddress = address.split(",").map(item => item.trim());
-            const street = splittedAddress[0]
-            const city = splittedAddress[1]
-            const country = splittedAddress[2]
+            const street = splittedAddress[0];
+            const city = splittedAddress[1];
+            const country = splittedAddress[2];
             const coordinates = await getCoordinatesByAddress(street, city, country);
             if(!coordinates) {
                 return res.status(500).json({
@@ -216,7 +216,7 @@ module.exports = {
         .then((products) => {
             products.forEach(product => {
                 productIDs.push(product.products)
-            })
+            });
             Products.find({_id: {$in: productIDs}}, {_id: 1, isDeleted: 0}).populate({
                 path: 'category', select: {
                     name: 1,
@@ -302,12 +302,12 @@ module.exports = {
         const userId = req.params.userId;
         const uploadedImage = await uploadToGCP(req, res);
         const newUser = req.body;
-        const { address } = req.body
+        const { address } = req.body;
         if(address){
             const splittedAddress = address.split(",").map(item => item.trim());
-            const street = splittedAddress[0]
-            const city = splittedAddress[1]
-            const country = splittedAddress[2]
+            const street = splittedAddress[0];
+            const city = splittedAddress[1];
+            const country = splittedAddress[2];
             const coordinates = await getCoordinatesByAddress(street, city, country);
             if(!coordinates) {
                 return res.status(500).json({
@@ -357,17 +357,17 @@ module.exports = {
         })
     },
     sendEmailVerification: async (req, res) => {
-        const { email } = req.body
-        const code = Math.floor(100000 + Math.random() * 900000)
+        const { email } = req.body;
+        const code = Math.floor(100000 + Math.random() * 900000);
 
         const verification = new Verification({
             _id: new mongoose.Types.ObjectId(),
             email,
             code
         });
-        verification.save()
+        verification.save();
         try {
-            await sendMail(email, code)
+            await sendMail(email, code);
             res.status(200).json(verification._id)
         } catch (e) {
             return res.status(500).json({error:e})
@@ -375,9 +375,9 @@ module.exports = {
 
     },
     verifyCode: async (req, res) => {
-        const { code, id } = req.body
+        const { code, id } = req.body;
         try {
-           const verificationObj = await Verification.findOne({_id:id})
+           const verificationObj = await Verification.findOne({_id:id});
            if(verificationObj && parseInt(code) === verificationObj.code){
                res.status(200).json()
            }

@@ -6,6 +6,9 @@ const Product = require('../model/product');
 
 // TODO: delete the console log what to do with error handling instead maybe make sure that the schema isn't exist before
 // TODO: must check if the schema exist before deleting raise an error
+//TODO: final-ayelet called in : public: delete_user private usage:
+//
+// releaseRentedProducts,releaseDeletedProducts,resetDataSet
 const clearDataSet = () =>{
     mongoose.connection.db.listCollections({name: 'productsdatasets'}).next(function(error, collinfo) {
         if (collinfo!==null) {
@@ -37,7 +40,7 @@ const clearDataSet = () =>{
     });
     formatData();
 };
-const clearRecommenations = () =>{
+const clearRecommendations = () =>{
     mongoose.connection.db.listCollections({name: 'recommendations'}).next(function(error, collinfo) {
         if (collinfo!==null) {
             mongoose.connection.dropCollection("recommendations",(error,result)=> {
@@ -59,7 +62,7 @@ const initialUpdateSchema = () =>{
     //TODO:add error handling
     common.save();
 };
-const updateDataSetCollections = () => {
+const resetRecommendationIfNeeded = () => {
     mongoose.connection.db.listCollections({name: 'commons'}).next(function(err, collinfo) {
         if (collinfo===null) {
             initialUpdateSchema();
@@ -72,13 +75,19 @@ const updateDataSetCollections = () => {
     });
     Common.findOne().then((num)=>{
         if(num.numOfNewProducts >= num.maxNumOfProductsBeforeUpdate){
-            clearDataSet();
+            clearRecommendations();
+            Common.updateOne({$set: {numOfNewProducts: 0}}).then((status)=>{
+                if(status.ok!==1){
+                    console.log("couldn't zeroed the number of new product")
+                }
+            });
         }
     });
 };
 const removeProductsFromDataSet = (productsIdsToRemove) => {
     ProductsDataSet.updateOne({$pull: {data: {_id:productsIdsToRemove}}}).then((status)=>{
-        clearRecommenations();
+        //TODO: final-ayelet need to check both status alredy rented and deleted for alredy rented didnt reset the recommandation every time but in the UI will show that rented
+        clearRecommendations();
         if (status.ok!==1){
             console.log("didnt remove products from dataset")
         }
@@ -88,13 +97,13 @@ const removeProductsFromDataSet = (productsIdsToRemove) => {
 const updateProductInDataSet = async (productIdToUpdate) => {
     const result = await createContentForProductId(productIdToUpdate);
     ProductsDataSet.updateOne({'data._id': productIdToUpdate}, {$set: {'data.$.content': result}}).then((status) => {
-        clearRecommenations();
         if (status.ok !== 1) {
             console.log("didnt remove products from dataset")
         }
+        resetRecommendationIfNeeded();
     })
 };
-//TODO:updateMany
+
 const addProductInDataSet = async (productIdToAdd) => {
     const result = await createContentForProductId(productIdToAdd);
     let tmpObj = {
@@ -102,10 +111,10 @@ const addProductInDataSet = async (productIdToAdd) => {
         content: result
     };
     ProductsDataSet.updateOne({$push: {data: tmpObj}}).then((status) => {
-        clearRecommenations();
         if (status.ok !== 1) {
             console.log("didnt remove products from dataset")
         }
+        resetRecommendationIfNeeded();
     })
 };
 const createContentForProductId = async (productId) => {
@@ -120,4 +129,4 @@ const createContentForProductId = async (productId) => {
     });
 };
 
-module.exports = {clearDataSet,updateDataSetCollections,removeProductsFromDataSet,addProductInDataSet,updateProductInDataSet};
+module.exports = {clearDataSet,updateDataSetCollections: resetRecommendationIfNeeded,removeProductsFromDataSet,addProductInDataSet,updateProductInDataSet};

@@ -8,13 +8,13 @@ const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 const {addProductInDataSet, removeProductsFromDataSet, updateProductInDataSet, clearDataSet} = require('../utils/updateDataSet');
 
-const shuffle = async (array) => array.sort(() => Math.random() - 0.5)
+const shuffle = async (array) => array.sort(() => Math.random() - 0.5);
 
 module.exports = {
     addProduct: async (req, res) => {
         const {name, category, subCategory, rewards, description} = req.body;
         const userId = await getUserId(req);
-        const { address }  = await User.findById(userId)
+        const { address }  = await User.findById(userId);
         const imageUrl = await uploadToGCP(req, res);
         const product = new Products({
             _id: new mongoose.Types.ObjectId(),
@@ -70,9 +70,14 @@ module.exports = {
             })
         })
     },
-    //TODO: do we need to validate that the updated product isn't isDeleted:true or we are sure shahar wont send us this product
-    updateProduct: (req, res) => {
+
+    updateProduct: async (req, res) => {
         const productId = req.params.productId;
+        await Products.find({_id: {$in: productId}, isDeleted: true}, {name: 1}).then(async (alreadyDeletedProduct) => {
+            if (await alreadyDeletedProduct.length > 0) {
+                return res.status(409).json('the product is deleted');
+            }
+        });
         Products.updateOne({_id: productId}, req.body).then(() => {
             Products.findById({_id: productId}, {isDeleted: 0, isRented: 0}).populate('user', {
                 name: 1,
@@ -273,7 +278,7 @@ module.exports = {
                     })
                 }).catch(error => {
                     res.status(500).json(error);
-            })
+            });
             res.status(200).json();
         })
     })
