@@ -4,7 +4,7 @@ export const URI_CONSTANTS = {
     signup: 'users/signup',
     getUser: 'users/getuser',
     sendVerification: 'users/sendVerification',
-    verifyCode: 'users/verifyCode',
+    verifyCode: 'users/verifyCode'
   },
   management: {
     getWeeklyData: 'statistics/weekly-data',
@@ -39,8 +39,13 @@ export const URI_CONSTANTS = {
     ordersList: 'users/ordersList',
     getUserById: 'users/getUserById/{id}',
     updateUser: 'users/update/{id}',
-    newMessages: 'users/messages/{id}',
     getWatchlist: 'users/getUserFavorites'
+  },
+  messages: {
+    messages: 'messages/all/{id}',
+    newMessages: 'messages/newMessages/{id}',
+    updateOpen: 'messages/updateIsOpened/{id}',
+    updateArchive: 'messages/updateIsArchived/{id}'
   },
   development: {
     releaseRented: 'products/_releaseRented',

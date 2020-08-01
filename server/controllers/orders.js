@@ -221,8 +221,8 @@ module.exports = {
             }).catch(error => {
                 return res.status(500).json({error})
             });
-            res.status(200).json({orderId});
             removeProductsFromDataSet(products);
+            return res.status(200).json({orderId});
         }).catch(error => {
             return res.status(500).json({
                 error

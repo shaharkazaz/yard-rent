@@ -1,17 +1,18 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {parseUrl} from "../shared/utils";
-import {URI_CONSTANTS} from "../shared/constants/uri.contants";
-import {Product} from "../marketplace/marketplace.types";
-import {UserInfo} from "../auth/state/auth.model";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { parseUrl } from '../shared/utils';
+import { URI_CONSTANTS } from '../shared/constants/uri.contants';
+import { Product } from '../marketplace/marketplace.types';
+import { UserInfo } from '../auth/state/auth.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class UserDataService {
-
   constructor(private http: HttpClient) {}
 
   updateProfile(id: string, user) {
-    return this.http.patch(parseUrl(URI_CONSTANTS.users.updateUser, {id}), {...user});
+    return this.http.patch(parseUrl(URI_CONSTANTS.users.updateUser, { id }), {
+      ...user
+    });
   }
 
   getProductsList() {
@@ -23,11 +24,9 @@ export class UserDataService {
   }
 
   getUserById(id: string) {
-    return this.http.get<Partial<UserInfo>>(parseUrl(URI_CONSTANTS.users.getUserById, {id}));
-  }
-
-  getNewMessages(id: string) {
-    return this.http.get<any>(parseUrl(URI_CONSTANTS.users.newMessages, {id}));
+    return this.http.get<Partial<UserInfo>>(
+      parseUrl(URI_CONSTANTS.users.getUserById, { id })
+    );
   }
 
   getWatchlist() {
@@ -35,10 +34,15 @@ export class UserDataService {
   }
 
   removeFromWatchlist(productId: string) {
-    return this.http.post(parseUrl(URI_CONSTANTS.products.removeFromWatchlist), {products: [productId]});
+    return this.http.post(
+      parseUrl(URI_CONSTANTS.products.removeFromWatchlist),
+      { products: [productId] }
+    );
   }
 
   addToWatchlist(productId: string) {
-    return this.http.post(parseUrl(URI_CONSTANTS.products.addToWatchlist), {products: [productId]});
+    return this.http.post(parseUrl(URI_CONSTANTS.products.addToWatchlist), {
+      products: [productId]
+    });
   }
 }

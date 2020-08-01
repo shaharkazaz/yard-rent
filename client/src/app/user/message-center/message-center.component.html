@@ -1,11 +1,153 @@
-<div class="container d-flex-column align-center p-10 pb-30">
-  <div class="d-flex toolbar">
-    <dato-icon datoIcon="close"></dato-icon>
-  </div>
-  <div class="d-flex messages">
-    <div class="list d-flex-column">
-      <div *ngFor="let a of [1,2,3,4,5,6,7,8,9,10,11,1,1,1,1,1,1]" class="message"></div>
+<ng-container *ngIf="messages">
+  <div
+    class="container height-100 d-flex-column py-10"
+    *transloco="let t; read: 'messages-page'"
+  >
+    <div class="d-flex d-flex-grow overflow-hidden">
+      <div class="list-container d-flex-column">
+        <div class="list-header pl-10 d-flex align-start-center">
+          <div class="d-flex align-start-center dato-sub-headline no-select">
+            <dato-icon
+              class="mr-10 pointer"
+              [datoIcon]="view"
+              (click)="changeView()"
+              [datoTooltip]="
+                'messages-page.view-' + (view === 'inbox' ? 'archive' : 'inbox')
+              "
+              datoTooltipPosition="bottom"
+            ></dato-icon>
+            {{ t(view, { count: getUnreadLength() }) }}
+          </div>
+          <div class="d-flex-grow"></div>
+          <div
+            class="d-flex pointer"
+            (click)="changeSort()"
+            datoTooltip="messages-page.change-sorting"
+            datoTooltipPosition="left"
+          >
+            <div class="no-select dato-simple d-flex align-center">
+              {{ t('sorted-by-date') }}
+            </div>
+            <dato-icon class="mx-5" [datoIcon]="getSortIcon()"></dato-icon>
+          </div>
+        </div>
+        <div class="list-content overflow-y-scroll">
+          <ng-container *ngIf="viewMessages as messages">
+            <div
+              class="p-20 d-flex-column align-center primary-300-color"
+              *ngIf="messages.length === 0; else messagesList"
+            >
+              <dato-icon
+                class="mb-10"
+                height="60px"
+                width="60px"
+                datoIcon="empty-mailbox"
+              ></dato-icon>
+              <div>{{ t('empty-mailbox') }}</div>
+            </div>
+            <ng-template #messagesList>
+              <div
+                *ngFor="let message of messages"
+                (click)="selectMessage(message)"
+                class="d-flex px-10 align-start-center pointer message accent-100-background-color:h"
+                [ngClass]="{
+                  selected: selectedMessage === message,
+                  'primary-100-background-color': message.isOpened
+                }"
+              >
+                <div
+                  class="dato-note ellipsis"
+                  [innerHTML]="
+                    t('titles.' + message.type, { item: 'some long name' })
+                  "
+                  [datoTooltip]="
+                    t('titles.' + message.type, { item: 'some long name' })
+                  "
+                  datoTooltipOnTextOverflow="true"
+                ></div>
+                <div class="d-flex-grow"></div>
+                <div class="date pl-20 dato-note-bold">
+                  {{ getDate(message.date) }}
+                </div>
+                <div class="actions hidden">
+                  <div
+                    *ngIf="view === 'archive'; else inboxActions"
+                    class="action-container"
+                    (click.stop)="archive(message, false)"
+                    datoTooltip="messages-page.actions.unarchive"
+                    datoTooltipPosition="bottom"
+                  >
+                    <dato-icon
+                      datoIcon="inbox"
+                      height="18px"
+                      width="18px"
+                    ></dato-icon>
+                  </div>
+                  <ng-template #inboxActions>
+                    <div
+                      class="action-container"
+                      (click.stop)="archive(message, true)"
+                      datoTooltip="messages-page.actions.archive"
+                      datoTooltipPosition="bottom"
+                    >
+                      <dato-icon
+                        datoIcon="archive"
+                        height="18px"
+                        width="18px"
+                      ></dato-icon>
+                    </div>
+                    <div
+                      class="action-container"
+                      (click.stop)="markAs(message, false)"
+                      *ngIf="message.isOpened; else markRead"
+                      datoTooltip="messages-page.actions.mark-unread"
+                      datoTooltipPosition="bottom"
+                    >
+                      <dato-icon
+                        datoIcon="letter"
+                        height="20px"
+                        width="20px"
+                      ></dato-icon>
+                    </div>
+                    <ng-template #markRead>
+                      <div
+                        class="action-container"
+                        (click.stop)="markAs(message, true)"
+                        datoTooltip="messages-page.actions.mark-read"
+                        datoTooltipPosition="bottom"
+                      >
+                        <dato-icon
+                          datoIcon="mark-read"
+                          height="18px"
+                          width="18px"
+                        ></dato-icon>
+                      </div>
+                    </ng-template>
+                  </ng-template>
+                </div>
+              </div>
+            </ng-template>
+          </ng-container>
+        </div>
+      </div>
+      <div
+        class="d-flex-column d-flex-grow preview primary-50-background-color"
+      >
+        <div class="toolbar primary-0-background-color"></div>
+        <div
+          class="d-flex-grow align-center m-10 primary-0-background-color"
+          [ngSwitch]="selectedMessage.type"
+        >
+          <return-reminder-message
+            [message]="selectedMessage"
+            *ngSwitchCase="'productReturned'"
+          ></return-reminder-message>
+          <return-reminder-message
+            [message]="selectedMessage"
+            *ngSwitchDefault
+          ></return-reminder-message>
+        </div>
+      </div>
     </div>
-    <div class="preview"></div>
   </div>
-</div>
+</ng-container>

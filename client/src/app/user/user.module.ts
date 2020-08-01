@@ -5,18 +5,25 @@ import { MyProductsPageComponent } from './my-products/my-products-page.componen
 import { ProfilePageComponent } from './profile/profile-page.component';
 import {
   DatoButtonModule,
-  DatoDirectivesModule, DatoEditableHeaderModule, DatoFileInputModule, DatoFormValidationModule,
-  DatoGridV2Module, DatoIconButtonModule,
-  DatoIconModule, DatoInfiniteScrollModule, DatoInputModule,
+  DatoDirectivesModule,
+  DatoEditableHeaderModule,
+  DatoFileInputModule,
+  DatoFormValidationModule,
+  DatoGridV2Module,
+  DatoIconButtonModule,
+  DatoIconModule,
+  DatoInfiniteScrollModule,
+  DatoInputModule,
   DatoLinkButtonModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import {ReactiveFormsModule} from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from '@angular/common';
 import { MessageCenterComponent } from './message-center/message-center.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
-import {MarketplaceModule} from "../marketplace/marketplace.module";
+import { MarketplaceModule } from '../marketplace/marketplace.module';
+import { ReturnReminderComponent } from './message-center/messages/return-reminder/return-reminder.component';
 
 const routes: Routes = [
   {
@@ -70,7 +77,8 @@ const routes: Routes = [
     ProfilePageComponent,
     EditUserComponent,
     MessageCenterComponent,
-    WatchlistComponent
+    WatchlistComponent,
+    ReturnReminderComponent
   ],
   providers: [],
   exports: [MyOrdersPageComponent]

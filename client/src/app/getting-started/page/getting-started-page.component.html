@@ -1,29 +1,32 @@
 <ng-container *transloco="let t">
-  <div id="how-to-rent" class="section d-flex-column align-center accent-100-background-color">
-    <div class="yardrent-titles mb-20" >
-      {{t('how-to-rent')}}
+  <div
+    id="how-to-rent"
+    class="section d-flex-column align-center accent-100-background-color"
+  >
+    <div class="yardrent-titles mb-20">
+      {{ t('how-to-rent') }}
     </div>
     <div class="d-flex align-center list-inline ">
       <ul>
         <li>
-          <img [src]="getIconImage('how-to-rent-find')" align="middle">
-          <h4>{{t('how-to-rent-description-title-1')}}</h4>
+          <img [src]="getIconImage('how-to-rent-find')" align="middle" />
+          <h4>{{ t('how-to-rent-description-title-1') }}</h4>
           <p>
-            {{t('how-to-rent-description-1')}}
+            {{ t('how-to-rent-description-1') }}
           </p>
         </li>
         <li>
-          <img [src]="getIconImage('how-to-rent-select')">
-          <h4>{{t('how-to-rent-description-title-2')}}</h4>
+          <img [src]="getIconImage('how-to-rent-select')" />
+          <h4>{{ t('how-to-rent-description-title-2') }}</h4>
           <p>
-            {{t('how-to-rent-description-2')}}
+            {{ t('how-to-rent-description-2') }}
           </p>
         </li>
         <li>
-          <img [src]="getIconImage('how-to-rent-planet')">
-          <h4>{{t('how-to-rent-description-title-3')}}</h4>
+          <img [src]="getIconImage('how-to-rent-planet')" />
+          <h4>{{ t('how-to-rent-description-title-3') }}</h4>
           <p>
-            {{t('how-to-rent-description-3')}}
+            {{ t('how-to-rent-description-3') }}
           </p>
         </li>
       </ul>
@@ -32,59 +35,63 @@
 
   <div id="how-to-post" class="section d-flex-column align-center">
     <div class="yardrent-titles mb-20">
-      {{t('how-to-post')}}
+      {{ t('how-to-post') }}
     </div>
 
     <div class="d-flex align-center ">
       <div class="list-inline">
         <ul>
           <p class="align-center">
-            {{t('how-to-post-description')}}
+            {{ t('how-to-post-description') }}
           </p>
         </ul>
         <ul>
           <li>
-            <img [src]="getIconImage('how-to-post-free')" >
-            <h4>{{t('how-to-post-description-title-1')}}</h4>
+            <img [src]="getIconImage('how-to-post-free')" />
+            <h4>{{ t('how-to-post-description-title-1') }}</h4>
             <p>
-              {{t('how-to-post-description-1')}}
+              {{ t('how-to-post-description-1') }}
             </p>
           </li>
           <li>
-            <img [src]="getIconImage('how-to-post-community')">
-            <h4>{{t('how-to-post-description-title-2')}}</h4>
+            <img [src]="getIconImage('how-to-post-community')" />
+            <h4>{{ t('how-to-post-description-title-2') }}</h4>
             <p>
-              {{t('how-to-post-description-2')}}
+              {{ t('how-to-post-description-2') }}
             </p>
           </li>
         </ul>
-        <dato-button class="items-center mr-10" datoType="orange" (click)="addNewItem()">+ {{ t('post-something') }}</dato-button>
+        <dato-button
+          class="items-center mr-10"
+          datoType="orange"
+          (click)="addNewItem()"
+          >+ {{ t('post-something') }}</dato-button
+        >
       </div>
     </div>
   </div>
-  <div id="what-are-rewards" class="section d-flex-column align-center accent-100-background-color">
+  <div
+    id="what-are-rewards"
+    class="section d-flex-column align-center accent-100-background-color"
+  >
     <div class="yardrent-titles mb-20">
-      {{t('what-are-rewards')}}
+      {{ t('what-are-rewards') }}
     </div>
     <div class="d-flex align-space-around-center ">
       <div class="content-container mr-30">
-        {{t('what-are-rewards-description')}}
+        {{ t('what-are-rewards-description') }}
         <ul>
           <li>
-            {{t('what-are-rewards-description-bullet1')}}
+            {{ t('what-are-rewards-description-bullet1') }}
           </li>
           <li>
-            {{t('what-are-rewards-description-bullet2')}}
+            {{ t('what-are-rewards-description-bullet2') }}
           </li>
         </ul>
-        <canvas id="myCanvas">
-          Niv
-        </canvas>
       </div>
       <div class="content-container">
-        <img [src]="getSectionImage('what-are-rewards')">
+        <img class="height-100" [src]="getSectionImage('what-are-rewards')" />
       </div>
     </div>
   </div>
-
 </ng-container>

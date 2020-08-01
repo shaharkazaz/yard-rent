@@ -1,4 +1,14 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit
+} from '@angular/core';
+import { AuthQuery } from '../../auth/state/auth.query';
+import { tapOnce } from '@datorama/core';
+import { ClientMessage, ServerMessage } from './message-center.types';
+import { format, isThisYear, isToday } from 'date-fns';
+import { MessageCenterService } from './message-center.service';
 
 @Component({
   selector: 'app-message-center',
@@ -7,10 +17,86 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageCenterComponent implements OnInit {
+  messages: ClientMessage[];
+  selectedMessage: ClientMessage;
+  view: 'archive' | 'inbox' = 'inbox';
+  private sortDir = -1; // desc
 
-  constructor() { }
+  constructor(
+    private messagesService: MessageCenterService,
+    private authQuery: AuthQuery,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
+    this.messagesService
+      .getAllMessages(this.authQuery.getUserInfo()._id)
+      .pipe(
+        tapOnce(([first]) => {
+          this.selectedMessage = first;
+        })
+      )
+      .subscribe(messages => {
+        this.messages = messages;
+        this.cdr.detectChanges();
+      });
   }
 
+  get viewMessages() {
+    return this.messages.filter(
+      ({ isArchived }) => isArchived === (this.view === 'archive')
+    );
+  }
+
+  selectMessage(message: ServerMessage) {
+    this.markAs(message, true);
+    this.selectedMessage = message;
+  }
+
+  changeSort() {
+    this.sortDir = this.sortDir * -1;
+    this.messages = this.messages.sort(
+      (a, b) => a.date.localeCompare(b.date) * this.sortDir
+    );
+  }
+
+  getSortIcon() {
+    const dir = this.sortDir === 1 ? 'asc' : 'desc';
+    return `sort-${dir}-arrow`;
+  }
+
+  getDate(raw: string) {
+    const date = new Date(raw);
+    let dateFormat = isToday(date) ? 'HH:mm' : 'MMM D';
+    if (!isThisYear(date)) {
+      dateFormat = ' YYYY';
+    }
+    return format(date, dateFormat);
+  }
+
+  getUnreadLength() {
+    return this.view === 'inbox'
+      ? this.messages.filter(
+          ({ isOpened, isArchived }) => !isOpened && !isArchived
+        ).length
+      : this.viewMessages.length;
+  }
+
+  markAs(message: ServerMessage, isOpened: boolean) {
+    message.isOpened = isOpened;
+    this.messagesService
+      .setMessageOpenStatus(message._id, isOpened)
+      .subscribe();
+  }
+
+  archive(message: ServerMessage, isArchived) {
+    message.isArchived = isArchived;
+    this.messagesService
+      .setMessageArchiveStatus(message._id, isArchived)
+      .subscribe();
+  }
+
+  changeView() {
+    this.view = this.view === 'inbox' ? 'archive' : 'inbox';
+  }
 }

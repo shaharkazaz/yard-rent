@@ -228,8 +228,8 @@
   "remove-from-cart": "Remove from cart",
   "perform-logout": "Perform logout?",
   "logout-clear-cart": "You have {{count}} items in your cart, if you proceed with the logout your cart will be cleard.<br>Are you sure you want to proceed?",
-  "place-order":  "Place order",
-  "insufficient-rewards":  "Insufficient rewards",
+  "place-order": "Place order",
+  "insufficient-rewards": "Insufficient rewards",
   "empty-cart": "Your cart is empty! fill it up with goods from our",
   "order-completed": {
     "title": "Order {{id}} has been placed",
@@ -237,7 +237,7 @@
     "twitter-title": "Hold on! want to make <span class='dato-headline'>100</span> shiny new rewards?",
     "twitter-instructions": "All you have to do is allow us to post your order* on our twitter channel!",
     "twitter-disclaimer": "*Only your name and the amount of items you rented will be posted",
-      "no-thanks": "No thanks",
+    "no-thanks": "No thanks",
     "sure": "Sure!",
     "posting": "Posting on twitter",
     "redirecting-to-home": "Posted! redirecting to home page"
@@ -346,5 +346,32 @@
     "verifying": "Verifying code",
     "try-again": "Seems like something is wrong, try again",
     "email-resent": "A new email was sent"
+  },
+  "messages-page": {
+    "inbox": "Inbox ({{count}})",
+    "archive": "Archive ({{count}})",
+    "change-sorting": "click to change sorting direction",
+    "sorted-by-date": "Sorted by date",
+    "view-inbox": "Click to view the inbox",
+    "view-archive": "Click to view archived messages",
+    "empty-mailbox": "There are no more messages",
+    "actions": {
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "mark-read": "Mark as read",
+      "mark-unread": "Mark as unread"
+    },
+    "titles": {
+      "orderIsAboutToExpire24H": "<b>Reminder:</b> You have 24 hours to return {{item}}",
+      "orderIsAboutToExpire48H": "<b>Reminder:</b> You have 48 hours to return {{item}}",
+      "productReturned": ""
+    },
+    "messages": {
+      "title": {
+        "orderIsAboutToExpire24H": "You have 24 hours to return this item:",
+        "orderIsAboutToExpire48H": "You have 48 hours to return this item:",
+        "productReturned": ""
+      }
+    }
   }
 }
