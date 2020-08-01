@@ -32,21 +32,17 @@ cron.schedule('0 0 0 * * *', async () => {
     const oneDayInMilliseconds = 86400000;
     const orders = await Order.find({}).populate('user', {_id: 1}).populate({
         path: 'products',
-        select: { isDeleted: 0 },
+        select: {isDeleted: 0},
         populate: [{path: 'user'}]
     });
-    for(let order of orders)
-    {
-        if (order.returnDate && (order.returnDate - now > 0) && (order.returnDate - now < oneDayInMilliseconds));
+    for (let order of orders) {
+        if (order.returnDate && (order.returnDate - now > 0) && (order.returnDate - now < oneDayInMilliseconds)) ;
         {
-            for(const product of order.products)
-            {
-                if(product.isRented === true)
-                {
+            for (const product of order.products) {
+                if (product.isRented === true) {
                     flag = true
                 }
-                if (flag && order.user != null)
-                {
+                if (flag && order.user != null) {
                     const messageId = new mongoose.Types.ObjectId();
                     const message = new Message({
                         _id: messageId,
@@ -76,21 +72,16 @@ cron.schedule('0 0 0 * * *', async () => {
     const twoDaysInMilliseconds = 17800000;
     const orders = await Order.find({}).populate('user', {_id: 1}).populate({
         path: 'products',
-        select: { isDeleted: 0 },
+        select: {isDeleted: 0},
         populate: [{path: 'user'}]
     });
-    for(let order of orders)
-    {
-        if (order.returnDate && ((order.returnDate - now) < twoDaysInMilliseconds) &&((order.returnDate - now) > oneDayInMilliseconds))
-        {
-            for(const product of order.products)
-            {
-                if(product.isRented === true)
-                {
+    for (let order of orders) {
+        if (order.returnDate && ((order.returnDate - now) < twoDaysInMilliseconds) && ((order.returnDate - now) > oneDayInMilliseconds)) {
+            for (const product of order.products) {
+                if (product.isRented === true) {
                     flag = true
                 }
-                if (flag && order.user != null)
-                {
+                if (flag && order.user != null) {
                     const messageId = new mongoose.Types.ObjectId();
                     const message = new Message({
                         _id: messageId,
@@ -118,18 +109,16 @@ cron.schedule('* * * * *', async () => {
     const sixDaysInMiliseconds = 518400000;
     const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
     let shouldCharge = false;
-    for(const order of orders)
-    {
-        if(order.returnDate) {
-            if(now - order.returnDate > fiveDayInMilliseconds &&  now - order.returnDate < sixDaysInMiliseconds){
-                for(const product of order.products)
-                {
-                    if(product.isRented === true){
+    for (const order of orders) {
+        if (order.returnDate) {
+            if (now - order.returnDate > fiveDayInMilliseconds && now - order.returnDate < sixDaysInMiliseconds) {
+                for (const product of order.products) {
+                    if (product.isRented === true) {
                         shouldCharge = true
                     }
                 }
             }
-            if(shouldCharge) {
+            if (shouldCharge) {
                 //TODO: remove deposit or remove 10% of the product rewards
             }
         }
@@ -167,21 +156,18 @@ module.exports = {
             return res.status(409).json(unfitProducts);
         }
 
-        await Product.find({_id: {$in: products}}, {_id: 0, isDeleted: 0, user: 1}).then(result => {
-            console.log(result)
+        await Product.find({_id: {$in: products}}, {user: 1}).then(result => {
             result.forEach(id => {
-                if(id == userId)
-                {
+                if (id._id.toString() === userId) {
                     return res.status(500).json({message: "You cant Rent your own products !"})
                 }
             })
-        }).catch(error =>{
+        }).catch(error => {
             return res.status(500).json({error})
-        })
-
-        Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}}).then(() => {
         });
-        User.findById(userId).then(async (user) => {
+
+        await Product.updateMany({_id: {$in: products}}, {$set: {isRented: true}});
+        await User.findById(userId).then(async (user) => {
             const orderId = new mongoose.Types.ObjectId();
             const now = new Date();
             const order = new Order({
@@ -192,23 +178,21 @@ module.exports = {
                 returnDate: now
             });
             // Check if user has enough rewards
-            if(rewards > user.rewards)
-            {
+            if (rewards > user.rewards) {
                 return res.status(500).json({message: "You do not have enough Rewards !"})
             }
             await order.save();
-            User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(() => {
+            await User.findOneAndUpdate({_id: user._id}, {$push: {orderId: order._id}}).then(async () => {
                 // Decrease the rewards from user amount
                 const rewardsAsNegative = (-1) * rewards;
-                User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsAsNegative}}).then(() => {
+                await User.findOneAndUpdate({_id: userId}, {$inc: {rewards: rewardsAsNegative}}).then(async () => {
                     // Increase rewards to all products owners
-                    for(let product of products)
-                    {
-                        Product.findById(product).then(product => {
+                    for (let product of products) {
+                        await Product.findById(product).then(async product => {
                             let userIdToIncreaseRewards = product.user;
                             let rewardsAmount = product.rewards;
-                            User.findOneAndUpdate({_id: userIdToIncreaseRewards},{$inc: {rewards: rewardsAmount}}).then(() => {
-                            }).catch(error =>{
+                            await User.findOneAndUpdate({_id: userIdToIncreaseRewards}, {$inc: {rewards: rewardsAmount}}).then(() => {
+                            }).catch(error => {
                                 return res.status(500).json({error})
                             });
                         }).catch(error => {
@@ -221,12 +205,10 @@ module.exports = {
             }).catch(error => {
                 return res.status(500).json({error})
             });
+            res.status(200).json({orderId});
             removeProductsFromDataSet(products);
-            return res.status(200).json({orderId});
         }).catch(error => {
-            return res.status(500).json({
-                error
-            })
+            return res.status(500).json({error})
         });
     },
     getOrder: (req, res) => {
