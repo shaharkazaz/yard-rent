@@ -117,8 +117,9 @@ const addProductInDataSet = async (productIdToAdd) => {
         resetRecommendationIfNeeded();
     })
 };
+//TODO: currently enable to edit a rented product if not add ,isRented:false}
 const createContentForProductId = async (productId) => {
-    return await Product.findOne({_id:productId,isDeleted: false,isRented:false}, {
+    return await Product.findOne({_id:productId,isDeleted: false}, {
         name: 1,
         category: 1,
         subCategory: 1,
