@@ -7,10 +7,10 @@ const messageSchema = mongoose.Schema({
     order: { type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false },
     orderDate: {type: Date, required: false},
     orderReturnDate: {type: Date, required: false},
-    productToReturn: { type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false },
-    productOwner: { type: mongoose.Schema.Types.ObjectID, ref: 'User', required: false },
+    productToReturn: { type: String, required: false },
+    productOwner: { type: String, required: false },
     productImage: {type: String, required: false},
-    productRenter: { type: mongoose.Schema.Types.ObjectID, ref: 'User', required: false },
+    productRenter: { type: String, required: false },
     isOpened: { type: Boolean, default: false },
     isArchived: { type: Boolean, default: false },
     type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H", "productReturned", "test"]
