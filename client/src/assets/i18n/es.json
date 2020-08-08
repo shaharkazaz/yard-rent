@@ -217,6 +217,19 @@
   "add-item": {
     "upload-image": "Sube la imagen de tu producto"
   },
+  "edit-item": {
+    "successfully-updated": "actualizado exitosamente"
+  },
+  "marketplace-filters": {
+    "free-text": "texto libre:",
+    "free-text-placeholder": "p.ej. baloncesto",
+    "category": "Categoría:",
+    "sub-category": "Subcategoría:",
+    "rewards-range-min": "Recompensas mínimas:",
+    "rewards-range-max": "Recompensas máximas:",
+    "clear": "Filtros claros",
+    "apply": "Aplicar filtros"
+  },
   "categories": {
     "Furniture": "Mueble",
     "Sports & Fitness": "Deportes & fitness",
@@ -237,7 +250,14 @@
     "Necklaces": "Collares",
     "Speakers": "Oradoras",
     "Headphones Mobiles": "Auriculares Móviles",
-    "Mobile Chargers": "Cargadores móviles"
+    "Mobile Chargers": "Cargadores móviles",
+    "Home Decor": "Decoración del hogar",
+    "Cameras & Accessories": "Cámaras y accesorios",
+    "Lens Hoods": "Capuchas para lentes",
+    "Battery chargers": "Cargadores de bateria",
+    "Wall Clocks": "Relojes de pared",
+    "Showpieces": "Obras maestras",
+    "Flowers & Vases": "Flores y jarrones"
   },
   "languages": {
     "en": "English",
