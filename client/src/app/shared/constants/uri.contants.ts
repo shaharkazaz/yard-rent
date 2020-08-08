@@ -36,6 +36,7 @@ export const URI_CONSTANTS = {
   },
   users: {
     productsList: 'users/productsList',
+    rentedProductsList: 'users/rentedProductsList',
     ordersList: 'users/ordersList',
     getUserById: 'users/getUserById/{id}',
     updateUser: 'users/update/{id}',

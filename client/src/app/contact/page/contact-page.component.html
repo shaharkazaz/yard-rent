@@ -1,33 +1,37 @@
-<ng-container *transloco="let t">
 <div class="container d-flex-column width-100">
-  <img src="../../../assets/images/contact/contact-us-banner.jpg">
-  <div class="centered">
-    <h1 class="yardrent-titles">{{t('contact-us')}}</h1>
-      {{t('contact-us-description')}}
+  <img src="../../../assets/images/contact/contact-us-banner.jpg" />
+  <div class="centered" *transloco="let t">
+    <h1 class="yardrent-titles">{{ t('contact-us') }}</h1>
+    {{ t('contact-us-description') }}
   </div>
 </div>
 <bing-map [addresses]="addresses"></bing-map>
 <ul>
   <li>
-    <br>
-    <canvas #canvasEl width=100 height=100 (click)="openGithub()"></canvas>
+    <br />
+    <canvas #canvasEl width="100" height="100" (click)="openGithub()"></canvas>
   </li>
   <li>
     <h3><b>1-800-70-70-70</b></h3>
-    Sunday - Friday<br>
+    Sunday - Friday<br />
     8:00AM - 6:00PM
   </li>
-  <li>
-    <h3><b>{{t('office')}}</b></h3>
-    Dikla 20, Rishon Letzion<br>
-    Israel<br>
-    054-3978955
-  </li>
-  <li>
-    <h3><b>{{t('corporate-office')}}</b></h3>
-    Mendel 5, Ramat-Gan<br>
-    Israel<br>
-    054-3555859
-  </li>
+  <ng-container *transloco="let t">
+    <li>
+      <h3>
+        <b>{{ t('office') }}</b>
+      </h3>
+      Dikla 20, Rishon Letzion<br />
+      Israel<br />
+      054-3978955
+    </li>
+    <li>
+      <h3>
+        <b>{{ t('corporate-office') }}</b>
+      </h3>
+      Mendel 5, Ramat-Gan<br />
+      Israel<br />
+      054-3555859
+    </li>
+  </ng-container>
 </ul>
-</ng-container>

@@ -20,6 +20,10 @@ export class UserService {
     return this.dataService.getProductsList();
   }
 
+  getRentedProductsList() {
+    return this.dataService.getRentedProductsList();
+  }
+
   getOrdersList() {
     return this.dataService.getOrdersList();
   }

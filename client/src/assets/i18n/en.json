@@ -157,6 +157,10 @@
   "login-to-continue": "Login to continue",
   "visit-us": "Visit us on {{name}}",
   "my-products": "My products",
+  "my-rented-products": "My rented products",
+  "rented-products-table": {
+    "return-date": "Return date"
+  },
   "my-orders": "My orders",
   "my-profile": "My profile",
   "rent-anything": "Rent anything",
@@ -273,9 +277,9 @@
     "clear": "Clear filters",
     "apply": "Apply filters"
   },
+  "item-returned": "Mark as returned",
   "products-table": {
     "is-rented": "Currently rented",
-    "item-returned": "Mark as returned",
     "delete-items": {
       "title": "Delete items",
       "content": "You are about to remove this item from the marketplace, are you sure?",

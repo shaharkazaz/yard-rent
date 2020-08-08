@@ -24,6 +24,7 @@ import { MessageCenterComponent } from './message-center/message-center.componen
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { MarketplaceModule } from '../marketplace/marketplace.module';
 import { ReturnReminderComponent } from './message-center/messages/return-reminder/return-reminder.component';
+import { MyRentedProductsComponent } from './my-rented-products/my-rented-products.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
   {
     path: 'my-products',
     component: MyProductsPageComponent
+  },
+  {
+    path: 'my-rented-products',
+    component: MyRentedProductsComponent
   },
   {
     path: 'profile',
@@ -78,7 +83,8 @@ const routes: Routes = [
     EditUserComponent,
     MessageCenterComponent,
     WatchlistComponent,
-    ReturnReminderComponent
+    ReturnReminderComponent,
+    MyRentedProductsComponent
   ],
   providers: [],
   exports: [MyOrdersPageComponent]

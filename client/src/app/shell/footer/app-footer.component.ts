@@ -6,10 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app-footer.component.scss']
 })
 export class AppFooterComponent {
-  contentEl = document.querySelector('.content');
   constructor() {}
-
-  scrollToTop() {
-    this.contentEl.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 }

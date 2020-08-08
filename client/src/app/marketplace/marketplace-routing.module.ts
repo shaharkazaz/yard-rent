@@ -1,10 +1,10 @@
-import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
-import {MarketplacePageComponent} from "./page/marketplace-page.component";
-import {MarketplaceAddItemComponent} from "./add-item/marketplace-add-item.component";
-import {MarketplaceAllItemsComponent} from "./all-items/marketplace-all-items.component";
-import {MarketplaceItemPageComponent} from "./item-page/marketplace-item-page.component";
-import {MarketplaceModule} from "./marketplace.module";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MarketplacePageComponent } from './page/marketplace-page.component';
+import { MarketplaceAddItemComponent } from './add-item/marketplace-add-item.component';
+import { MarketplaceAllItemsComponent } from './all-items/marketplace-all-items.component';
+import { MarketplaceItemPageComponent } from './item-page/marketplace-item-page.component';
+import { MarketplaceModule } from './marketplace.module';
 
 const routes: Routes = [
   {
@@ -38,9 +38,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forChild(routes),
-    MarketplaceModule
-  ]
+  imports: [RouterModule.forChild(routes), MarketplaceModule]
 })
 export class MarketplaceRoutingModule {}
