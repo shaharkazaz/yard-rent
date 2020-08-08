@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthQuery} from '../../auth/state/auth.query';
 import {AppAuthService} from '../../auth/app-auth.service';
 import {UserInfo} from '../../auth/state/auth.model';
@@ -13,10 +13,9 @@ import {untilDestroyed} from 'ngx-take-until-destroy';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./profile-page.component.scss']
 })
-export class ProfilePageComponent implements OnInit {
+export class ProfilePageComponent implements OnInit, OnDestroy {
   user: UserInfo;
   userProfile: FormGroup;
-  loading = true;
 
   constructor(
     private authQuery: AuthQuery,
@@ -25,13 +24,11 @@ export class ProfilePageComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  // tslint:disable-next-line:use-lifecycle-interface
   ngOnDestroy(): void {}
 
   ngOnInit() {
     this.authService.getUserByToken().pipe(untilDestroyed(this)).subscribe(user => {
       this.user = user;
-      this.loading = false;
       this.userProfile = this.fb.group({
         name: [this.user.name]
       });
