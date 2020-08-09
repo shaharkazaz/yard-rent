@@ -255,42 +255,49 @@ module.exports = {
         Products.find({_id: {$in: objectIdProducts}},{_id: 1, user: 1, name: 1}).populate('user').then(
             productsList => {
             productsList.forEach(product => {
-                Products.findOneAndUpdate({_id: product.id},{$set: {isRented: false, orderDate: null, orderReturnDate: null}}).populate('user').then(() => {
-                    Order.find({ products : mongoose.Types.ObjectId(product.id)},{_id: 1, user: 1, date: 1}).populate('user').then(async orders => {
-                        var maxOrder = orders[0]
-                        var max_dt = orders[0].date
-                        var max_dtObj = new Date(max_dt)
-                        orders.forEach(order => {
-                            if(new Date(order.date) > max_dtObj)
-                            {
-                                max_dt = order.date
-                                max_dtObj = new Date(order.date)
-                                maxOrder = order;
-                            }
-                        })
-                        const messageId = new mongoose.Types.ObjectId();
-                        const message = new Message({
-                            _id: messageId,
-                            order: maxOrder,
-                            type: "productReturned",
-                            productToReturn: product.name,
-                            productOwner: product.user.name,
-                            productRenter: maxOrder.user.name
-                        });
-                        await message.save()
-                        User.findOneAndUpdate({_id: product.user}, {$push: {message: messageId}}).then(() => {
-                            res.status(200).json();
+                if(!product.isInReturnProcess)
+                {
+                    Products.findOneAndUpdate({_id: product.id},{$set: {isInReturnProcess: true}}).populate('user').then(() => {
+                        Order.find({ products : mongoose.Types.ObjectId(product.id)},{_id: 1, user: 1, date: 1}).populate('user').then(async orders => {
+                            var maxOrder = orders[0]
+                            var max_dt = orders[0].date
+                            var max_dtObj = new Date(max_dt)
+                            orders.forEach(order => {
+                                if(new Date(order.date) > max_dtObj)
+                                {
+                                    max_dt = order.date
+                                    max_dtObj = new Date(order.date)
+                                    maxOrder = order;
+                                }
+                            })
+                            const messageId = new mongoose.Types.ObjectId();
+                            const message = new Message({
+                                _id: messageId,
+                                order: maxOrder,
+                                type: "productReturnProcess",
+                                productToReturn: product.name,
+                                productOwner: product.user.name,
+                                productRenter: maxOrder.user.name
+                            });
+                            await message.save()
+                            User.findOneAndUpdate({_id: product.user}, {$push: {message: messageId}}).then(() => {
+                                res.status(200).json();
+                            }).catch(error => {
+                                //TODO: error handling
+                                res.status(500).json(error);
+                            })
                         }).catch(error => {
-                            //TODO: error handling
                             res.status(500).json(error);
                         })
                     }).catch(error => {
                         res.status(500).json(error);
-                    })
-                }).catch(error => {
-                    res.status(500).json(error);
-            });
-        })
+                    });
+                }
+                else
+                {
+                    res.status(200).json("Product is under return process...")
+                }
+})
     })
     },
     getIds: (req, res) => {
