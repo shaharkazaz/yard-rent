@@ -13,7 +13,7 @@ const messageSchema = mongoose.Schema({
     productRenter: { type: String, required: false },
     isOpened: { type: Boolean, default: false },
     isArchived: { type: Boolean, default: false },
-    type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H", "productReturned", "test"]
+    type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H", "productReturnProcess", "test"]
 });
 
 module.exports = mongoose.model('Message', messageSchema);
