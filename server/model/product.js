@@ -14,6 +14,7 @@ const productSchema = mongoose.Schema({
         isRented: {type: Boolean, default: false, required: true},
         orderDate: {type: Date, required: false},
         orderReturnDate: {type: Date, required: false},
-    });
+        isInReturnProcess: {type: Boolean, default: false, required: false}
+});
 
 module.exports = mongoose.model('Product', productSchema);
