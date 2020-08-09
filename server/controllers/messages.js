@@ -87,7 +87,7 @@ module.exports = {
                 const messageToProductRenterId = new mongoose.Types.ObjectId();
                 const messageToProductRenter = new Message({
                     _id: messageToProductRenterId,
-                    type: "productReturnProcessToOwner",
+                    type: "productReturnProcessToRenter",
                     productToReturn: product.name,
                     productOwner: product.user.name
                 });
