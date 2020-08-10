@@ -252,32 +252,21 @@ module.exports = {
 
         const {products} = req.body;
         const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
-        Products.find({_id: {$in: objectIdProducts}},{_id: 1, user: 1, name: 1}).populate('user').then(
+        Products.find({_id: {$in: objectIdProducts}},{_id: 1, user: 1, name: 1, isInReturnProcess: 1}).populate('user').then(
             productsList => {
             productsList.forEach(product => {
                 if(!product.isInReturnProcess)
                 {
                     Products.findOneAndUpdate({_id: product.id},{$set: {isInReturnProcess: true}}).populate('user').then(() => {
-                        Order.find({ products : mongoose.Types.ObjectId(product.id)},{_id: 1, user: 1, date: 1}).populate('user').then(async orders => {
-                            var maxOrder = orders[0]
-                            var max_dt = orders[0].date
-                            var max_dtObj = new Date(max_dt)
-                            orders.forEach(order => {
-                                if(new Date(order.date) > max_dtObj)
-                                {
-                                    max_dt = order.date
-                                    max_dtObj = new Date(order.date)
-                                    maxOrder = order;
-                                }
-                            })
+                        Order.find({ products : mongoose.Types.ObjectId(product.id)},{_id: 1, user: 1, date: 1}).populate('user').populate('order').sort('-date').limit(1).then(async orders => {
                             const messageId = new mongoose.Types.ObjectId();
                             const message = new Message({
                                 _id: messageId,
-                                order: maxOrder,
+                                order: orders[0],
                                 type: "productReturnProcess",
                                 productToReturn: product.name,
                                 productOwner: product.user.name,
-                                productRenter: maxOrder.user.name
+                                productRenter: orders[0].user.name
                             });
                             await message.save()
                             User.findOneAndUpdate({_id: product.user}, {$push: {message: messageId}}).then(() => {
