@@ -68,10 +68,6 @@ module.exports = {
         } else {
             // Message both renter and owner about return process
             Products.find({_id: productId}, {_id: 1, isDeleted: 0}).populate({
-                path: 'category', select: {
-                    name: 1,
-                    _id: 0
-                }}).populate({
                 path: 'user'
             }).then(async result => {
 
