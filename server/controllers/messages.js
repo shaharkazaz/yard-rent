@@ -1,5 +1,7 @@
+const mongoose = require('mongoose');
 const Message = require('../model/message');
 const User = require('../model/user');
+const Order = require('../model/order');
 const Products = require('../model/product');
 
 
@@ -49,35 +51,47 @@ module.exports = {
             })
         })
     },
-    updateReturnProcess: (req, res) => {
+    updateReturnProcess: async (req, res) => {
         const {product, isReturned} = req.body;
         const productId = mongoose.Types.ObjectId(product)
-        if (isReturned) {
+        if (isReturned)
+        {
             Products.findOneAndUpdate({_id: productId}, {
                 $set: {
                     isRented: false,
                     isInReturnProcess: false,
+                    order: null,
                     orderDate: null,
                     orderReturnDate: null
                 }
-            }).populate('user').then().catch((error) => {
+            }).then(
+                res.status(200).json())
+                .catch((error) => {
                 res.status(500).json({
                     error
                 })
             })
-        } else {
+        }
+        else
+        {
+            //const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1}).sort('-date').limit(1)[0];
+            //console.log(orders)
             // Message both renter and owner about return process
-            Products.find({_id: productId}, {_id: 1, isDeleted: 0}).populate({
+            Products.findOne({_id: productId}).populate({
                 path: 'user'
-            }).then(async result => {
-
+            }).populate({
+                path: 'order',
+                populate: [{path: 'user'}]
+            }).then(async product => {
+                console.log(product);
                 // Message to product owner in order YardRent support will contact product renter to solve or settle down
                 const messageToProductOwnerId = new mongoose.Types.ObjectId();
                 const messageToProductOwner = new Message({
                     _id: messageToProductOwnerId,
                     type: "productReturnProcessToOwner",
                     productToReturn: product.name,
-                    productOwner: product.user.name
+                    productOwner: product.user.name,
+                    productRenter: product.order.user.name
                 });
                 await messageToProductOwner.save()
 
@@ -87,7 +101,8 @@ module.exports = {
                     _id: messageToProductRenterId,
                     type: "productReturnProcessToRenter",
                     productToReturn: product.name,
-                    productOwner: product.user.name
+                    productOwner: product.user.name,
+                    productRenter: product.order.user.name
                 });
                 await messageToProductRenter.save()
 

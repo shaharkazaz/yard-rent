@@ -12,6 +12,7 @@ const productSchema = mongoose.Schema({
         image: {type: String, required: true},
         isDeleted: {type: Boolean, default: false, required: true},
         isRented: {type: Boolean, default: false, required: true},
+        order: {type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false},
         orderDate: {type: Date, required: false},
         orderReturnDate: {type: Date, required: false},
         isInReturnProcess: {type: Boolean, default: false, required: false}
