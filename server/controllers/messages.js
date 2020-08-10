@@ -66,7 +66,7 @@ module.exports = {
                 })
             })
         } else {
-            //TODO: Return message to product owner in order YardRent support will contact product renter to solve or settle down
+            // Message both renter and owner about return process
             Products.find({_id: productId}, {_id: 1, isDeleted: 0}).populate({
                 path: 'category', select: {
                     name: 1,
@@ -74,6 +74,8 @@ module.exports = {
                 }}).populate({
                 path: 'user'
             }).then(async result => {
+
+                // Message to product owner in order YardRent support will contact product renter to solve or settle down
                 const messageToProductOwnerId = new mongoose.Types.ObjectId();
                 const messageToProductOwner = new Message({
                     _id: messageToProductOwnerId,
@@ -83,7 +85,7 @@ module.exports = {
                 });
                 await messageToProductOwner.save()
 
-                //TODO: Return message to product renter about returning product to owner immediately
+                // Message to product renter about returning product to owner immediately
                 const messageToProductRenterId = new mongoose.Types.ObjectId();
                 const messageToProductRenter = new Message({
                     _id: messageToProductRenterId,
