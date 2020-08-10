@@ -56,6 +56,7 @@ module.exports = {
         const productId = mongoose.Types.ObjectId(product)
         if (isReturned)
         {
+            // Release product back to marketplace
             Products.findOneAndUpdate({_id: productId}, {
                 $set: {
                     isRented: false,
@@ -74,8 +75,6 @@ module.exports = {
         }
         else
         {
-            //const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1}).sort('-date').limit(1)[0];
-            //console.log(orders)
             // Message both renter and owner about return process
             Products.findOne({_id: productId}).populate({
                 path: 'user'
