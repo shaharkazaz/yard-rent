@@ -313,7 +313,14 @@
     "Necklaces": "Necklaces",
     "Speakers": "Speakers",
     "Headphones Mobiles": "Headphones Mobiles",
-    "Mobile Chargers": "Mobile Chargers"
+    "Mobile Chargers": "Mobile Chargers",
+    "Home Decor": "Home Decor",
+    "Cameras & Accessories": "Cameras & Accessories",
+    "Lens Hoods": "Lens Hoods",
+    "Battery chargers": "Battery chargers",
+    "Wall Clocks": "Wall Clocks",
+    "Showpieces": "Showpieces",
+    "Flowers & Vases": "Flowers & Vases"
   },
   "profile": {
     "summary": "You made {{orders}} orders and posted {{products}} products",
