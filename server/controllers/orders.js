@@ -152,7 +152,7 @@ module.exports = {
                 unfitProducts.missingItems = alreadyDeletedProducts
             }
         });
-        if (unfitProducts.rentedItems || unfitProducts.missingItems > 0) {
+        if (unfitProducts.rentedItems || unfitProducts.missingItems) {
             return res.status(409).json(unfitProducts);
         }
 
