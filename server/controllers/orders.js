@@ -173,11 +173,6 @@ module.exports = {
                 await Product.updateMany({_id: {$in: products}}, {$set: {isRented: true, order: orderId,orderDate: now,orderReturnDate: returnDate}}).then().catch(error => {
                     return res.status(500).json({error})
                 });
-            await Product.find({_id: {$in: products}, isRented: true}, {$set: { order: orderId }}).then(async (alreadyRentedProducts) => {
-                if (await alreadyRentedProducts.length > 0) {
-                    unfitProducts.rentedItems = alreadyRentedProducts;
-                }
-            });
             const order = new Order({
                 _id: orderId,
                 user: user._id,
