@@ -217,7 +217,7 @@ module.exports = {
             products.forEach(product => {
                 productIDs.push(product.products)
             });
-            Products.find({_id: {$in: productIDs}}, {_id: 1, isDeleted: 0}).populate({
+            Products.find({_id: {$in: productIDs}}, {isDeleted: 0}).populate({
                 path: 'category', select: {
                     name: 1,
                     _id: 0
@@ -231,7 +231,6 @@ module.exports = {
             }).catch(error => {
                 res.status(500).json(error)
             })
-            //res.status(200).json(product ? product.product : []);
         }).catch(error => {
             res.status(500).json(error)
         })

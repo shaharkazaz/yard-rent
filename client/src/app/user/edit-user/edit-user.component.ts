@@ -39,10 +39,10 @@ export class EditUserComponent implements OnInit {
       this.cdr.detectChanges();
     });
     this.userService.getUser(this.userId).subscribe((user) => {
-      const {name, email, address, image} = user;
+      const {name, email, address: { street, city, country }, image} = user;
       this.originalUser = user;
       this.imageBase64 = image;
-      this.userForm.patchValue({name, address, email});
+      this.userForm.patchValue({name, address: `${street}${city ? ', ' + city : ''}${country ? ', ' + country : ''}`, email});
       this.userForm.get('image').patchValue(new File([],'fake.jpeg', {type: "image/jpeg"}), {emitEvent: false});
     });
   }

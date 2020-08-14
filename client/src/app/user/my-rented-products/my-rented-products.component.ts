@@ -64,7 +64,7 @@ export class MyRentedProductsComponent implements OnInit {
       },
       {
         headerName: 'rented-products-table.return-date',
-        field: 'returnDate',
+        field: 'orderReturnDate',
         type: DatoGridColumnTypes.Date,
         filter: DatoGridFilterTypes.None
       }
