@@ -10,11 +10,13 @@ export class ContactPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('canvasEl', {static: true}) canvasEl: ElementRef;
   addresses: [];
+  zoom: number;
 
 
   constructor(private contactService : ContactService) {}
 
   ngOnInit()  {
+    this.zoom = 10
     this.contactService.getAllShops().subscribe(shops => {
       this.addresses = shops
     })
