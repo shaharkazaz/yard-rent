@@ -14,9 +14,9 @@ const recommender = new ContentBasedRecommender({
 });
 //TODO: error handling
 const getProductPopulated = async productId => {
-    const result = Recommendation.findById(productId).populate({
+    return await Recommendation.findById(productId).populate({
         path: 'recommendedProducts',
-        select: { isInReturnProcess: 0},
+        select: {isInReturnProcess: 0},
         populate: [{path: 'user', select: {name: 1, _id: 0}}, {
             path: 'category', select: {
                 name: 1,
@@ -24,7 +24,6 @@ const getProductPopulated = async productId => {
             }
         }, {path: 'subCategory', select: {name: 1, _id: 0}}]
     });
-    return result
 };
 
 module.exports = {
@@ -38,20 +37,20 @@ module.exports = {
         });
         const recommendation = await getProductPopulated(productId);
         if (recommendation) {
-            await Products.find({_id: {$in: recommendation.recommendedProducts.forEach(p=>p._id)}, isDeleted: true}, {name: 1}).then(async (deletedProduct) => {
+            const ids = recommendation.recommendedProducts.map(p => p._id);
+            await Products.find({_id: {$in: ids},isDeleted: true}, {name: 1}).then(async (deletedProduct) => {
                 if (await deletedProduct.length > 0) {
-                    runRecommendation=true;
-                    Recommendation.findByIdAndRemove(productId);
-                }
-                else{
-                    runRecommendation=false;
+                    runRecommendation = true;
+                    await Recommendation.findByIdAndRemove(productId);
+                } else {
+                    runRecommendation = false;
                     res.status(200).json(recommendation.recommendedProducts);
                 }
             });
         }
-        if(runRecommendation) {
+        if (runRecommendation) {
             DataSet.findOne({}).then(async (dataSet) => {
-                if(dataSet==null){
+                if (dataSet == null) {
                     await formatData();
                 }
                 recommender.train(dataSet.data.toObject({getters: true}));
@@ -77,7 +76,7 @@ module.exports = {
         }
     },
     //make sure we dont use it and remove in the end
-    resetDataSet: (req,res)=> {
+    resetDataSet: (req, res) => {
         clearDataSet();
         res.status(200).json();
     }
