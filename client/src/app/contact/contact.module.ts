@@ -3,6 +3,7 @@ import { ContactPageComponent } from './page/contact-page.component';
 import { RouterModule, Routes } from '@angular/router';
 import {TranslocoModule} from '@ngneat/transloco';
 import {BingMapModule} from '../shared/components/bing-map/bing-map.module';
+import {CommonModule} from "@angular/common";
 
 const routes: Routes = [
   {
@@ -12,7 +13,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes), TranslocoModule, BingMapModule],
+  imports: [RouterModule.forChild(routes), TranslocoModule, BingMapModule, CommonModule],
   declarations: [ContactPageComponent],
 })
 export class ContactModule {}
