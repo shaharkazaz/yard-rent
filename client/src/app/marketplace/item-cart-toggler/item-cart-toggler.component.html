@@ -1,2 +1,7 @@
-<dato-button [attr.datoType]="inCart ? 'orange' : 'primary'" (click)="toggleItemInCart()"
->{{inCart ? '-' : '+'}} {{ (inCart ? 'remove-from-cart' : 'add-to-cart') | transloco }}</dato-button>
+<dato-button
+  [disabled]="_product.isRented"
+  [attr.datoType]="inCart ? 'orange' : 'primary'"
+  (click)="toggleItemInCart()"
+  >{{ inCart ? '-' : '+' }}
+  {{ (inCart ? 'remove-from-cart' : 'add-to-cart') | transloco }}</dato-button
+>

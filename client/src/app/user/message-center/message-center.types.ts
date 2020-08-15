@@ -10,7 +10,7 @@ export interface ServerMessage {
   date: string;
   isOpened: boolean;
   isArchived: boolean;
-  productToReturn: Product;
+  productToReturn: string;
   productOwner: UserInfo;
   productRenter: UserInfo;
   type: MessageType;

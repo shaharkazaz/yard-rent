@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ClientMessage } from '../../message-center.types';
+import { MarketplaceService } from '@yr/marketplace/state/marketplace.service';
+import { Product } from '@yr/marketplace/marketplace.types';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'return-reminder-message',
@@ -8,8 +11,13 @@ import { ClientMessage } from '../../message-center.types';
 })
 export class ReturnReminderComponent implements OnInit {
   @Input() message: ClientMessage;
+  product$: Observable<Product>;
 
-  constructor() {}
+  constructor(private marketplaceService: MarketplaceService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.product$ = this.marketplaceService.getProduct(
+      this.message.productToReturn
+    );
+  }
 }

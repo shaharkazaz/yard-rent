@@ -12,6 +12,12 @@ export class AppInitService {
     private authService: AuthService
   ) {}
 
+  private hasInit = false;
+
+  appInitiated() {
+    return this.hasInit;
+  }
+
   init() {
     return new Promise(resolve => {
       // add all svgs to the registry
@@ -23,11 +29,17 @@ export class AppInitService {
       if (inStorage()) {
         this.authService
           .getUserByToken()
-          .pipe(finalize(resolve))
+          .pipe(
+            finalize(() => {
+              this.hasInit = true;
+              resolve();
+            })
+          )
           .subscribe(user => {
             this.authService.updateStoreFromUser(user);
           });
       } else {
+        this.hasInit = true;
         resolve();
       }
     });

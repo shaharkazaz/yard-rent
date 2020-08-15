@@ -1,8 +1,18 @@
-<div class="d-flex-column align-center container p-10" *transloco="let t">
+<div
+  class="relative d-flex-column align-center container p-10"
+  [ngClass]="{ 'rented primary-200-color': item.isRented }"
+  *transloco="let t"
+>
   <div
     class="image-container width-100 mb-10"
     [style.background-image]="'url(' + item.image + ')'"
   ></div>
+  <div
+    *ngIf="item.isRented"
+    class="rented-note absolute orange-400-color dato-headline no-select"
+  >
+    {{ t('item-rented') }}
+  </div>
   <div
     class="dato-sub-headline ellipsis mb-10"
     [datoTooltip]="item.name"
@@ -54,8 +64,9 @@
   </div>
   <div class="actions d-flex align-space-between-center">
     <dato-button
+      [disabled]="item.isRented"
       tabindex="-1"
-      [routerLink]="'../' + item._id"
+      [routerLink]="['/marketplace', item._id]"
       datoType="none"
       >{{ t('view-item') }}</dato-button
     >

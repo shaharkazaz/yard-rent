@@ -6,7 +6,14 @@
     {{ t('title.' + message.type) }}
   </div>
   <div class="d-flex">
-    <!--    <marketplace-item-card readonly="true" [item]="message.productToReturn"></marketplace-item-card>-->
+    <marketplace-item-card
+      *ngIf="product$ | async as product; else productLoader"
+      readonly="true"
+      [item]="product"
+    ></marketplace-item-card>
+    <ng-template #productLoader
+      ><item-card-loader></item-card-loader
+    ></ng-template>
     <div class="order-details"></div>
   </div>
 </div>

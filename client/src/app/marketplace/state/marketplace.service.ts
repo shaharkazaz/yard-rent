@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { MarketplaceDataService } from './marketplace.data-service';
-import {NewProduct} from "../marketplace.types";
+import { NewProduct } from '../marketplace.types';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MarketplaceService {
   constructor(private dataService: MarketplaceDataService) {}
 

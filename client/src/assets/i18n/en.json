@@ -198,6 +198,7 @@
     "description": "Description",
     "rewards": "Rewards"
   },
+  "item-rented": "Item rented",
   "click-to-upload-profile": "Click to upload a profile image",
   "get-more": "Get more",
   "learn-rewards": "Learn more about rewards here",
