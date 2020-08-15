@@ -60,7 +60,7 @@ module.exports = {
             if(data.isRented && data.isInReturnProcess)
             {
                 Message.findOneAndUpdate({_id: messageId}, {$set: {isApproved: isApproved}}).then(rootMessage => {
-                    if (rootMessage.isApproved)
+                    if (isApproved)
                     {
                         // Release product back to marketplace
                         Products.findOneAndUpdate({_id: productId}, {

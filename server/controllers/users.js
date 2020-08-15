@@ -217,7 +217,7 @@ module.exports = {
             products.forEach(product => {
                 productIDs.push(product.products)
             });
-            Products.find({_id: {$in: productIDs}}, {isDeleted: 0}).populate({
+            Products.find({_id: {$in: productIDs}, isRented: true}, {isDeleted: 0}).populate({
                 path: 'category', select: {
                     name: 1,
                     _id: 0
