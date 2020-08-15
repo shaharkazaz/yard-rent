@@ -14,7 +14,7 @@ export class OrdersService {
   constructor(private http: HttpClient) {}
 
   placeOrder(details: OrderDetails) {
-    return this.http.post<{orderId: string}>(parseUrl(URI_CONSTANTS.orders.placeOrder), details);
+    return this.http.post<{orderId: string, returnDate: Date}>(parseUrl(URI_CONSTANTS.orders.placeOrder), details);
   }
 
 }

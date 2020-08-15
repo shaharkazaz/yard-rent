@@ -268,7 +268,7 @@ module.exports = {
                                 productOwner: product.user.name,
                                 productRenter: orders[0].user.name
                             });
-                            await message.save()
+                            await message.save();
                             User.findOneAndUpdate({_id: product.user}, {$push: {message: messageId}}).then(() => {
                                 res.status(200).json();
                             }).catch(error => {

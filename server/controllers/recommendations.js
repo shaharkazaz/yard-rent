@@ -16,7 +16,7 @@ const recommender = new ContentBasedRecommender({
 const getProductPopulated = async productId => {
     const result = Recommendation.findById(productId).populate({
         path: 'recommendedProducts',
-        select: { isDeleted: 0},
+        select: { isInReturnProcess: 0},
         populate: [{path: 'user', select: {name: 1, _id: 0}}, {
             path: 'category', select: {
                 name: 1,
@@ -26,9 +26,10 @@ const getProductPopulated = async productId => {
     });
     return result
 };
-//TODO: make sure the error if the product is deleted is okay
+
 module.exports = {
     getRecommendation: async (req, res) => {
+        let runRecommendation = true;
         const productId = req.params.productId;
         await Products.find({_id: {$in: productId}, isDeleted: true}, {name: 1}).then(async (alreadyDeletedProduct) => {
             if (await alreadyDeletedProduct.length > 0) {
@@ -37,9 +38,18 @@ module.exports = {
         });
         const recommendation = await getProductPopulated(productId);
         if (recommendation) {
-            res.status(200).json(recommendation.recommendedProducts)
+            await Products.find({_id: {$in: recommendation.recommendedProducts.forEach(p=>p._id)}, isDeleted: true}, {name: 1}).then(async (deletedProduct) => {
+                if (await deletedProduct.length > 0) {
+                    runRecommendation=true;
+                    Recommendation.findByIdAndRemove(productId);
+                }
+                else{
+                    runRecommendation=false;
+                    res.status(200).json(recommendation.recommendedProducts);
+                }
+            });
         }
-        else {
+        if(runRecommendation) {
             DataSet.findOne({}).then(async (dataSet) => {
                 if(dataSet==null){
                     await formatData();

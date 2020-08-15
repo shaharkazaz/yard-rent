@@ -60,7 +60,8 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
               private ordersService: OrdersService,
               private router: Router,
               private cdr: ChangeDetectorRef,
-              private dialog: DatoDialog) {}
+              private dialog: DatoDialog) {
+  }
 
   ngOnInit() {
     this.user = this.authQuery.getValue().user;
@@ -85,11 +86,11 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
       products: this.cartItems.map(({_id}) => _id)
     };
     this.ordersService.placeOrder(orderDetails).subscribe(
-      ({orderId}) => {
+      ({orderId, returnDate}) => {
         this.shoppingCartService.clearCart();
         const route = this.router.config.find(r => r.path === 'order-complete');
         const idAsNumber = stringAsCharSum(orderId);
-        route.data = { orderId: idAsNumber, orderDetails  };
+        route.data = {orderId: idAsNumber, orderDetails, returnDate};
         this.router.navigateByUrl('/order-complete');
       },
       ({error, status}) => {

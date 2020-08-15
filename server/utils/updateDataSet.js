@@ -86,8 +86,6 @@ const resetRecommendationIfNeeded = () => {
 };
 const removeProductsFromDataSet = (productsIdsToRemove) => {
     ProductsDataSet.updateOne({$pull: {data: {_id:productsIdsToRemove}}}).then((status)=>{
-        //TODO: final-ayelet need to check both status alredy rented and deleted for alredy rented didnt reset the recommandation every time but in the UI will show that rented
-        clearRecommendations();
         if (status.ok!==1){
             console.log("didnt remove products from dataset")
         }

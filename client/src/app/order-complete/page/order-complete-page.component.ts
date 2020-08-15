@@ -19,16 +19,21 @@ import {TwitterService} from "../../shared/services/twitter.service";
 export class OrderCompletePageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('loader', {static: false, read: ElementRef}) loader;
   orderId: string;
+  returnDate: string;
   loading = false;
   tweeted = false;
   private redirection;
 
-  constructor(private route: ActivatedRoute, private router: Router,private twitterService: TwitterService, private cdr: ChangeDetectorRef) { }
+  constructor(private route: ActivatedRoute, private router: Router, private twitterService: TwitterService, private cdr: ChangeDetectorRef) {
+  }
 
   ngOnInit() {
-    const {orderId} = this.route.snapshot.data;
+    const {orderId, returnDate} = this.route.snapshot.data;
     if (orderId) {
       this.orderId = `#${orderId}`;
+    }
+    if (returnDate) {
+      this.returnDate = new Date(returnDate).toLocaleDateString()
     }
   }
 
