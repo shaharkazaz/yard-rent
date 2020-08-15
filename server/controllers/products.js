@@ -264,7 +264,7 @@ module.exports = {
                                 _id: messageId,
                                 order: orders[0],
                                 type: "productReturnProcess",
-                                productToReturn: product.name,
+                                productToReturn: product.id,
                                 productOwner: product.user.name,
                                 productRenter: orders[0].user.name
                             });

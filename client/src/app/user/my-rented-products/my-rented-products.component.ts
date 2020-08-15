@@ -10,6 +10,7 @@ import {
 import { UserService } from '../user.service';
 import { RowNode } from 'ag-grid-community';
 import { MyRentedProductsService } from './my-rented-products.service';
+import {formatNumber} from "@yr/shared/utils";
 
 @Component({
   selector: 'my-rented-products',
@@ -67,6 +68,13 @@ export class MyRentedProductsComponent implements OnInit {
         field: 'orderReturnDate',
         type: DatoGridColumnTypes.Date,
         filter: DatoGridFilterTypes.None
+      },
+      {
+        headerName: 'rented-products-table.is-in-return-process',
+        field: 'isInReturnProcess',
+        type: DatoGridColumnTypes.String,
+        filter: DatoGridFilterTypes.None,
+        valueFormatter: ({value}) => value ? `Yes` : 'No'
       }
     ];
   }

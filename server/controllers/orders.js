@@ -25,6 +25,9 @@ cron.schedule('5 * * * * *', async () => {
 });
 */
 
+// TODO: message to Owner & Renter if order expired (24h late) and no product returned
+
+
 // orderIsAboutToExpire24H cron job every day at 00:00
 cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
@@ -86,7 +89,7 @@ cron.schedule('0 0 0 * * *', async () => {
                     const message = new Message({
                         _id: messageId,
                         order: order,
-                        type: "orderIsAboutToExpire48H",
+                        type: "orderIsAboutToExpire48H".toString(),
                         productToReturn: product.name,
                         productOwner: product.user,
                         productRenter: order.user
@@ -100,6 +103,30 @@ cron.schedule('0 0 0 * * *', async () => {
                 flag = false;
             }
         }
+    }
+});
+
+// Charge user rewards if didnt returned products of order - unnecessary ?
+cron.schedule('* * * * *', async () => {
+    const now = new Date();
+    const fiveDayInMilliseconds = 432000000;
+    const sixDaysInMiliseconds = 518400000;
+    const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
+    let shouldCharge = false;
+    for (const order of orders) {
+        if (order.returnDate) {
+            if (now - order.returnDate > fiveDayInMilliseconds && now - order.returnDate < sixDaysInMiliseconds) {
+                for (const product of order.products) {
+                    if (product.isRented === true) {
+                        shouldCharge = true
+                    }
+                }
+            }
+            if (shouldCharge) {
+                //TODO: remove deposit or remove 10% of the product rewards
+            }
+        }
+
     }
 });
 
