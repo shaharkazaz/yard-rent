@@ -70,7 +70,6 @@ module.exports = {
                                 order: null,
                                 orderDate: null,
                                 orderReturnDate: null,
-                                action: null
                             }
                         }).then(
                             res.status(200).json())
@@ -124,7 +123,6 @@ module.exports = {
                                     error
                                 })
                             })
-
                             // and only after return OK 200
                             res.status(200).json();
                         }).catch(error => {
