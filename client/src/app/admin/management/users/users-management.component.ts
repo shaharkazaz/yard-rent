@@ -16,7 +16,7 @@ import {ManagementQuery} from '../state/management.query';
 import {Router} from '@angular/router';
 import {untilDestroyed} from 'ngx-take-until-destroy';
 import {switchMap} from 'rxjs/operators';
-import {formatNumber} from "../../../shared/utils";
+import {formatNumber, formatAddress} from "../../../shared/utils";
 import {UserInfo} from "../../../auth/state/auth.model";
 
 @Component({
@@ -77,7 +77,8 @@ export class UsersManagementComponent implements OnInit, OnDestroy {
       {
         headerName: 'user-management-table.address',
         field: 'address',
-        type: DatoGridColumnTypes.String
+        type: DatoGridColumnTypes.String,
+        valueFormatter: ({ value }) => formatAddress(value),
       },
       {
         headerName: 'user-management-table.role',
