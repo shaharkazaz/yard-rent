@@ -52,8 +52,10 @@ module.exports = {
         })
     },
     updateReturnProcess: async (req, res) => {
-        const {product, isReturned} = req.body;
+        const {message, product, isReturned} = req.body;
         const productId = mongoose.Types.ObjectId(product)
+        const messageId = mongoose.Types.ObjectId(message)
+
         if (isReturned)
         {
             // Release product back to marketplace
@@ -87,12 +89,19 @@ module.exports = {
                 const messageToProductOwnerId = new mongoose.Types.ObjectId();
                 const messageToProductOwner = new Message({
                     _id: messageToProductOwnerId,
+                    // TODO: Change
                     type: "productReturnProcessToOwner",
                     productToReturn: product.name,
                     productOwner: product.user.name,
                     productRenter: product.order.user.name
                 });
                 await messageToProductOwner.save()
+                User.findOneAndUpdate({_id: product.user.name}, {$push: {message: messageToProductOwnerId}}).then(() => {
+                }).catch(error => {
+                    res.status(500).json({
+                        error
+                    })
+                })
 
                 // Message to product renter about returning product to owner immediately
                 const messageToProductRenterId = new mongoose.Types.ObjectId();
@@ -104,6 +113,12 @@ module.exports = {
                     productRenter: product.order.user.name
                 });
                 await messageToProductRenter.save()
+                User.findOneAndUpdate({_id: product.order.user.name}, {$push: {message: messageToProductRenterId}}).then(() => {
+                }).catch(error => {
+                    res.status(500).json({
+                        error
+                    })
+                })
 
                 // and only after return OK 200
                 res.status(200).json();

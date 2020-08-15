@@ -25,6 +25,9 @@ cron.schedule('5 * * * * *', async () => {
 });
 */
 
+// TODO: message to Owner & Renter if order expired (24h late) and no product returned
+
+
 // orderIsAboutToExpire24H cron job every day at 00:00
 cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
@@ -86,7 +89,7 @@ cron.schedule('0 0 0 * * *', async () => {
                     const message = new Message({
                         _id: messageId,
                         order: order,
-                        type: "orderIsAboutToExpire48H",
+                        type: "orderIsAboutToExpire48H".toString(),
                         productToReturn: product.name,
                         productOwner: product.user,
                         productRenter: order.user

@@ -1,6 +1,7 @@
 
 const mongoose = require('mongoose');
 
+// TODO:
 const messageSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectID,
     date: {type: Date, default: Date.now(), required: true},
@@ -13,7 +14,10 @@ const messageSchema = mongoose.Schema({
     productRenter: { type: String, required: false },
     isOpened: { type: Boolean, default: false },
     isArchived: { type: Boolean, default: false },
-    type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H", "productReturnProcess", "productReturnProcessToOwner", "productReturnProcessToRenter"]
+    action: { type: Boolean, default: false },
+    linkedMessages: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Message', required: false }],
+    type: { type: String, required: false }
+    //type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H", "productReturnProcess", "productReturnProcessToOwner", "productReturnProcessToRenter"]
 });
 
 module.exports = mongoose.model('Message', messageSchema);
