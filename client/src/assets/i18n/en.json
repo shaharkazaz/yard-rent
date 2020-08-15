@@ -159,7 +159,9 @@
   "my-products": "My products",
   "my-rented-products": "My rented products",
   "rented-products-table": {
-    "return-date": "Return date"
+    "return-date": "Return date",
+    "is-in-return-process": "Is In Return Process ?"
+
   },
   "my-orders": "My orders",
   "my-profile": "My profile",

@@ -52,81 +52,99 @@ module.exports = {
         })
     },
     updateReturnProcess: async (req, res) => {
-        const {message, product, isReturned} = req.body;
+        const {message, product, isApproved} = req.body;
         const productId = mongoose.Types.ObjectId(product)
         const messageId = mongoose.Types.ObjectId(message)
 
-        if (isReturned)
-        {
-            // Release product back to marketplace
-            Products.findOneAndUpdate({_id: productId}, {
-                $set: {
-                    isRented: false,
-                    isInReturnProcess: false,
-                    order: null,
-                    orderDate: null,
-                    orderReturnDate: null
-                }
-            }).then(
-                res.status(200).json())
-                .catch((error) => {
-                res.status(500).json({
-                    error
-                })
-            })
-        }
-        else
-        {
-            // Message both renter and owner about return process
-            Products.findOne({_id: productId}).populate({
-                path: 'user'
-            }).populate({
-                path: 'order',
-                populate: [{path: 'user'}]
-            }).then(async product => {
-                console.log(product);
-                // Message to product owner in order YardRent support will contact product renter to solve or settle down
-                const messageToProductOwnerId = new mongoose.Types.ObjectId();
-                const messageToProductOwner = new Message({
-                    _id: messageToProductOwnerId,
-                    // TODO: Change
-                    type: "productReturnProcessToOwner",
-                    productToReturn: product.name,
-                    productOwner: product.user.name,
-                    productRenter: product.order.user.name
-                });
-                await messageToProductOwner.save()
-                User.findOneAndUpdate({_id: product.user.name}, {$push: {message: messageToProductOwnerId}}).then(() => {
+        Products.findOne({_id: productId}).then(data => {
+            if(data.isRented && data.isInReturnProcess)
+            {
+                Message.findOneAndUpdate({_id: messageId}, {$set: {isApproved: isApproved}}).then(rootMessage => {
+                    if (rootMessage.isApproved)
+                    {
+                        // Release product back to marketplace
+                        Products.findOneAndUpdate({_id: productId}, {
+                            $set: {
+                                isRented: false,
+                                isInReturnProcess: false,
+                                order: null,
+                                orderDate: null,
+                                orderReturnDate: null,
+                                action: null
+                            }
+                        }).then(
+                            res.status(200).json())
+                            .catch((error) => {
+                                res.status(500).json({
+                                    error
+                                })
+                            })
+                    }
+                    else
+                    {
+                        // Message both renter and owner about return process
+                        Products.findOne({_id: productId}).populate({
+                            path: 'user'
+                        }).populate({
+                            path: 'order',
+                            populate: [{path: 'user'}]
+                        }).then(async product => {
+                            console.log(product);
+                            // Message to product owner in order YardRent support will contact product renter to solve or settle down
+                            const messageToProductOwnerId = new mongoose.Types.ObjectId();
+                            const messageToProductOwner = new Message({
+                                _id: messageToProductOwnerId,
+                                type: "InformProductOwner",
+                                productToReturn: product.id,
+                                productOwner: product.user.name,
+                                productRenter: product.order.user.name,
+                            });
+                            await messageToProductOwner.save()
+                            // push to linkedMessages - should we push as well to user messages or leave reference in linkedMessages
+                            Message.findOneAndUpdate({_id: messageId}, {$push: {linkedMessages: messageToProductOwnerId}}).then().catch(error => {
+                                res.status(500).json({
+                                    error
+                                })
+                            })
+
+
+                            // Message to product renter about returning product to owner immediately
+                            const messageToProductRenterId = new mongoose.Types.ObjectId();
+                            const messageToProductRenter = new Message({
+                                _id: messageToProductRenterId,
+                                type: "OwnerDeclinedReturn",
+                                productToReturn: product.id,
+                                productOwner: product.user.name,
+                                productRenter: product.order.user.name
+                            });
+                            await messageToProductRenter.save()
+                            User.findOneAndUpdate({_id: product.order.user.name}, {$push: {message: messageToProductRenterId}}).then(() => {
+                            }).catch(error => {
+                                res.status(500).json({
+                                    error
+                                })
+                            })
+
+                            // and only after return OK 200
+                            res.status(200).json();
+                        }).catch(error => {
+                            res.status(500).json(error)
+                        })
+
+                    }
                 }).catch(error => {
                     res.status(500).json({
                         error
                     })
                 })
-
-                // Message to product renter about returning product to owner immediately
-                const messageToProductRenterId = new mongoose.Types.ObjectId();
-                const messageToProductRenter = new Message({
-                    _id: messageToProductRenterId,
-                    type: "productReturnProcessToRenter",
-                    productToReturn: product.name,
-                    productOwner: product.user.name,
-                    productRenter: product.order.user.name
-                });
-                await messageToProductRenter.save()
-                User.findOneAndUpdate({_id: product.order.user.name}, {$push: {message: messageToProductRenterId}}).then(() => {
-                }).catch(error => {
-                    res.status(500).json({
-                        error
-                    })
-                })
-
-                // and only after return OK 200
-                res.status(200).json();
-            }).catch(error => {
-                res.status(500).json(error)
-            })
-
-        }
+            }
+            else
+            {
+                res.status(500).json("Something went wrong")
+            }
+        }).catch(error => {
+            res.status(500).json(error)
+        })
 
     }
 };

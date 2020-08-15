@@ -106,6 +106,30 @@ cron.schedule('0 0 0 * * *', async () => {
     }
 });
 
+// Charge user rewards if didnt returned products of order - unnecessary ?
+cron.schedule('* * * * *', async () => {
+    const now = new Date();
+    const fiveDayInMilliseconds = 432000000;
+    const sixDaysInMiliseconds = 518400000;
+    const orders = await Order.find({}).populate('user', {_id: 1}).populate('products', {isRented: 1});
+    let shouldCharge = false;
+    for (const order of orders) {
+        if (order.returnDate) {
+            if (now - order.returnDate > fiveDayInMilliseconds && now - order.returnDate < sixDaysInMiliseconds) {
+                for (const product of order.products) {
+                    if (product.isRented === true) {
+                        shouldCharge = true
+                    }
+                }
+            }
+            if (shouldCharge) {
+                //TODO: remove deposit or remove 10% of the product rewards
+            }
+        }
+
+    }
+});
+
 cron.schedule('* * * * *', async () => {
     const now = new Date();
     const fiveDayInMilliseconds = 432000000;

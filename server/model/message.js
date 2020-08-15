@@ -8,13 +8,13 @@ const messageSchema = mongoose.Schema({
     order: { type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false },
     orderDate: {type: Date, required: false},
     orderReturnDate: {type: Date, required: false},
-    productToReturn: { type: String, required: false },
+    order: { type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false },
     productOwner: { type: String, required: false },
     productImage: {type: String, required: false},
     productRenter: { type: String, required: false },
     isOpened: { type: Boolean, default: false },
     isArchived: { type: Boolean, default: false },
-    action: { type: Boolean, default: false },
+    isApproved: { type: Boolean, default: false, required: false },
     linkedMessages: [{ type: mongoose.Schema.Types.ObjectID, ref: 'Message', required: false }],
     type: { type: String, required: false }
     //type: ["orderIsAboutToExpire24H" , "orderIsAboutToExpire48H", "productReturnProcess", "productReturnProcessToOwner", "productReturnProcessToRenter"]
