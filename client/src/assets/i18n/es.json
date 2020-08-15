@@ -205,7 +205,8 @@
     "no-thanks": "No, gracias",
     "sure": "Por supuesto!",
     "posting": "Publicando en twitter",
-    "redirecting-to-home": "Publicado! Redireccionando a la página de inicio"
+    "redirecting-to-home": "Publicado! Redireccionando a la página de inicio",
+    "return-date": "Tenga en cuenta que debe devolver los productos hasta {{returnDate}}"
   },
   "order-failure": {
     "following-items": "Los siguientes elementos son",

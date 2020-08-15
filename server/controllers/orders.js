@@ -4,7 +4,6 @@ const Order = require('../model/order');
 const User = require('../model/user');
 const Product = require('../model/product');
 const getUserId = require('../utils/getUserId');
-const {removeProductsFromDataSet} = require('../utils/updateDataSet');
 const cron = require('node-cron');
 
 // fake messages
@@ -39,7 +38,7 @@ cron.schedule('0 0 0 * * *', async () => {
         populate: [{path: 'user'}]
     });
     for (let order of orders) {
-        if (order.returnDate && (order.returnDate - now > 0) && (order.returnDate - now < oneDayInMilliseconds)) ;
+        if (order.returnDate && (order.returnDate - now > 0) && (order.returnDate - now < oneDayInMilliseconds))
         {
             for (const product of order.products) {
                 if (product.isRented === true) {
@@ -58,7 +57,7 @@ cron.schedule('0 0 0 * * *', async () => {
                     await message.save();
                     User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
                     }).catch(error => {
-                        //TODO: error handling
+                        console.log(`error while adding the message to the user:${error}`)
                     })
                 }
                 flag = false;
@@ -97,7 +96,7 @@ cron.schedule('0 0 0 * * *', async () => {
                     await message.save();
                     User.findOneAndUpdate({_id: order.user._id}, {$push: {message: message._id}}).then(() => {
                     }).catch(error => {
-                        //TODO: error handling
+                        console.log(`error while adding the message to the user:${error}`)
                     })
                 }
                 flag = false;
@@ -236,8 +235,7 @@ module.exports = {
             }).catch(error => {
                 return res.status(500).json({error})
             });
-            res.status(200).json({orderId});
-            removeProductsFromDataSet(products);
+            res.status(200).json({orderId,returnDate});
         }).catch(error => {
             return res.status(500).json({error})
         });

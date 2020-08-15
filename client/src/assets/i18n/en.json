@@ -247,7 +247,8 @@
     "no-thanks": "No thanks",
     "sure": "Sure!",
     "posting": "Posting on twitter",
-    "redirecting-to-home": "Posted! redirecting to home page"
+    "redirecting-to-home": "Posted! redirecting to home page",
+    "return-date": "Please Notice - you need to return the products until {{returnDate}}"
   },
   "order-failure": {
     "following-items": "The following items are",
