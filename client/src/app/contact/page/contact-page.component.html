@@ -5,7 +5,7 @@
     {{ t('contact-us-description') }}
   </div>
 </div>
-<bing-map [addresses]="addresses" [zoom]="zoom"></bing-map>
+<bing-map *ngIf="isLoaded" [addresses]="addresses" [zoom]="zoom"></bing-map>
 <ul>
   <li>
     <br />

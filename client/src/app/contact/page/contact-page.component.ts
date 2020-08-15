@@ -11,6 +11,7 @@ export class ContactPageComponent implements OnInit, AfterViewInit {
   @ViewChild('canvasEl', {static: true}) canvasEl: ElementRef;
   addresses: [];
   zoom: number;
+  isLoaded: boolean = false;
 
 
   constructor(private contactService : ContactService) {}
@@ -19,6 +20,7 @@ export class ContactPageComponent implements OnInit, AfterViewInit {
     this.zoom = 10
     this.contactService.getAllShops().subscribe(shops => {
       this.addresses = shops
+      this.isLoaded = true
     })
   }
 
