@@ -34,3 +34,7 @@ export function toBase64(file): Promise<string> {
 export function stringAsCharSum(str: String): number {
   return [...str].reduce((acc, _, i) => acc + str.charCodeAt(i), 0);
 }
+
+export function formatAddress(address: { street: string; city: string; country: string; }): string {
+  return `${address.street}${address.city ? ', ' + address.city : ''}${address.country ? ', ' + address.country : ''}`
+}

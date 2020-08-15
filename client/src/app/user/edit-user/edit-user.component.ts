@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {UserService} from "../user.service";
 import {filter, finalize, switchMap} from "rxjs/operators";
 import {from, of} from "rxjs";
-import {toBase64} from "../../shared/utils";
+import {toBase64, formatAddress} from "../../shared/utils";
 import {untilDestroyed} from "ngx-take-until-destroy";
 import {UserInfo} from "../../auth/state/auth.model";
 import {AuthService} from "../../auth/state/auth.service";
@@ -39,10 +39,10 @@ export class EditUserComponent implements OnInit {
       this.cdr.detectChanges();
     });
     this.userService.getUser(this.userId).subscribe((user) => {
-      const {name, email, address: { street, city, country }, image} = user;
+      const {name, email, address, image} = user;
       this.originalUser = user;
       this.imageBase64 = image;
-      this.userForm.patchValue({name, address: `${street}${city ? ', ' + city : ''}${country ? ', ' + country : ''}`, email});
+      this.userForm.patchValue({name, address: formatAddress(address), email});
       this.userForm.get('image').patchValue(new File([],'fake.jpeg', {type: "image/jpeg"}), {emitEvent: false});
     });
   }
