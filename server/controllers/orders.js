@@ -50,7 +50,7 @@ cron.schedule('0 0 0 * * *', async () => {
                         _id: messageId,
                         order: order,
                         type: "orderIsAboutToExpire24H",
-                        productToReturn: product.name,
+                        productToReturn: product.id,
                         productOwner: product.user,
                         productRenter: order.user
                     });
@@ -88,8 +88,8 @@ cron.schedule('0 0 0 * * *', async () => {
                     const message = new Message({
                         _id: messageId,
                         order: order,
-                        type: "orderIsAboutToExpire48H".toString(),
-                        productToReturn: product.name,
+                        type: "orderIsAboutToExpire48H",
+                        productToReturn: product.id,
                         productOwner: product.user,
                         productRenter: order.user
                     });
