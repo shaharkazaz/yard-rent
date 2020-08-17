@@ -32,7 +32,7 @@ cron.schedule('0 0 0 * * *', async () => {
     const now = new Date();
     let flag = false;
     const oneDayInMilliseconds = 86400000;
-    const orders = await Order.find({}).populate('user', {_id: 1}).populate({
+    const orders = await Order.find({},{_id:1, date: 1, returnDate: 1}).populate('user', {_id: 1}).populate({
         path: 'products',
         select: {isDeleted: 0},
         populate: [{path: 'user'}]
@@ -46,6 +46,8 @@ cron.schedule('0 0 0 * * *', async () => {
                 }
                 if (flag && order.user != null) {
                     const messageId = new mongoose.Types.ObjectId();
+                    // TODO: Order - Id, Date, return Date
+                    // TODO: User - email,name, phone
                     const message = new Message({
                         _id: messageId,
                         order: order,
