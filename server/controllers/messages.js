@@ -8,8 +8,21 @@ const Products = require('../model/product');
 
 module.exports = {
     getUserMessages: (req, res) => {
+        // TODO: populate Order - Id, Date, return Date
+        // TODO: populate User - email,name, phone
         const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).populate({path: 'message', options: { sort: { 'date': -1 } } }).then((user) => {
+        User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).populate(
+            {
+                path: 'message',
+                options: { sort: { 'date': -1 } },
+                populate: [
+                    {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
+                    {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
+                    {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
+                    {path: 'productToReturn', select: {_id: 1, name: 1, orderDate: 1, orderReturnDate: 1, address: 1,image: 1 }}
+                ]
+            }
+            ).then((user) => {
             res.status(200).json(user.message)
         }).catch((error) => {
             res.status(500).json({
@@ -22,7 +35,13 @@ module.exports = {
         User.findOne({_id:userId,isDeleted: false}).sort({date: 'desc'}).populate(
             {
                 path:'message',
-                match: { isOpened: false, isArchived: false }
+                match: { isOpened: false, isArchived: false },
+                populate: [
+                    {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
+                    {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
+                    {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
+                    {path: 'productToReturn', select: {_id: 1, name: 1, orderDate: 1, orderReturnDate: 1, address: 1,image: 1 }}
+                ]
             }).then((user) => {
             res.status(200).json(user.message)
         }).catch((error) => {
