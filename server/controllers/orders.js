@@ -7,9 +7,9 @@ const getUserId = require('../utils/getUserId');
 const cron = require('node-cron');
 
 // fake messages
-/*
-cron.schedule('5 * * * * *', async () => {
-    const testUser = "5e7f7758eb6b0a4ef05046f7";
+
+/*cron.schedule('5 * * * * *', async () => {
+    const testUser = "5f2d23c89803a56f1c60c923";
     const messageId = new mongoose.Types.ObjectId();
     const message = new Message({
         _id: messageId,
@@ -21,8 +21,8 @@ cron.schedule('5 * * * * *', async () => {
     }).catch(error => {
         //TODO: error handling
     })
-});
-*/
+});*/
+
 
 // TODO: message to Owner & Renter if order expired (24h late) and no product returned
 
