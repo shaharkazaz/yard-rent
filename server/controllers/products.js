@@ -265,8 +265,8 @@ module.exports = {
                                 order: orders[0],
                                 type: "productReturnProcess",
                                 productToReturn: product.id,
-                                productOwner: product.user.name,
-                                productRenter: orders[0].user.name
+                                productOwner: product.user,
+                                productRenter: orders[0].user
                             });
                             await message.save();
                             User.findOneAndUpdate({_id: product.user}, {$push: {message: messageId}}).then(() => {

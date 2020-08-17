@@ -95,8 +95,8 @@ module.exports = {
                                 _id: messageToProductOwnerId,
                                 type: "InformProductOwner",
                                 productToReturn: product.id,
-                                productOwner: product.user.name,
-                                productRenter: product.order.user.name,
+                                productOwner: product.user,
+                                productRenter: product.order.user,
                             });
                             await messageToProductOwner.save()
                             // push to linkedMessages - should we push as well to user messages or leave reference in linkedMessages
@@ -113,8 +113,8 @@ module.exports = {
                                 _id: messageToProductRenterId,
                                 type: "OwnerDeclinedReturn",
                                 productToReturn: product.id,
-                                productOwner: product.user.name,
-                                productRenter: product.order.user.name
+                                productOwner: product.user,
+                                productRenter: product.order.user
                             });
                             await messageToProductRenter.save()
                             User.findOneAndUpdate({_id: product.order.user.name}, {$push: {message: messageToProductRenterId}}).then(() => {
