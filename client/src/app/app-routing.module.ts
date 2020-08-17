@@ -10,9 +10,7 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () =>
-      import('./about/about.module').then(
-        ({ AboutModule }) => AboutModule
-      )
+      import('./about/about.module').then(({ AboutModule }) => AboutModule)
   },
   {
     path: 'marketplace',
@@ -33,22 +31,34 @@ const routes: Routes = [
   },
   {
     path: 'contact',
-    loadChildren: () => import('./contact/contact.module').then(({ ContactModule }) => ContactModule)
+    loadChildren: () =>
+      import('./contact/contact.module').then(
+        ({ ContactModule }) => ContactModule
+      )
   },
   {
     path: 'getting-started',
-    loadChildren: () => import('./getting-started/getting-started.module').then(({ GettingStartedModule }) => GettingStartedModule)
+    loadChildren: () =>
+      import('./getting-started/getting-started.module').then(
+        ({ GettingStartedModule }) => GettingStartedModule
+      )
   },
   {
     path: 'shopping-cart',
-    loadChildren: () => import('./shopping-cart/shopping-cart.module').then(({ ShoppingCartModule }) => ShoppingCartModule)
+    loadChildren: () =>
+      import('./shopping-cart/shopping-cart.module').then(
+        ({ ShoppingCartModule }) => ShoppingCartModule
+      )
   },
   {
     path: 'order-complete',
-    loadChildren: () => import('./order-complete/order-complete.module').then(({ OrderCompleteModule }) => OrderCompleteModule)
+    loadChildren: () =>
+      import('./order-complete/order-complete.module').then(
+        ({ OrderCompleteModule }) => OrderCompleteModule
+      )
   },
   {
-    path: '',
+    path: '**',
     redirectTo: '/home',
     pathMatch: 'full'
   }

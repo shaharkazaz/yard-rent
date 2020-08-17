@@ -135,6 +135,7 @@
       >
         <div class="toolbar primary-0-background-color"></div>
         <div
+          *ngIf="selectedMessage"
           class="d-flex-grow align-center m-10 primary-0-background-color"
           [ngSwitch]="selectedMessage.type"
         >

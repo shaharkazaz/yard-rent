@@ -25,35 +25,43 @@ import { WatchlistComponent } from './watchlist/watchlist.component';
 import { MarketplaceModule } from '../marketplace/marketplace.module';
 import { ReturnReminderComponent } from './message-center/messages/return-reminder/return-reminder.component';
 import { MyRentedProductsComponent } from './my-rented-products/my-rented-products.component';
+import { AuthGuard } from '@yr/shared/route-gurds';
 
 const routes: Routes = [
   {
     path: 'my-orders',
-    component: MyOrdersPageComponent
+    component: MyOrdersPageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'my-products',
-    component: MyProductsPageComponent
+    component: MyProductsPageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'my-rented-products',
-    component: MyRentedProductsComponent
+    component: MyRentedProductsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
-    component: ProfilePageComponent
+    component: ProfilePageComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'edit-user/:id',
-    component: EditUserComponent
+    component: EditUserComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'watchlist',
-    component: WatchlistComponent
+    component: WatchlistComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'messages',
-    component: MessageCenterComponent
+    component: MessageCenterComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

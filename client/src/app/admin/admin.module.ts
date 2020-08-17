@@ -5,11 +5,13 @@ import { UsersManagementComponent } from './management/users/users-management.co
 import { ManagementModule } from './management/management.module';
 import { StatisticsComponent } from './management/statistics/statistics/statistics.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { AdminGuard, AuthGuard } from '@yr/shared/route-gurds';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminPageComponent,
+    canActivateChild: [AuthGuard, AdminGuard],
     children: [
       {
         path: '',

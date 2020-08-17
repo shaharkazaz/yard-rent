@@ -161,7 +161,6 @@
   "rented-products-table": {
     "return-date": "Return date",
     "is-in-return-process": "Is In Return Process ?"
-
   },
   "my-orders": "My orders",
   "my-profile": "My profile",
@@ -200,6 +199,7 @@
     "description": "Description",
     "rewards": "Rewards"
   },
+  "must-login": "Please login first in order to visit that page",
   "item-rented": "Item rented",
   "click-to-upload-profile": "Click to upload a profile image",
   "get-more": "Get more",
