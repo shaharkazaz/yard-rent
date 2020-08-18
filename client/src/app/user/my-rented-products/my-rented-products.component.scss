@@ -2,4 +2,8 @@
   height: 100%;
   display: block;
   margin: 20px;
+  ::ng-deep .ag-row.disabled {
+    cursor: default;
+    background-color: #ffcb7c;
+  }
 }

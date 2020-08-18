@@ -1,0 +1,38 @@
+<div
+  class="d-flex-column align-center"
+  *transloco="let t; read: 'messages-page.messages'"
+>
+  <div class="dato-headline">{{ t('product-returned') }}</div>
+  <span class="order-details my-10">
+    {{ t('rent-details', orderDetails) }}
+    {{ t('rented-by', { name: renterName }) }}
+  </span>
+  <div>
+    <marketplace-item-card
+      *ngIf="product$ | async as product; else productLoader"
+      readonly="true"
+      [item]="product"
+    ></marketplace-item-card>
+    <ng-template #productLoader>
+      <item-card-loader></item-card-loader>
+    </ng-template>
+  </div>
+  <div
+    class="mb-10 text-center"
+    [innerHTML]="t('return-product.claiming-return', { name: renterName })"
+  ></div>
+  <div class="actions d-flex align-center" *ngIf="!returnProcess; else loader">
+    <dato-button
+      class="mr-10"
+      datoType="secondary"
+      (click)="applyAction(false)"
+      >{{ t('return-product.decline') }}</dato-button
+    >
+    <dato-button (click)="applyAction(true)">{{
+      t('return-product.accept')
+    }}</dato-button>
+  </div>
+  <ng-template #loader>
+    <span class="dato-spinner-loader lg-loader"></span>
+  </ng-template>
+</div>

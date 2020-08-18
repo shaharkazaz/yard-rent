@@ -23,9 +23,10 @@ import { CommonModule } from '@angular/common';
 import { MessageCenterComponent } from './message-center/message-center.component';
 import { WatchlistComponent } from './watchlist/watchlist.component';
 import { MarketplaceModule } from '../marketplace/marketplace.module';
-import { ReturnReminderComponent } from './message-center/messages/return-reminder/return-reminder.component';
+import { ReturnReminderComponent } from './message-center/messages/reminder/return-reminder.component';
 import { MyRentedProductsComponent } from './my-rented-products/my-rented-products.component';
 import { AuthGuard } from '@yr/shared/route-gurds';
+import { ReturnProductComponent } from './message-center/messages/return-product/return-product.component';
 
 const routes: Routes = [
   {
@@ -92,7 +93,8 @@ const routes: Routes = [
     MessageCenterComponent,
     WatchlistComponent,
     ReturnReminderComponent,
-    MyRentedProductsComponent
+    MyRentedProductsComponent,
+    ReturnProductComponent
   ],
   providers: [],
   exports: [MyOrdersPageComponent]

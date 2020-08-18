@@ -160,7 +160,7 @@
   "my-rented-products": "My rented products",
   "rented-products-table": {
     "return-date": "Return date",
-    "is-in-return-process": "Is In Return Process ?"
+    "in-return-process": "In Return Process"
   },
   "my-orders": "My orders",
   "my-profile": "My profile",
@@ -376,17 +376,27 @@
       "mark-read": "Mark as read",
       "mark-unread": "Mark as unread"
     },
+
     "titles": {
       "orderIsAboutToExpire24H": "<b>Reminder:</b> You have 24 hours to return {{item}}",
       "orderIsAboutToExpire48H": "<b>Reminder:</b> You have 48 hours to return {{item}}",
       "productReturned": ""
     },
     "messages": {
+      "return-product": {
+        "accept": "Accept",
+        "decline": "Decline",
+        "claiming-return": "{{name}} is claiming that this product was returned to you.<br> Do you accept this claim?"
+      },
+      "reminder": "This is a reminder",
+      "product-returned": "Product returned",
+      "rented-by": "by {{name}}",
       "title": {
         "orderIsAboutToExpire24H": "You have 24 hours to return this item:",
         "orderIsAboutToExpire48H": "You have 48 hours to return this item:",
         "productReturned": ""
-      }
+      },
+      "rent-details": "Rented at order number #{{id}} on {{date}}"
     }
   }
 }

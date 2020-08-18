@@ -20,7 +20,7 @@ export class UserDataService {
   }
 
   getRentedProductsList() {
-    return this.http.get<Product[]>(
+    return this.http.get<(Product & { isInReturnProcess: boolean })[]>(
       parseUrl(URI_CONSTANTS.users.rentedProductsList)
     );
   }

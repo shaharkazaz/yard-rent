@@ -10,7 +10,6 @@ import {
 import { UserService } from '../user.service';
 import { RowNode } from 'ag-grid-community';
 import { MyRentedProductsService } from './my-rented-products.service';
-import {formatNumber} from "@yr/shared/utils";
 
 @Component({
   selector: 'my-rented-products',
@@ -24,7 +23,11 @@ export class MyRentedProductsComponent implements OnInit {
   gridOptions: DatoGridOptions = {
     gridName: 'my-rented-products',
     columnDefs: this.getColumns(),
-    rowHeight: 100
+    rowHeight: 100,
+    rowClassRules: {
+      disabled: params => params.data.isInReturnProcess
+    },
+    isRowSelectable: node => !node.data.isInReturnProcess
   };
   // gridActions: GeneralGridActions = {export: false};
   rowActions: RowAction[] = this.getRowActions();
@@ -70,11 +73,11 @@ export class MyRentedProductsComponent implements OnInit {
         filter: DatoGridFilterTypes.None
       },
       {
-        headerName: 'rented-products-table.is-in-return-process',
+        headerName: 'rented-products-table.in-return-process',
         field: 'isInReturnProcess',
         type: DatoGridColumnTypes.String,
         filter: DatoGridFilterTypes.None,
-        valueFormatter: ({value}) => value ? `Yes` : 'No'
+        valueFormatter: ({ value }) => (value ? `Yes` : 'No')
       }
     ];
   }
@@ -85,7 +88,8 @@ export class MyRentedProductsComponent implements OnInit {
         key: 'item-returned',
         label: 'item-returned',
         icon: 'checkmark',
-        visibleWhen: rows => rows && rows.length > 0,
+        visibleWhen: rows =>
+          rows && rows.length > 0 && rows.every(r => !r.data.isInReturnProcess),
         onClick: rows => {
           this.gridController.gridService.setLoading(true);
           this.myRentedProductsService
@@ -93,7 +97,7 @@ export class MyRentedProductsComponent implements OnInit {
             .subscribe(() => {
               const updated = rows.map(row => {
                 const data = row.data;
-                data.isRented = false;
+                data.isInReturnProcess = true;
                 return data;
               });
               this.gridController.gridService.updateRows(updated);

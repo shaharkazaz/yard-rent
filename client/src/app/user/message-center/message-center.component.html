@@ -139,10 +139,10 @@
           class="d-flex-grow align-center m-10 primary-0-background-color"
           [ngSwitch]="selectedMessage.type"
         >
-          <return-reminder-message
+          <return-product-message
             [message]="selectedMessage"
             *ngSwitchCase="'productReturned'"
-          ></return-reminder-message>
+          ></return-product-message>
           <return-reminder-message
             [message]="selectedMessage"
             *ngSwitchDefault

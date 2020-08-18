@@ -8,17 +8,19 @@
       display: none;
     }
   }
+  &:not([readonly]) {
+    .container.rented {
+      .image-container {
+        filter: grayscale(1);
+      }
+    }
+  }
   .container {
     width: 280px;
     border: 2px solid #f1f2f5;
     transition: border 0.3s;
     &:hover {
       border-color: #09a0ff;
-    }
-    &.rented {
-      .image-container {
-        filter: grayscale(1);
-      }
     }
   }
   .rented-note {

@@ -2,8 +2,9 @@
   class="d-flex-column align-center"
   *transloco="let t; read: 'messages-page.messages'"
 >
+  <div class="dato-headline">{{ t('reminder') }}</div>
   <div class="text-center my-10 dato-sub-headline">
-    {{ t('title.' + message.type) }}
+    {{ t('title.' + _message.type) }}
   </div>
   <div class="d-flex">
     <marketplace-item-card
@@ -14,6 +15,8 @@
     <ng-template #productLoader
       ><item-card-loader></item-card-loader
     ></ng-template>
-    <div class="order-details"></div>
+  </div>
+  <div class="order-details">
+    {{ t('rent-details', orderDetails) }}
   </div>
 </div>

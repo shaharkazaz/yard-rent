@@ -32,8 +32,8 @@ export class MessageCenterComponent implements OnInit {
     this.messagesService
       .getAllMessages(this.authQuery.getUserInfo()._id)
       .pipe(
-        tapOnce(([first]) => {
-          this.selectedMessage = first;
+        tapOnce(messages => {
+          this.selectedMessage = messages.find(m => !m.isArchived);
         })
       )
       .subscribe(messages => {
@@ -94,9 +94,15 @@ export class MessageCenterComponent implements OnInit {
     this.messagesService
       .setMessageArchiveStatus(message._id, isArchived)
       .subscribe();
+    const nextMessage = this.messages.indexOf(message) + 1;
+    this.selectedMessage =
+      nextMessage === this.messages.length ? null : this.messages[nextMessage];
   }
 
   changeView() {
     this.view = this.view === 'inbox' ? 'archive' : 'inbox';
+    this.selectedMessage = this.messages.find(({ isArchived }) =>
+      this.view === 'archive' ? isArchived : !isArchived
+    );
   }
 }

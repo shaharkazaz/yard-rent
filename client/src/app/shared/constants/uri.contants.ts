@@ -46,7 +46,8 @@ export const URI_CONSTANTS = {
     messages: 'messages/all/{id}',
     newMessages: 'messages/newMessages/{id}',
     updateOpen: 'messages/updateIsOpened/{id}',
-    updateArchive: 'messages/updateIsArchived/{id}'
+    updateArchive: 'messages/updateIsArchived/{id}',
+    updateReturnStatus: 'messages/updateReturnProcess'
   },
   development: {
     releaseRented: 'products/_releaseRented',

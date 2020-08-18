@@ -1,6 +1,6 @@
 <div
   class="relative d-flex-column align-center container p-10"
-  [ngClass]="{ 'rented primary-200-color': item.isRented }"
+  [ngClass]="{ 'rented primary-200-color': !readonly && item.isRented }"
   *transloco="let t"
 >
   <div
@@ -8,7 +8,7 @@
     [style.background-image]="'url(' + item.image + ')'"
   ></div>
   <div
-    *ngIf="item.isRented"
+    *ngIf="item.isRented && !readonly"
     class="rented-note absolute orange-400-color dato-headline no-select"
   >
     {{ t('item-rented') }}
