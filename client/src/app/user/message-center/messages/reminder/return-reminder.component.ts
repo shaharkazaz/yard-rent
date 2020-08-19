@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import { stringAsCharSum } from '@yr/shared/utils';
 
 @Component({
-  selector: 'reminder-message',
+  selector: 'return-reminder-message',
   templateUrl: './return-reminder.component.html',
   styleUrls: ['./return-reminder.component.scss']
 })
