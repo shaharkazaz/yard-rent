@@ -19,7 +19,6 @@ module.exports = {
                     {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
                     {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
                     {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
-                    {path: 'productToReturn', select: {_id: 1}}
                 ]
             }
             ).then((user) => {
@@ -40,7 +39,6 @@ module.exports = {
                     {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
                     {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
                     {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
-                    {path: 'productToReturn', select: {_id: 1}}
                 ]
             }).then((user) => {
             res.status(200).json(user.message)
