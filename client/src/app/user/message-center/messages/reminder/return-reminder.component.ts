@@ -18,7 +18,9 @@ export class ReturnReminderComponent {
       id: stringAsCharSum(message.order._id)
     };
     this._message = message;
-    this.product$ = this.marketplaceService.getProduct(message.productToReturn);
+    this.product$ = this.marketplaceService.getProduct(
+      message.productToReturn._id
+    );
   }
   orderDetails;
   _message: ClientMessage;

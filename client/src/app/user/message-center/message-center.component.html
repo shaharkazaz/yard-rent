@@ -58,7 +58,10 @@
                 <div
                   class="dato-note ellipsis"
                   [innerHTML]="
-                    t('titles.' + message.type, { item: 'some long name' })
+                    t('titles.' + message.type, {
+                      item: message.productToReturn.name,
+                      name: message.productRenter.name
+                    })
                   "
                   [datoTooltip]="
                     t('titles.' + message.type, { item: 'some long name' })
@@ -141,7 +144,7 @@
         >
           <return-product-message
             [message]="selectedMessage"
-            *ngSwitchCase="'productReturned'"
+            *ngSwitchCase="'productReturnProcess'"
           ></return-product-message>
           <return-reminder-message
             [message]="selectedMessage"

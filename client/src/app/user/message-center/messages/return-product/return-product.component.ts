@@ -22,7 +22,9 @@ export class ReturnProductComponent {
     };
     this._message = message;
     this.renterName = message.productRenter.name;
-    this.product$ = this.marketplaceService.getProduct(message.productToReturn);
+    this.product$ = this.marketplaceService.getProduct(
+      message.productToReturn._id
+    );
   }
   orderDetails;
   _message: ClientMessage;

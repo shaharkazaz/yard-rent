@@ -51,6 +51,7 @@ export class MessageCenterComponent implements OnInit {
   selectMessage(message: ServerMessage) {
     this.markAs(message, true);
     this.selectedMessage = message;
+    this.cdr.detectChanges();
   }
 
   changeSort() {

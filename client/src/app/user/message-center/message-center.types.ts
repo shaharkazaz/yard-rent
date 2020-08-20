@@ -1,4 +1,3 @@
-import { Product } from '../../marketplace/marketplace.types';
 import { UserInfo } from '../../auth/state/auth.model';
 
 export type MessageType =
@@ -10,7 +9,10 @@ export interface ServerMessage {
   date: string;
   isOpened: boolean;
   isArchived: boolean;
-  productToReturn: string;
+  productToReturn: {
+    name: string;
+    _id: string;
+  };
   productOwner: UserInfo;
   productRenter: UserInfo;
   type: MessageType;

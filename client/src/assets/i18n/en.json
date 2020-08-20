@@ -380,7 +380,7 @@
     "titles": {
       "orderIsAboutToExpire24H": "<b>Reminder:</b> You have 24 hours to return {{item}}",
       "orderIsAboutToExpire48H": "<b>Reminder:</b> You have 48 hours to return {{item}}",
-      "productReturned": ""
+      "productReturnProcess": "{{name}} is returning your {{item}}!"
     },
     "messages": {
       "return-product": {
@@ -393,8 +393,7 @@
       "rented-by": "by {{name}}",
       "title": {
         "orderIsAboutToExpire24H": "You have 24 hours to return this item:",
-        "orderIsAboutToExpire48H": "You have 48 hours to return this item:",
-        "productReturned": ""
+        "orderIsAboutToExpire48H": "You have 48 hours to return this item:"
       },
       "rent-details": "Rented at order number #{{id}} on {{date}}"
     }
