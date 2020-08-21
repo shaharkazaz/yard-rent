@@ -16,6 +16,7 @@ module.exports = {
                 path: 'message',
                 options: { sort: { 'date': -1 } },
                 populate: [
+                    {path: 'linkedMessages'},
                     {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
                     {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
                     {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
@@ -37,6 +38,7 @@ module.exports = {
                 path:'message',
                 match: { isOpened: false, isArchived: false },
                 populate: [
+                    {path: 'linkedMessages'},
                     {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
                     {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
                     {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
