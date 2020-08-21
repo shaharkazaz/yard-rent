@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { parseUrl } from '../shared/utils';
-import { URI_CONSTANTS } from '../shared/constants/uri.contants';
-import { Product } from '../marketplace/marketplace.types';
+import { Injectable } from '@angular/core';
+
 import { UserInfo } from '../auth/state/auth.model';
+import { Product } from '../marketplace/marketplace.types';
+import { URI_CONSTANTS } from '../shared/constants/uri.contants';
+import { parseUrl } from '../shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class UserDataService {

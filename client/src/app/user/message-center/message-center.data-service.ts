@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { ServerMessage } from './message-center.types';
-import { parseUrl } from '../../shared/utils';
-import { URI_CONSTANTS } from '../../shared/constants/uri.contants';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { URI_CONSTANTS } from '../../shared/constants/uri.contants';
+import { parseUrl } from '../../shared/utils';
+
+import { ServerMessage } from './message-center.types';
 
 @Injectable({ providedIn: 'root' })
 export class MessageCenterDataService {

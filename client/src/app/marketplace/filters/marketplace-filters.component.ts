@@ -1,15 +1,22 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
-import {untilDestroyed} from "ngx-take-until-destroy";
-import {MarketplaceService} from "../state/marketplace.service";
-import {deepEqual, isNumber} from "@datorama/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { deepEqual, isNumber } from '@datorama/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+
+import { MarketplaceService } from '../state/marketplace.service';
 
 @Component({
   selector: 'marketplace-filters',
   templateUrl: './marketplace-filters.component.html',
   styleUrls: ['./marketplace-filters.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
   filterForm = this.fb.group({
@@ -17,7 +24,7 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
     category: [],
     subCategory: [],
     minRewards: [],
-    maxRewards: [],
+    maxRewards: []
   });
 
   categories = [];
@@ -25,49 +32,66 @@ export class MarketplaceFiltersComponent implements OnInit, OnDestroy {
   subCategories = [];
   previousFilter;
 
-  constructor(private fb: FormBuilder, private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private fb: FormBuilder,
+    private marketplaceService: MarketplaceService,
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     const predefined = this.route.snapshot.queryParams;
     if (predefined) {
       this.filterForm.patchValue(predefined);
     }
-    this.filterForm.get('category').valueChanges.pipe(untilDestroyed(this)).subscribe((category) => {
-      this.filterForm.get('subCategory').reset();
-      this.subCategories = category ? this.subCategoriesMap[category.name] : [];
-      this.cdr.detectChanges();
-    });
-    this.marketplaceService.getAllCategories().subscribe((categories) => {
+    this.filterForm
+      .get('category')
+      .valueChanges.pipe(untilDestroyed(this))
+      .subscribe(category => {
+        this.filterForm.get('subCategory').reset();
+        this.subCategories = category
+          ? this.subCategoriesMap[category.name]
+          : [];
+        this.cdr.detectChanges();
+      });
+    this.marketplaceService.getAllCategories().subscribe(categories => {
       this.categories = [];
-      categories.forEach(({_id, subCategories, name}) => {
-        this.categories.push({_id, name});
+      categories.forEach(({ _id, subCategories, name }) => {
+        this.categories.push({ _id, name });
         this.subCategoriesMap[name] = subCategories;
       });
     });
   }
 
   apply() {
-    if (!deepEqual(this.previousFilter, this.filterForm.value) && this.hasValues) {
-    const filledValues = {};
-    for (const control in this.filterForm.value) {
-      const controlValue = this.filterForm.value[control];
-      if (isNumber(controlValue) || !!controlValue) {
-        let value = controlValue;
-        if (/category|subCategory/.test(control)) {
-          value = controlValue.name
+    if (
+      !deepEqual(this.previousFilter, this.filterForm.value) &&
+      this.hasValues
+    ) {
+      const filledValues = {};
+      for (const control in this.filterForm.value) {
+        const controlValue = this.filterForm.value[control];
+        if (isNumber(controlValue) || !!controlValue) {
+          let value = controlValue;
+          if (/category|subCategory/.test(control)) {
+            value = controlValue.name;
+          }
+          filledValues[control] = value;
         }
-        filledValues[control] = value;
       }
-    }
       this.previousFilter = this.filterForm.value;
-      this.router.navigate([], {relativeTo: this.route, queryParams: filledValues});
+      this.router.navigate([], {
+        relativeTo: this.route,
+        queryParams: filledValues
+      });
     }
   }
 
   clear() {
     this.previousFilter = null;
     this.filterForm.reset();
-    this.router.navigate([], {relativeTo: this.route, queryParams: {}});
+    this.router.navigate([], { relativeTo: this.route, queryParams: {} });
   }
 
   ngOnDestroy(): void {}

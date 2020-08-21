@@ -7,8 +7,10 @@ import {
   DatoGridOptions,
   RowAction
 } from '@datorama/core';
-import { UserService } from '../user.service';
 import { RowNode } from 'ag-grid-community';
+
+import { UserService } from '../user.service';
+
 import { MyRentedProductsService } from './my-rented-products.service';
 
 @Component({

@@ -1,12 +1,17 @@
-import {Injectable} from "@angular/core";
-import {LoginComponent} from "../login/login.component";
-import {DatoDialog, DatoSnackbar, filterDialogSuccess} from "@datorama/core";
-import {AuthQuery} from "./auth.query";
+import { Injectable } from '@angular/core';
+import { DatoDialog, DatoSnackbar, filterDialogSuccess } from '@datorama/core';
 
-@Injectable({providedIn: 'root'})
+import { LoginComponent } from '../login/login.component';
+
+import { AuthQuery } from './auth.query';
+
+@Injectable({ providedIn: 'root' })
 export class AuthDialogService {
-
-  constructor(private dialog: DatoDialog, private snackbar: DatoSnackbar, private authQuery: AuthQuery) {}
+  constructor(
+    private dialog: DatoDialog,
+    private snackbar: DatoSnackbar,
+    private authQuery: AuthQuery
+  ) {}
 
   verifyLoggedIn(cb: Function) {
     if (this.authQuery.isLoggedIn()) {

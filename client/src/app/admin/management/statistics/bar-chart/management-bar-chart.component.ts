@@ -6,13 +6,15 @@ import {
   OnInit,
   Renderer2
 } from '@angular/core';
-import { ManagementService } from '../../state/management.service';
-import * as d3 from 'd3';
-import { ManagementQuery } from '../../state/management.query';
 import { isEmpty } from '@datorama/core';
+import * as d3 from 'd3';
 import { of } from 'rxjs';
-import {WeeklyData} from "../../state/management.types";
-import {formatNumber} from "../../../../shared/utils";
+
+import { formatNumber } from '@yr/shared/utils';
+
+import { WeeklyData } from '../../state/management.types';
+import { ManagementQuery } from '../../state/management.query';
+import { ManagementService } from '../../state/management.service';
 
 @Component({
   selector: 'management-bar-chart',

@@ -1,4 +1,5 @@
-import {Injectable, NgModule} from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Injectable, NgModule } from '@angular/core';
 import {
   Translation,
   TRANSLOCO_CONFIG,
@@ -6,8 +7,7 @@ import {
   translocoConfig,
   TranslocoLoader,
   TranslocoModule
-} from "@ngneat/transloco";
-import {HttpClient} from "@angular/common/http";
+} from '@ngneat/transloco';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
@@ -19,9 +19,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
 }
 
 @NgModule({
-  imports: [
-    TranslocoModule
-  ],
+  imports: [TranslocoModule],
   providers: [
     {
       provide: TRANSLOCO_LOADER,
@@ -35,7 +33,7 @@ export class TranslocoHttpLoader implements TranslocoLoader {
         reRenderOnLangChange: true,
         prodMode: true
       })
-    },
+    }
   ]
 })
 export class TranslocoRootModule {}

@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -6,11 +5,13 @@ import {
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { DatoSnackbar } from '@datorama/core';
-import { AuthService } from '../../auth/state/auth.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AppInitService } from '../../app-init.service';
+
+import { AppInitService } from '@yr/app-init.service';
+import { AuthService } from '@yr/auth/state/auth.service';
 
 @Injectable()
 export class ErrorsInterceptor implements HttpInterceptor {

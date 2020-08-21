@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
 import { URI_CONSTANTS } from '../shared/constants/uri.contants';
 import { parseUrl } from '../shared/utils';
 
@@ -7,10 +8,9 @@ import { parseUrl } from '../shared/utils';
   providedIn: 'root'
 })
 export class ContactService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  getAllShops(){
+  getAllShops() {
     return this.http.get<any>(parseUrl(URI_CONSTANTS.shops.getAll));
   }
 }

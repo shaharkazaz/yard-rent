@@ -1,9 +1,16 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
-import {MarketplaceService} from '../state/marketplace.service';
-import {Product} from "../marketplace.types";
-import {ActivatedRoute} from "@angular/router";
-import {untilDestroyed} from "ngx-take-until-destroy";
+import { ActivatedRoute } from '@angular/router';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+
+import { Product } from '../marketplace.types';
 import { CARD_WIDTH } from '../item-card/item-card-loader/item-card-loader.component';
+import { MarketplaceService } from '../state/marketplace.service';
 
 @Component({
   selector: 'app-marketplace-all-items',
@@ -20,19 +27,28 @@ export class MarketplaceAllItemsComponent implements OnInit, OnDestroy {
   private readonly LOAD_BUFFER = 20;
   private buffer = this.LOAD_BUFFER;
 
-  constructor(private marketplaceService: MarketplaceService, private cdr: ChangeDetectorRef, private route: ActivatedRoute) {}
+  constructor(
+    private marketplaceService: MarketplaceService,
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.loadersCount = new Array(Math.floor(document.documentElement.clientWidth / CARD_WIDTH));
-    this.route.queryParams.pipe(untilDestroyed(this)).subscribe((filter) => {
-      const parsedFilter = Object.entries(filter).reduce((parsed, [prop, rawVal]) => {
-        let value = rawVal;
-        if (/(min|max)Rewards/.test(prop)) {
-          value = +value;
-        }
-        parsed[prop] = value;
-        return parsed;
-      }, {});
+    this.loadersCount = new Array(
+      Math.floor(document.documentElement.clientWidth / CARD_WIDTH)
+    );
+    this.route.queryParams.pipe(untilDestroyed(this)).subscribe(filter => {
+      const parsedFilter = Object.entries(filter).reduce(
+        (parsed, [prop, rawVal]) => {
+          let value = rawVal;
+          if (/(min|max)Rewards/.test(prop)) {
+            value = +value;
+          }
+          parsed[prop] = value;
+          return parsed;
+        },
+        {}
+      );
       this.filterProducts(parsedFilter);
     });
   }
@@ -56,13 +72,15 @@ export class MarketplaceAllItemsComponent implements OnInit, OnDestroy {
 
   private loadProducts(filter?) {
     this.loading = true;
-    this.marketplaceService.getAllProducts(filter).pipe(untilDestroyed(this)).subscribe((products) => {
-      !filter && (this.allProducts = products);
-      this.filteredProducts = products;
-      this.loading = false;
-      this.items = this.filteredProducts.slice(0, this.buffer);
-      this.cdr.detectChanges();
-    });
+    this.marketplaceService
+      .getAllProducts(filter)
+      .pipe(untilDestroyed(this))
+      .subscribe(products => {
+        !filter && (this.allProducts = products);
+        this.filteredProducts = products;
+        this.loading = false;
+        this.items = this.filteredProducts.slice(0, this.buffer);
+        this.cdr.detectChanges();
+      });
   }
 }
-

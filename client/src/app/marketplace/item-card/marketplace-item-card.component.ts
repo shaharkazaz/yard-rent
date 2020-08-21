@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Product } from '../marketplace.types';
+
 import { formatNumber, formatToKebab } from '../../shared/utils';
+import { Product } from '../marketplace.types';
 
 @Component({
   selector: 'marketplace-item-card',

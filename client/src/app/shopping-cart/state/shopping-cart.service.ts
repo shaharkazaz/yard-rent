@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {ShoppingCartStore} from './shopping-cart.store';
-import {Product} from "../../marketplace/marketplace.types";
+import { Injectable } from '@angular/core';
+
+import { Product } from '../../marketplace/marketplace.types';
+
+import { ShoppingCartStore } from './shopping-cart.store';
 
 @Injectable({ providedIn: 'root' })
 export class ShoppingCartService {
-
-  constructor(private shoppingCartStore: ShoppingCartStore) {
-  }
+  constructor(private shoppingCartStore: ShoppingCartStore) {}
 
   add(product: Product) {
     this.shoppingCartStore.add(product);

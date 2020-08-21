@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
+
 import { ManagementStore, ManagementState } from './management.store';
 
 @Injectable()

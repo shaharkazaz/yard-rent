@@ -1,11 +1,17 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthQuery} from '../../auth/state/auth.query';
-import {AppAuthService} from '../../auth/app-auth.service';
-import {UserInfo} from '../../auth/state/auth.model';
-import {formatNumber} from '../../shared/utils';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {AuthService} from '../../auth/state/auth.service';
-import {untilDestroyed} from 'ngx-take-until-destroy';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
+import { AppAuthService } from '@yr/auth/app-auth.service';
+import { UserInfo } from '@yr/auth/state/auth.model';
+import { AuthQuery } from '@yr/auth/state/auth.query';
+import { AuthService } from '@yr/auth/state/auth.service';
+import { formatNumber } from '@yr/shared/utils';
 
 @Component({
   selector: 'app-profile',
@@ -27,12 +33,15 @@ export class ProfilePageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   ngOnInit() {
-    this.authService.getUserByToken().pipe(untilDestroyed(this)).subscribe(user => {
-      this.user = user;
-      this.userProfile = this.fb.group({
-        name: [this.user.name]
+    this.authService
+      .getUserByToken()
+      .pipe(untilDestroyed(this))
+      .subscribe(user => {
+        this.user = user;
+        this.userProfile = this.fb.group({
+          name: [this.user.name]
+        });
       });
-    });
   }
 
   logout() {

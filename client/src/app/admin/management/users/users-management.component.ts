@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ConfirmationType,
   DatoDialog,
@@ -11,13 +18,14 @@ import {
   RowAction,
   RowSelectionTypeV2
 } from '@datorama/core';
-import {ManagementService} from '../state/management.service';
-import {ManagementQuery} from '../state/management.query';
-import {Router} from '@angular/router';
-import {untilDestroyed} from 'ngx-take-until-destroy';
-import {switchMap} from 'rxjs/operators';
-import {formatNumber, formatAddress} from "../../../shared/utils";
-import {UserInfo} from "../../../auth/state/auth.model";
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { switchMap } from 'rxjs/operators';
+
+import { UserInfo } from '@yr/auth/state/auth.model';
+import { formatNumber, formatAddress } from '@yr/shared/utils';
+
+import { ManagementQuery } from '../state/management.query';
+import { ManagementService } from '../state/management.service';
 
 @Component({
   selector: 'users-management',
@@ -78,7 +86,7 @@ export class UsersManagementComponent implements OnInit, OnDestroy {
         headerName: 'user-management-table.address',
         field: 'address',
         type: DatoGridColumnTypes.String,
-        valueFormatter: ({ value }) => formatAddress(value),
+        valueFormatter: ({ value }) => formatAddress(value)
       },
       {
         headerName: 'user-management-table.role',
@@ -103,19 +111,21 @@ export class UsersManagementComponent implements OnInit, OnDestroy {
         key: 'edit',
         visibleWhen: RowSelectionTypeV2.SINGLE,
         onClick: ([row]) =>
-          this.router.navigate(['/user/edit-user', row.data._id], {queryParams: {backTo: 'admin/management'}})
+          this.router.navigate(['/user/edit-user', row.data._id], {
+            queryParams: { backTo: 'admin/management' }
+          })
       },
       {
         icon: 'delete',
         label: 'delete',
         key: 'delete',
         visibleWhen: RowSelectionTypeV2.ANY,
-        onClick: rows => this.openDeleteUserDialog(rows.map(({data}) => data))
+        onClick: rows => this.openDeleteUserDialog(rows.map(({ data }) => data))
       }
     ];
   }
 
-  private openDeleteUserDialog(data: (UserInfo & {_id: string})[]) {
+  private openDeleteUserDialog(data: (UserInfo & { _id: string })[]) {
     this.deleteUsers = data;
     this.dialog
       .confirm({
@@ -126,7 +136,9 @@ export class UsersManagementComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         filterDialogSuccess(),
-        switchMap(() => this.managementService.deleteUser(data.map(({_id}) => _id)))
+        switchMap(() =>
+          this.managementService.deleteUser(data.map(({ _id }) => _id))
+        )
       )
       .subscribe();
   }

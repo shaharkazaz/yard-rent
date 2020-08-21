@@ -1,8 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { MyOrdersPageComponent } from './my-orders/my-orders-page.component';
-import { MyProductsPageComponent } from './my-products/my-products-page.component';
-import { ProfilePageComponent } from './profile/profile-page.component';
 import {
   DatoButtonModule,
   DatoDirectivesModule,
@@ -17,16 +16,20 @@ import {
   DatoLinkButtonModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ReactiveFormsModule } from '@angular/forms';
-import { EditUserComponent } from './edit-user/edit-user.component';
-import { CommonModule } from '@angular/common';
-import { MessageCenterComponent } from './message-center/message-center.component';
-import { WatchlistComponent } from './watchlist/watchlist.component';
-import { MarketplaceModule } from '../marketplace/marketplace.module';
-import { ReturnReminderComponent } from './message-center/messages/reminder/return-reminder.component';
-import { MyRentedProductsComponent } from './my-rented-products/my-rented-products.component';
+
 import { AuthGuard } from '@yr/shared/route-gurds';
+
+import { MarketplaceModule } from '../marketplace/marketplace.module';
+
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { MessageCenterComponent } from './message-center/message-center.component';
+import { ReturnReminderComponent } from './message-center/messages/reminder/return-reminder.component';
 import { ReturnProductComponent } from './message-center/messages/return-product/return-product.component';
+import { MyOrdersPageComponent } from './my-orders/my-orders-page.component';
+import { MyProductsPageComponent } from './my-products/my-products-page.component';
+import { MyRentedProductsComponent } from './my-rented-products/my-rented-products.component';
+import { ProfilePageComponent } from './profile/profile-page.component';
+import { WatchlistComponent } from './watchlist/watchlist.component';
 
 const routes: Routes = [
   {

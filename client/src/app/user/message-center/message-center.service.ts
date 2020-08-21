@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { MessageCenterDataService } from './message-center.data-service';
 import { map } from 'rxjs/operators';
+
+import { MessageCenterDataService } from './message-center.data-service';
 import { ClientMessage, ServerMessage } from './message-center.types';
 
 @Injectable({ providedIn: 'root' })

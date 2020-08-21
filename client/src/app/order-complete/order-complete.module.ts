@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OrderCompletePageComponent } from './page/order-complete-page.component';
-import { TranslocoModule } from '@ngneat/transloco';
 import { DatoButtonModule, DatoIconModule } from '@datorama/core';
-import { CommonModule } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
+
 import { AuthGuard } from '@yr/shared/route-gurds';
+
+import { OrderCompletePageComponent } from './page/order-complete-page.component';
 
 const routes: Routes = [
   {

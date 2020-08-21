@@ -1,4 +1,3 @@
-import { ID } from '@datorama/akita';
 import { UserRole } from '../auth.types';
 
 export type Creds = {
@@ -7,7 +6,7 @@ export type Creds = {
 };
 
 export type UserInfo = {
-  address: { street: string, city: string, country: string };
+  address: { street: string; city: string; country: string };
   email: string;
   isDeleted: boolean;
   name: string;

@@ -8,11 +8,12 @@ import {
   DatoGridColumnDef,
   DatoGridColumnTypes,
   DatoGridControllerComponent,
-  DatoGridOptions,
+  DatoGridOptions
 } from '@datorama/core';
-import {UserService} from "../user.service";
-import {formatNumber, stringAsCharSum} from "../../shared/utils";
-import {format} from 'date-fns';
+import { format } from 'date-fns';
+
+import { formatNumber, stringAsCharSum } from '../../shared/utils';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-my-orders-page',
@@ -27,7 +28,7 @@ export class MyOrdersPageComponent implements OnInit {
     gridName: 'my-orders',
     columnDefs: this.getColumns()
   };
-  constructor(private userService: UserService,) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.userService.getOrdersList().subscribe(data => {
@@ -41,14 +42,15 @@ export class MyOrdersPageComponent implements OnInit {
         headerName: 'orders-table.id',
         field: '_id',
         type: DatoGridColumnTypes.Number,
-        valueGetter: ({data}) => stringAsCharSum(data._id),
-        valueFormatter: ({value}) => `#${value}`
+        valueGetter: ({ data }) => stringAsCharSum(data._id),
+        valueFormatter: ({ value }) => `#${value}`
       },
       {
         headerName: 'orders-table.date',
         field: 'date',
         type: DatoGridColumnTypes.Date,
-        valueFormatter: ({value}) => format(new Date(value), 'MM/DD/YYYY HH:mm:ss')
+        valueFormatter: ({ value }) =>
+          format(new Date(value), 'MM/DD/YYYY HH:mm:ss')
       },
       {
         headerName: 'orders-table.products',
@@ -59,7 +61,8 @@ export class MyOrdersPageComponent implements OnInit {
         headerName: 'orders-table.rewards-paid',
         field: 'rewards',
         type: DatoGridColumnTypes.Number,
-        valueFormatter: ({value}) => value ? `${formatNumber(value)} ⭐️` : ''
+        valueFormatter: ({ value }) =>
+          value ? `${formatNumber(value)} ⭐️` : ''
       }
     ];
   }

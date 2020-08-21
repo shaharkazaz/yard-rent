@@ -7,8 +7,9 @@ import {
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
-import { AuthQuery } from '../state/auth.query';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+
+import { AuthQuery } from '../state/auth.query';
 
 @Directive({ selector: '[loggedUser]' })
 export class IsLoggedInDirective implements OnInit, OnDestroy {

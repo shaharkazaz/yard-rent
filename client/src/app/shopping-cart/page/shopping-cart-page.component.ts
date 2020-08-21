@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  TemplateRef,
-  ViewChild
-} from '@angular/core';
+import { Router } from '@angular/router';
 import {
   DatoDialog,
   DatoGridColumnDef,
@@ -17,18 +9,28 @@ import {
   GeneralGridActions,
   RowAction,
   RowSelectionTypeV2
-} from "@datorama/core";
-import {ShoppingCartQuery} from "../state/shopping-cart.query";
-import {take} from "rxjs/operators";
-import {ShoppingCartService} from "../state/shopping-cart.service";
-import {AuthQuery} from "../../auth/state/auth.query";
-import {UserInfo} from "../../auth/state/auth.model";
-import {OrdersService} from "../orders.service";
-import {Router} from "@angular/router";
-import {Product} from "../../marketplace/marketplace.types";
-import {formatNumber, stringAsCharSum} from "../../shared/utils";
+} from '@datorama/core';
+import { take } from 'rxjs/operators';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 
-type ErroredItem = {_id: string, name: string};
+import { UserInfo } from '@yr/auth/state/auth.model';
+import { AuthQuery } from '@yr/auth/state/auth.query';
+import { Product } from '@yr/marketplace/marketplace.types';
+import { formatNumber, stringAsCharSum } from '@yr/shared/utils';
+
+import { OrdersService } from '../orders.service';
+import { ShoppingCartQuery } from '../state/shopping-cart.query';
+import { ShoppingCartService } from '../state/shopping-cart.service';
+
+type ErroredItem = { _id: string; name: string };
 
 @Component({
   selector: 'app-shopping-cart',
@@ -36,32 +38,36 @@ type ErroredItem = {_id: string, name: string};
   styleUrls: ['./shopping-cart-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
+export class ShoppingCartPageComponent implements OnInit, AfterViewInit {
   @ViewChild(DatoGridControllerComponent, { static: false })
   private gridController: DatoGridControllerComponent;
 
-  @ViewChild('orderFailed', { static: true }) private orderFailure: TemplateRef<any>
+  @ViewChild('orderFailed', { static: true }) private orderFailure: TemplateRef<
+    any
+  >;
 
   gridOptions: DatoGridOptions = {
     gridName: 'shopping-cart',
     columnDefs: this.getColumns(),
-    getRowHeight: ({node: { rowPinned }}) => rowPinned && rowPinned === 'bottom' ? 35 : 100
+    getRowHeight: ({ node: { rowPinned } }) =>
+      rowPinned && rowPinned === 'bottom' ? 35 : 100
   };
-  gridActions: GeneralGridActions = {export: false};
+  gridActions: GeneralGridActions = { export: false };
   rowActions: RowAction[] = this.getRowActions();
   totalAmount: number;
   user: UserInfo;
   loading: boolean;
   private cartItems: Product[];
 
-  constructor(private shoppingCartQuery: ShoppingCartQuery,
-              private shoppingCartService: ShoppingCartService,
-              private authQuery: AuthQuery,
-              private ordersService: OrdersService,
-              private router: Router,
-              private cdr: ChangeDetectorRef,
-              private dialog: DatoDialog) {
-  }
+  constructor(
+    private shoppingCartQuery: ShoppingCartQuery,
+    private shoppingCartService: ShoppingCartService,
+    private authQuery: AuthQuery,
+    private ordersService: OrdersService,
+    private router: Router,
+    private cdr: ChangeDetectorRef,
+    private dialog: DatoDialog
+  ) {}
 
   ngOnInit() {
     this.user = this.authQuery.getValue().user;
@@ -83,28 +89,31 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
     this.loading = true;
     const orderDetails = {
       rewards: this.totalAmount,
-      products: this.cartItems.map(({_id}) => _id)
+      products: this.cartItems.map(({ _id }) => _id)
     };
     this.ordersService.placeOrder(orderDetails).subscribe(
-      ({orderId, returnDate}) => {
+      ({ orderId, returnDate }) => {
         this.shoppingCartService.clearCart();
         const route = this.router.config.find(r => r.path === 'order-complete');
         const idAsNumber = stringAsCharSum(orderId);
-        route.data = {orderId: idAsNumber, orderDetails, returnDate};
+        route.data = { orderId: idAsNumber, orderDetails, returnDate };
         this.router.navigateByUrl('/order-complete');
       },
-      ({error, status}) => {
+      ({ error, status }) => {
         this.loading = false;
         this.cdr.detectChanges();
         if (status === 409) {
-          const productIds = Object.values(error).flat().map(({_id}: ErroredItem) => _id);
+          const productIds = Object.values(error)
+            .flat()
+            .map(({ _id }: ErroredItem) => _id);
           this.shoppingCartService.delete(productIds);
           this.dialog.open(this.orderFailure, {
             data: error,
             width: '600px'
           });
         }
-      });
+      }
+    );
   }
 
   private getColumns(): DatoGridColumnDef[] {
@@ -119,21 +128,25 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
         field: 'image',
         filter: DatoGridFilterTypes.None,
         sortable: false,
-        cellRenderer: ({data}) => data.image ? `<img class="m-10" height="80" src="${data.image}" />` : ''
+        cellRenderer: ({ data }) =>
+          data.image
+            ? `<img class="m-10" height="80" src="${data.image}" />`
+            : ''
       },
       {
         headerName: 'cart-table.description',
         field: 'description',
         type: DatoGridColumnTypes.String,
         filter: DatoGridFilterTypes.None,
-        sortable: false,
+        sortable: false
       },
       {
         headerName: 'cart-table.rewards',
         field: 'rewards',
         type: DatoGridColumnTypes.Number,
-        valueFormatter: ({value}) => value ? `${formatNumber(value)} ⭐️` : ''
-      },
+        valueFormatter: ({ value }) =>
+          value ? `${formatNumber(value)} ⭐️` : ''
+      }
     ];
   }
 
@@ -144,8 +157,8 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
         label: 'remove-from-cart',
         icon: 'delete',
         visibleWhen: RowSelectionTypeV2.ANY,
-        onClick: (rows) => {
-          this.shoppingCartService.delete(rows.map((row) => row.data._id));
+        onClick: rows => {
+          this.shoppingCartService.delete(rows.map(row => row.data._id));
           this.initGrid();
         }
       }
@@ -154,11 +167,18 @@ export class ShoppingCartPageComponent implements OnInit, AfterViewInit{
 
   private initGrid() {
     this.cartItems = this.shoppingCartQuery.getAll();
-    this.totalAmount = this.cartItems.reduce((sum, item) => sum + item.rewards, 0);
+    this.totalAmount = this.cartItems.reduce(
+      (sum, item) => sum + item.rewards,
+      0
+    );
     this.gridController.gridService.setRows(this.cartItems);
-    this.gridController.gridQuery.waitForGrid().pipe(take(1)).subscribe(() => {
-      this.gridController.gridService.api.grid.setPinnedBottomRowData([{name: 'Total', rewards: this.totalAmount}]);
-    });
+    this.gridController.gridQuery
+      .waitForGrid()
+      .pipe(take(1))
+      .subscribe(() => {
+        this.gridController.gridService.api.grid.setPinnedBottomRowData([
+          { name: 'Total', rewards: this.totalAmount }
+        ]);
+      });
   }
-
 }

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { UserDataService } from './user.data-service';
 import { tap } from 'rxjs/operators';
-import { AuthService } from '../auth/state/auth.service';
+
 import { AuthQuery } from '../auth/state/auth.query';
+import { AuthService } from '../auth/state/auth.service';
+
+import { UserDataService } from './user.data-service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

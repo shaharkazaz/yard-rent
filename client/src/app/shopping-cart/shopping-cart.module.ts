@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ShoppingCartPageComponent } from './page/shopping-cart-page.component';
 import {
   DatoButtonModule,
   DatoDialogModule,
@@ -10,9 +10,11 @@ import {
   DatoLinkButtonModule
 } from '@datorama/core';
 import { TranslocoModule } from '@ngneat/transloco';
-import { CommonModule } from '@angular/common';
-import { OrdersService } from './orders.service';
+
 import { AuthGuard } from '@yr/shared/route-gurds';
+
+import { OrdersService } from './orders.service';
+import { ShoppingCartPageComponent } from './page/shopping-cart-page.component';
 
 const routes: Routes = [
   {

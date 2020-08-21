@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import {OrdersPerCategoryData, WeeklyData} from './management.types';
+
+import { OrdersPerCategoryData, WeeklyData } from './management.types';
 
 export interface ManagementState {
   ordersPerCategory: OrdersPerCategoryData;

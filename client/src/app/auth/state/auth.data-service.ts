@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URI_CONSTANTS } from '../../shared/constants/uri.contants';
+import { Injectable } from '@angular/core';
+
+import { URI_CONSTANTS } from '@yr/shared/constants/uri.contants';
+import { parseUrl } from '@yr/shared/utils';
+
 import { Credentials, LoginResponse, SignupParams } from '../auth.types';
-import { parseUrl } from '../../shared/utils';
 
 @Injectable({ providedIn: 'root' })
 export class AuthDataService {
@@ -27,7 +29,10 @@ export class AuthDataService {
   }
 
   sendVerificationEmail(email: string) {
-    return this.http.post<string>(parseUrl(URI_CONSTANTS.auth.sendVerification), {email});
+    return this.http.post<string>(
+      parseUrl(URI_CONSTANTS.auth.sendVerification),
+      { email }
+    );
   }
 
   verifyEmailCode(info: { code: string; id: string }) {

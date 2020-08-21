@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { ClientMessage } from '../../message-center.types';
-import { MarketplaceService } from '@yr/marketplace/state/marketplace.service';
-import { Product } from '@yr/marketplace/marketplace.types';
-import { Observable } from 'rxjs';
 import { format } from 'date-fns';
+import { Observable } from 'rxjs';
+
+import { Product } from '@yr/marketplace/marketplace.types';
+import { MarketplaceService } from '@yr/marketplace/state/marketplace.service';
 import { stringAsCharSum } from '@yr/shared/utils';
+
+import { ClientMessage } from '../../message-center.types';
 
 @Component({
   selector: 'return-reminder-message',

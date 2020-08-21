@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { parseUrl } from '@yr/shared/utils';
+import { Injectable } from '@angular/core';
+
 import { URI_CONSTANTS } from '@yr/shared/constants/uri.contants';
+import { parseUrl } from '@yr/shared/utils';
 
 @Injectable()
 export class ReturnProductService {

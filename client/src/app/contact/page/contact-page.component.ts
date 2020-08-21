@@ -1,5 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ContactService} from '../contact.service';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+
+import { ContactService } from '../contact.service';
 
 @Component({
   selector: 'app-contact-page',
@@ -7,21 +14,19 @@ import {ContactService} from '../contact.service';
   styleUrls: ['./contact-page.component.scss']
 })
 export class ContactPageComponent implements OnInit, AfterViewInit {
-
-  @ViewChild('canvasEl', {static: true}) canvasEl: ElementRef;
+  @ViewChild('canvasEl', { static: true }) canvasEl: ElementRef;
   addresses: [];
   zoom: number;
   isLoaded: boolean = false;
 
+  constructor(private contactService: ContactService) {}
 
-  constructor(private contactService : ContactService) {}
-
-  ngOnInit()  {
-    this.zoom = 10
+  ngOnInit() {
+    this.zoom = 10;
     this.contactService.getAllShops().subscribe(shops => {
-      this.addresses = shops
-      this.isLoaded = true
-    })
+      this.addresses = shops;
+      this.isLoaded = true;
+    });
   }
 
   ngAfterViewInit() {
@@ -29,17 +34,18 @@ export class ContactPageComponent implements OnInit, AfterViewInit {
   }
 
   private drawCanvas() {
-    const context = (this.canvasEl.nativeElement as HTMLCanvasElement).getContext('2d');
+    const context = (this.canvasEl
+      .nativeElement as HTMLCanvasElement).getContext('2d');
     context.font = '15px Arial';
     context.textBaseline = 'middle';
     context.textAlign = 'center';
-    context.fillStyle = 'black'
+    context.fillStyle = 'black';
     const x = (this.canvasEl.nativeElement as HTMLCanvasElement).width / 2;
     const y = (this.canvasEl.nativeElement as HTMLCanvasElement).height / 2;
-    context.fillText('@YardRent', x,y);
+    context.fillText('@YardRent', x, y);
   }
 
   openGithub() {
-    window.open('https://github.com/shaharkazaz/yard-rent', '_blank')
+    window.open('https://github.com/shaharkazaz/yard-rent', '_blank');
   }
 }

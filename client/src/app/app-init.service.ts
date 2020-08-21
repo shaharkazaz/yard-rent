@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IconRegistry } from '@datorama/core';
-import * as icons from './my-icons';
+import { finalize } from 'rxjs/operators';
+
 import { inStorage } from './auth/state/auth.query';
 import { AuthService } from './auth/state/auth.service';
-import { finalize } from 'rxjs/operators';
+import * as icons from './my-icons';
 
 @Injectable()
 export class AppInitService {

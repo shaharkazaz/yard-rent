@@ -4,11 +4,13 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { AuthQuery } from '../../auth/state/auth.query';
 import { tapOnce } from '@datorama/core';
-import { ClientMessage, ServerMessage } from './message-center.types';
 import { format, isThisYear, isToday } from 'date-fns';
+
+import { AuthQuery } from '../../auth/state/auth.query';
+
 import { MessageCenterService } from './message-center.service';
+import { ClientMessage, ServerMessage } from './message-center.types';
 
 @Component({
   selector: 'app-message-center',

@@ -1,16 +1,19 @@
-import { NgModule } from '@angular/core';
-import { HomePageComponent } from './page/home-page.component';
-import { TranslocoModule } from '@ngneat/transloco';
-import {
-    DatoCarouselModule, DatoDirectivesModule,
-    DatoIconButtonModule,
-    DatoIconModule,
-    DatoInputModule, DatoLinkButtonModule
-} from '@datorama/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {RouterModule} from "@angular/router";
-import {ReactiveFormsModule} from "@angular/forms";
+import {
+  DatoCarouselModule,
+  DatoDirectivesModule,
+  DatoIconButtonModule,
+  DatoIconModule,
+  DatoInputModule,
+  DatoLinkButtonModule
+} from '@datorama/core';
+import { TranslocoModule } from '@ngneat/transloco';
+
+import { HomePageComponent } from './page/home-page.component';
 
 @NgModule({
   declarations: [HomePageComponent],

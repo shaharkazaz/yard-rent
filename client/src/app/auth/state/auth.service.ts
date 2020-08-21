@@ -1,17 +1,19 @@
-import {Injectable} from '@angular/core';
-import {DatoSnackbar} from '@datorama/core';
-import {AuthDataService} from './auth.data-service';
-import {Credentials, SignupParams} from '../auth.types';
-import {tap} from 'rxjs/operators';
-import {AuthStore, clearStorage, saveInStorage} from './auth.store';
-import {createEmptyUser, UserInfo} from './auth.model';
+import { Injectable } from '@angular/core';
+import { DatoSnackbar } from '@datorama/core';
+import { tap } from 'rxjs/operators';
+
+import { Credentials, SignupParams } from '../auth.types';
+
+import { AuthDataService } from './auth.data-service';
+import { createEmptyUser, UserInfo } from './auth.model';
+import { AuthStore, clearStorage, saveInStorage } from './auth.store';
 
 @Injectable()
 export class AuthService {
   constructor(
     private authDataService: AuthDataService,
     private snackbar: DatoSnackbar,
-    private authStore: AuthStore,
+    private authStore: AuthStore
   ) {}
 
   login(params: Credentials) {
@@ -44,7 +46,7 @@ export class AuthService {
     return this.authDataService.sendVerificationEmail(email);
   }
 
-  verifyEmailCode(info: {code: string, id: string}){
+  verifyEmailCode(info: { code: string; id: string }) {
     return this.authDataService.verifyEmailCode(info);
   }
 
@@ -68,7 +70,7 @@ export class AuthService {
 
   updateUserInfo(userInfo: UserInfo) {
     this.authStore.update({
-      user: userInfo,
+      user: userInfo
     });
   }
 }

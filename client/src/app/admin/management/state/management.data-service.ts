@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URI_CONSTANTS } from '../../../shared/constants/uri.contants';
-import { parseUrl } from '../../../shared/utils';
-import {OrdersPerCategoryData, WeeklyData} from './management.types';
+import { Injectable } from '@angular/core';
+
+import { URI_CONSTANTS } from '@yr/shared/constants/uri.contants';
+import { parseUrl } from '@yr/shared/utils';
+
+import { OrdersPerCategoryData, WeeklyData } from './management.types';
 
 @Injectable()
 export class ManagementDataService {
@@ -25,6 +27,8 @@ export class ManagementDataService {
   }
 
   deleteUsers(users: string[]) {
-    return this.http.post<any>(parseUrl(URI_CONSTANTS.management.deleteUser), { users });
+    return this.http.post<any>(parseUrl(URI_CONSTANTS.management.deleteUser), {
+      users
+    });
   }
 }

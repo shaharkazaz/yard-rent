@@ -1,27 +1,42 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { parseUrl } from '../../shared/utils';
-import { URI_CONSTANTS } from '../../shared/constants/uri.contants';
-import {Categories, NewProduct, Product, SubCategory} from "../marketplace.types";
+import { Injectable } from '@angular/core';
+
+import { URI_CONSTANTS } from '@yr/shared/constants/uri.contants';
+import { parseUrl } from '@yr/shared/utils';
+
+import {
+  Categories,
+  NewProduct,
+  Product,
+  SubCategory
+} from '../marketplace.types';
 
 @Injectable()
 export class MarketplaceDataService {
   constructor(private http: HttpClient) {}
 
   getAllProducts(filter = {}) {
-    return this.http.post<Product[]>(parseUrl(URI_CONSTANTS.products.getAll), {...filter});
+    return this.http.post<Product[]>(parseUrl(URI_CONSTANTS.products.getAll), {
+      ...filter
+    });
   }
 
   getProduct(id: string) {
-    return this.http.get<Product>(parseUrl(URI_CONSTANTS.products.get, {id}));
+    return this.http.get<Product>(parseUrl(URI_CONSTANTS.products.get, { id }));
   }
 
   addProduct(newProduct: NewProduct) {
-    return this.http.post<Product>(parseUrl(URI_CONSTANTS.products.add), newProduct);
+    return this.http.post<Product>(
+      parseUrl(URI_CONSTANTS.products.add),
+      newProduct
+    );
   }
 
   updateProduct(id: string, product: Partial<NewProduct>) {
-    return this.http.patch<Product>(parseUrl(URI_CONSTANTS.products.update, {id}), product);
+    return this.http.patch<Product>(
+      parseUrl(URI_CONSTANTS.products.update, { id }),
+      product
+    );
   }
 
   getAllCategories() {
@@ -29,10 +44,14 @@ export class MarketplaceDataService {
   }
 
   getSubCategories(id: string) {
-    return this.http.get<SubCategory[]>(parseUrl(URI_CONSTANTS.categories.getSubCategories, {id}));
+    return this.http.get<SubCategory[]>(
+      parseUrl(URI_CONSTANTS.categories.getSubCategories, { id })
+    );
   }
 
   getProductRecommendation(id: string) {
-    return this.http.get<Product[]>(parseUrl(URI_CONSTANTS.products.getRecommendations, {id}));
+    return this.http.get<Product[]>(
+      parseUrl(URI_CONSTANTS.products.getRecommendations, { id })
+    );
   }
 }

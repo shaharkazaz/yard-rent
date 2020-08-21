@@ -7,9 +7,10 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthQuery } from '@yr/auth/state/auth.query';
 import { DatoSnackbar } from '@datorama/core';
+import { Observable } from 'rxjs';
+
+import { AuthQuery } from '@yr/auth/state/auth.query';
 
 @Injectable({
   providedIn: 'root'

@@ -4,12 +4,14 @@ import {
   Component,
   Input
 } from '@angular/core';
-import { ShoppingCartService } from '../../shopping-cart/state/shopping-cart.service';
-import { ShoppingCartQuery } from '../../shopping-cart/state/shopping-cart.query';
 import { DatoSnackbar } from '@datorama/core';
-import { Product } from '../marketplace.types';
-import { AuthQuery } from '../../auth/state/auth.query';
+
+import { ShoppingCartService } from '@yr/shopping-cart/state/shopping-cart.service';
+
 import { AuthDialogService } from '../../auth/state/auth-dialog.service';
+import { AuthQuery } from '../../auth/state/auth.query';
+import { ShoppingCartQuery } from '../../shopping-cart/state/shopping-cart.query';
+import { Product } from '../marketplace.types';
 
 @Component({
   selector: 'marketplace-item-cart-toggler',

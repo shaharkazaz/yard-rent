@@ -5,11 +5,13 @@ import {
   OnDestroy,
   OnInit
 } from '@angular/core';
-import { UserService } from '../user.service';
-import { Product } from '@yr/marketplace/marketplace.types';
-import { CARD_WIDTH } from '@yr/marketplace/item-card/item-card-loader/item-card-loader.component';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { skip } from 'rxjs/operators';
+
+import { CARD_WIDTH } from '@yr/marketplace/item-card/item-card-loader/item-card-loader.component';
+import { Product } from '@yr/marketplace/marketplace.types';
+
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-watchlist',

@@ -1,9 +1,11 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { AuthStore } from './auth.store';
-import {User, UserInfo} from './auth.model';
 import { Query } from '@datorama/akita';
+
 import { UserRole } from '../auth.types';
-import {Observable} from "rxjs";
+
+import { User, UserInfo } from './auth.model';
+import { AuthStore } from './auth.store';
 
 @Injectable({
   providedIn: 'root'

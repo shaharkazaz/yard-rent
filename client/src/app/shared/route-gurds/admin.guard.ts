@@ -8,6 +8,7 @@ import {
   Router
 } from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { AuthQuery } from '@yr/auth/state/auth.query';
 
 @Injectable({

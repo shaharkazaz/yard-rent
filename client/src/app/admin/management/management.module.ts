@@ -1,18 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ManagementPieChartComponent } from './statistics/pie-chart/management-pie-chart.component';
-import { ManagementBarChartComponent } from './statistics/bar-chart/management-bar-chart.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import {
   DatoButtonModule,
   DatoGridV2Module,
   DatoInputModule,
   DatoLoadersModule
 } from '@datorama/core';
-import { CommonModule } from '@angular/common';
-import { UsersManagementComponent } from './users/users-management.component';
-import { RouterModule } from '@angular/router';
-import { StatisticsComponent } from './statistics/statistics/statistics.component';
 import { TranslocoModule } from '@ngneat/transloco';
-import { ReactiveFormsModule } from '@angular/forms';
+
+import { ManagementBarChartComponent } from './statistics/bar-chart/management-bar-chart.component';
+import { ManagementPieChartComponent } from './statistics/pie-chart/management-pie-chart.component';
+import { StatisticsComponent } from './statistics/statistics/statistics.component';
+import { UsersManagementComponent } from './users/users-management.component';
 
 const api = [
   StatisticsComponent,

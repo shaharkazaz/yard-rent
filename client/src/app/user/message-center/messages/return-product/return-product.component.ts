@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { ClientMessage } from '@yr/user/message-center/message-center.types';
 import { format } from 'date-fns';
-import { stringAsCharSum } from '@yr/shared/utils';
 import { Observable } from 'rxjs';
+
 import { Product } from '@yr/marketplace/marketplace.types';
 import { MarketplaceService } from '@yr/marketplace/state/marketplace.service';
+import { stringAsCharSum } from '@yr/shared/utils';
+import { ClientMessage } from '@yr/user/message-center/message-center.types';
+
 import { ReturnProductService } from './return-product.service';
 
 @Component({

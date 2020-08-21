@@ -8,11 +8,13 @@ import {
   ViewChild
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MarketplaceService } from '../state/marketplace.service';
-import { Product } from '../marketplace.types';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { finalize } from 'rxjs/operators';
-import { formatToKebab } from '../../shared/utils';
+
+import { formatToKebab } from '@yr/shared/utils';
+
+import { Product } from '../marketplace.types';
+import { MarketplaceService } from '../state/marketplace.service';
 
 @Component({
   selector: 'marketplace-item-page',

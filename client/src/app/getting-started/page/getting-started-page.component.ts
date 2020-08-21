@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy} from '@angular/core';
-import {NavigationEnd, Router} from "@angular/router";
-import {untilDestroyed} from "ngx-take-until-destroy";
-import {DatoDialog, DatoSnackbar, filterDialogSuccess} from "@datorama/core";
-import {AuthQuery} from "../../auth/state/auth.query";
-import {ShoppingCartQuery} from "../../shopping-cart/state/shopping-cart.query";
-import {LoginComponent} from "../../auth/login/login.component";
+import { NavigationEnd, Router } from '@angular/router';
+import { DatoDialog, DatoSnackbar, filterDialogSuccess } from '@datorama/core';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
+
+import { LoginComponent } from '@yr/auth/login/login.component';
+import { AuthQuery } from '@yr/auth/state/auth.query';
+import { ShoppingCartQuery } from '@yr/shopping-cart/state/shopping-cart.query';
 
 @Component({
   selector: 'app-getting-started',
@@ -12,33 +13,31 @@ import {LoginComponent} from "../../auth/login/login.component";
   styleUrls: ['./getting-started-page.component.scss']
 })
 export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
-
   itemsCount$ = this.shoppingCartQuery.selectCount();
   isLoggedIn$ = this.authQuery.isLoggedIn$;
-  private readonly generalPath = '../../../assets/images/getting-started/'
+  private readonly generalPath = '../../../assets/images/getting-started/';
   private readonly canvas = document.getElementById('myCanvas');
 
-
   sections = [
-      {
-        name:'how-to-post',
-        description: 'how-to-post-description'
-      },
-      {
-        name:'how-to-rent',
-        description: 'how-to-rent-description'
-      },
-      {
-        name:'what-are-rewards',
-        description: 'what-are-rewards-description'
-      }
-    ];
+    {
+      name: 'how-to-post',
+      description: 'how-to-post-description'
+    },
+    {
+      name: 'how-to-rent',
+      description: 'how-to-rent-description'
+    },
+    {
+      name: 'what-are-rewards',
+      description: 'what-are-rewards-description'
+    }
+  ];
 
-  getSectionImage(name){
+  getSectionImage(name) {
     return this.generalPath + name + '.jpg';
   }
 
-  getIconImage(name){
+  getIconImage(name) {
     return this.generalPath + name + '.png';
   }
 
@@ -49,7 +48,7 @@ export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
     private authQuery: AuthQuery,
     private snackbar: DatoSnackbar,
     private shoppingCartQuery: ShoppingCartQuery
-  ) { }
+  ) {}
 
   addNewItem() {
     if (this.authQuery.isLoggedIn()) {
@@ -76,10 +75,7 @@ export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {}
 
-
-
   ngAfterViewInit() {
-
     this.scrollToHash();
     this.router.events.pipe(untilDestroyed(this)).subscribe(e => {
       if (e instanceof NavigationEnd) {
@@ -88,14 +84,16 @@ export class GettingStartedPageComponent implements OnDestroy, AfterViewInit {
     });
   }
 
-
   private scrollToHash() {
-    const {hash} = window.location;
+    const { hash } = window.location;
     if (hash) {
       const elementId = hash.slice(1);
       const element = document.getElementById(elementId);
       if (element) {
-        this.host.nativeElement.scrollTo({ behavior: 'smooth', top: element.offsetTop });
+        this.host.nativeElement.scrollTo({
+          behavior: 'smooth',
+          top: element.offsetTop
+        });
       }
     }
   }

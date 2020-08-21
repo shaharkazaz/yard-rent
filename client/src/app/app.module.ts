@@ -1,26 +1,30 @@
-import {BrowserModule, EVENT_MANAGER_PLUGINS} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
-
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {HomeModule} from './home/home.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import {
+  BrowserModule,
+  EVENT_MANAGER_PLUGINS
+} from '@angular/platform-browser';
 import {
   APP_TRANSLATE,
-  DATO_CORE_LOGGER, DATO_FORM_ERRORS,
+  DATO_CORE_LOGGER,
+  DATO_FORM_ERRORS,
   DATO_GRID_STORAGE_API,
   DatoCoreModule,
   EventModifiersPlugin
 } from '@datorama/core';
-import {TranslatePipe} from './shared/pipes/translate.pipe';
-import {ShellModule} from './shell/shell.module';
-import {AuthModule} from './auth/auth.module';
-import {AppInitService} from './app-init.service';
-import {gridStorageAPI} from './app-grid-storage-api';
-import {appLogger} from './app-event-logger';
-import {ErrorsInterceptor} from "./shared/interceptors/errors.interceptor";
-import {TranslocoRootModule} from "./transloco-root.module";
-import {formErrors} from "./app-form-errors";
+
+import { formErrors } from './app-form-errors';
+import { ErrorsInterceptor } from './shared/interceptors/errors.interceptor';
+import { TranslocoRootModule } from './transloco-root.module';
+import { appLogger } from './app-event-logger';
+import { gridStorageAPI } from './app-grid-storage-api';
+import { AppInitService } from './app-init.service';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AuthModule } from './auth/auth.module';
+import { HomeModule } from './home/home.module';
+import { TranslatePipe } from './shared/pipes/translate.pipe';
+import { ShellModule } from './shell/shell.module';
 
 export function initApp(appInitService: AppInitService) {
   return () => {
@@ -46,7 +50,7 @@ export function initApp(appInitService: AppInitService) {
         richText: '',
         staticImages: '/assets/images'
       }
-    }),
+    })
   ],
   providers: [
     AppInitService,
@@ -75,7 +79,7 @@ export function initApp(appInitService: AppInitService) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorsInterceptor,
-      multi: true,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ManagementStore } from './management.store';
 import { tap } from 'rxjs/operators';
+
 import { ManagementDataService } from './management.data-service';
 import { ManagementQuery } from './management.query';
+import { ManagementStore } from './management.store';
 
 @Injectable()
 export class ManagementService {
@@ -21,7 +22,11 @@ export class ManagementService {
   getOrdersPerCategory() {
     return this.dataService
       .getOrdersPerCategory()
-      .pipe(tap(ordersPerCategory => this.managementStore.update({ ordersPerCategory })));
+      .pipe(
+        tap(ordersPerCategory =>
+          this.managementStore.update({ ordersPerCategory })
+        )
+      );
   }
 
   getAllUsers() {

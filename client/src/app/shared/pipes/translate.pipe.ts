@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
 import { HashMap } from '@datorama/core';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Pipe({
   name: 'translate'

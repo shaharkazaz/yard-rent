@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component, isDevMode} from '@angular/core';
-import {AuthQuery} from '../../auth/state/auth.query';
-import {DatoDialog, DatoSnackbar} from '@datorama/core';
-import {Router} from '@angular/router';
-import {ShoppingCartQuery} from "../../shopping-cart/state/shopping-cart.query";
-import {AuthDialogService} from "../../auth/state/auth-dialog.service";
+import { ChangeDetectionStrategy, Component, isDevMode } from '@angular/core';
+import { Router } from '@angular/router';
+import { DatoDialog, DatoSnackbar } from '@datorama/core';
+
+import { AuthDialogService } from '@yr/auth/state/auth-dialog.service';
+import { ShoppingCartQuery } from '@yr/shopping-cart/state/shopping-cart.query';
+import { AuthQuery } from '@yr/auth/state/auth.query';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import {AuthDialogService} from "../../auth/state/auth-dialog.service";
   styleUrls: ['./app-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppHeaderComponent  {
+export class AppHeaderComponent {
   itemsCount$ = this.shoppingCartQuery.selectCount();
   isLoggedIn$ = this.authQuery.isLoggedIn$;
 
@@ -26,7 +27,9 @@ export class AppHeaderComponent  {
 
   addNewItem() {
     this.authDialogService.verifyLoggedIn(() =>
-      this.router.navigate(['marketplace/add-item'], {queryParams: {backTo: this.router.url}})
+      this.router.navigate(['marketplace/add-item'], {
+        queryParams: { backTo: this.router.url }
+      })
     );
   }
 

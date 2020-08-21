@@ -13,7 +13,8 @@
     "e2e": "ng e2e",
     "i18n:extract": "transloco-keys-manager extract",
     "i18n:find": "transloco-keys-manager find",
-    "svg-to-ts": "svg-to-ts -s 'src/assets/svg/*' -o 'src/app' -t SVGIcon -d KEBAB -p ''"
+    "svg-to-ts": "svg-to-ts -s 'src/assets/svg/*' -o 'src/app' -t SVGIcon -d KEBAB -p ''",
+    "pretty:imports": "import-conductor -p @yr"
   },
   "private": true,
   "dependencies": {
@@ -72,6 +73,7 @@
     "cz-conventional-changelog": "^3.0.2",
     "git-cz": "^3.3.0",
     "husky": "^3.0.9",
+    "import-conductor": "^1.5.1",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
@@ -102,6 +104,7 @@
   },
   "lint-staged": {
     "*.{js,json,css,scss,less,md,ts,html,component.html}": [
+      "import-conductor --staged -p @yr",
       "prettier --write",
       "git add"
     ]

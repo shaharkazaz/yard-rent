@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -6,11 +8,9 @@ import {
   OnInit
 } from '@angular/core';
 import { CarouselConfig } from '@datorama/core/lib/carousel/carousel.types';
-import { fromEvent, merge, timer } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { fromEvent, merge, timer } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import {FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-page',
@@ -19,7 +19,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit, OnDestroy {
-  sections = ['recycle', 'rewards', 'share',];
+  sections = ['recycle', 'rewards', 'share'];
   carouselConfig: CarouselConfig = {
     loop: true,
     autoRun: true,
@@ -47,7 +47,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   search() {
     if (!!this.searchAnything.value) {
-      this.router.navigate(['marketplace/all-items'], {queryParams: {text: this.searchAnything.value}});
+      this.router.navigate(['marketplace/all-items'], {
+        queryParams: { text: this.searchAnything.value }
+      });
     }
   }
 }

@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
 import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest
 } from '@angular/common/http';
-import { AuthQuery } from './state/auth.query';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { AuthQuery } from './state/auth.query';
 
 @Injectable()
 export class JWTInterceptor implements HttpInterceptor {

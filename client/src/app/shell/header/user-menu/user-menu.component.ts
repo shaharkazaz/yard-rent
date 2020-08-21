@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component, isDevMode, OnInit } from '@angular/core';
-import { formatNumber } from '@yr/shared/utils';
-import { AppAuthService } from '@yr/auth/app-auth.service';
-import { UserInfo } from '@yr/auth/state/auth.model';
-import { AuthQuery } from '@yr/auth/state/auth.query';
 import { polling, tapOnce } from '@datorama/core';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { Observable } from 'rxjs';
+
+import { AppAuthService } from '@yr/auth/app-auth.service';
+import { UserInfo } from '@yr/auth/state/auth.model';
+import { AuthQuery } from '@yr/auth/state/auth.query';
+import { formatNumber } from '@yr/shared/utils';
 import { MessageCenterService } from '@yr/user/message-center/message-center.service';
 
 @Component({

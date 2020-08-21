@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
-import {ContentLoaderComponent} from "@ngneat/content-loader";
+import { ContentLoaderComponent } from '@ngneat/content-loader';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 export const CARD_WIDTH = 304;
 

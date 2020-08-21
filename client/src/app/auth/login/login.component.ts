@@ -1,15 +1,22 @@
+import { DialogResultStatus } from '@datorama/core';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnInit
 } from '@angular/core';
-import {DatoDialog, DatoDialogRef, DatoDialogResult, DatoSnackbar} from '@datorama/core';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../state/auth.service';
+import {
+  DatoDialog,
+  DatoDialogRef,
+  DatoDialogResult,
+  DatoSnackbar
+} from '@datorama/core';
 import { filter } from 'rxjs/operators';
-import {MailVerificationComponent} from "./mail-verification/mail-verification.component";
-import {DialogResultStatus} from "@datorama/core";
+
+import { AuthService } from '../state/auth.service';
+
+import { MailVerificationComponent } from './mail-verification/mail-verification.component';
 
 @Component({
   selector: 'app-login',
@@ -53,32 +60,34 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm() {
-    Object.values(this.form.controls).forEach(control => control.updateValueAndValidity());
+    Object.values(this.form.controls).forEach(control =>
+      control.updateValueAndValidity()
+    );
     // if (this.form.valid) {
-      this.loading = true;
-      this.isLogin() ? this.login() : this.signup();
+    this.loading = true;
+    this.isLogin() ? this.login() : this.signup();
     // }
   }
 
-  private login()
-  {
+  private login() {
     const { email, password } = this.form.value;
     this.authService.login({ email, password }).subscribe(
       ({ success }) => {
-        (success ? this.ref.close() : this.hideLoader())
+        success ? this.ref.close() : this.hideLoader();
       },
       () => this.hideLoader()
     );
   }
 
   private signup() {
-    this.dialog.open(MailVerificationComponent, {
-      data: {
-        email: this.form.value.email
-      }
-    })
+    this.dialog
+      .open(MailVerificationComponent, {
+        data: {
+          email: this.form.value.email
+        }
+      })
       .afterClosed()
-      .subscribe(({status}: DatoDialogResult) => {
+      .subscribe(({ status }: DatoDialogResult) => {
         if (status === DialogResultStatus.SUCCESS) {
           this.authService
             .signup(this.form.value)
@@ -90,7 +99,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.hideLoader();
         }
-      })
+      });
   }
 
   private setSignupValidators(action: 'add' | 'remove') {

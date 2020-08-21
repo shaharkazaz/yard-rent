@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ManagementStore } from '../management/state/management.store';
-import { ManagementService } from '../management/state/management.service';
-import { ManagementQuery } from '../management/state/management.query';
+
 import { ManagementDataService } from '../management/state/management.data-service';
+import { ManagementQuery } from '../management/state/management.query';
+import { ManagementService } from '../management/state/management.service';
+import { ManagementStore } from '../management/state/management.store';
 
 @Component({
   selector: 'app-management-page',
