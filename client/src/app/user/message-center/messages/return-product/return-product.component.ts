@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { format } from 'date-fns';
 import { Observable } from 'rxjs';
 
@@ -28,6 +28,7 @@ export class ReturnProductComponent {
       message.productToReturn._id
     );
   }
+  loading: boolean;
   orderDetails;
   _message: ClientMessage;
   product$: Observable<Product>;
@@ -35,15 +36,19 @@ export class ReturnProductComponent {
   renterName: string;
   constructor(
     private marketplaceService: MarketplaceService,
-    private returnProductService: ReturnProductService
+    private returnProductService: ReturnProductService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   applyAction(isApproved: boolean) {
     const { productToReturn, _id } = this._message;
-    this.returnProcess = this.returnProductService.setProductReturnStatus(
-      productToReturn,
-      isApproved,
-      _id
-    );
+    this.loading = true;
+    this.returnProductService
+      .setProductReturnStatus(productToReturn._id, isApproved, _id)
+      .subscribe(updatedMessage => {
+        this._message = updatedMessage;
+        this.loading = false;
+        this.cdr.detectChanges();
+      });
   }
 }

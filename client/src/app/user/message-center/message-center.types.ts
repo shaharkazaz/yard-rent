@@ -1,4 +1,4 @@
-import { UserInfo } from '../../auth/state/auth.model';
+import { UserInfo } from '@yr/auth/state/auth.model';
 
 export type MessageType =
   | 'orderIsAboutToExpire24H'
@@ -7,12 +7,14 @@ export type MessageType =
 
 export interface ServerMessage {
   date: string;
+  isApproved: boolean;
   isOpened: boolean;
   isArchived: boolean;
   productToReturn: {
     name: string;
     _id: string;
   };
+  linkedMessages: ServerMessage[];
   productOwner: UserInfo;
   productRenter: UserInfo;
   type: MessageType;

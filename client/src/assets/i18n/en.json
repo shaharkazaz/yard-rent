@@ -384,13 +384,14 @@
     },
     "messages": {
       "return-product": {
-        "accept": "Accept",
-        "decline": "Decline",
         "claiming-return": "{{name}} is claiming that this product was returned to you.<br> Do you accept this claim?"
       },
+      "yarn-rent-intervene": "The renter is claiming to have return this item, we'll step in to help resolve the issue.<br>A message was sent to {{renter}} regarding this item, and you will get an update ASAP to your personal email.<br> Thank you for your patience.",
+      "accept": "Accept",
+      "decline": "Decline",
       "reminder": "This is a reminder",
       "product-returned": "Product returned",
-      "rented-by": "by {{name}}",
+      "rented-by": "by {{name}}.",
       "title": {
         "orderIsAboutToExpire24H": "You have 24 hours to return this item:",
         "orderIsAboutToExpire48H": "You have 48 hours to return this item:"

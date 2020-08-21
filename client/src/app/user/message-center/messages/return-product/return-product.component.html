@@ -17,22 +17,53 @@
       <item-card-loader></item-card-loader>
     </ng-template>
   </div>
-  <div
-    class="mb-10 text-center"
-    [innerHTML]="t('return-product.claiming-return', { name: renterName })"
-  ></div>
-  <div class="actions d-flex align-center" *ngIf="!returnProcess; else loader">
-    <dato-button
-      class="mr-10"
-      datoType="secondary"
-      (click)="applyAction(false)"
-      >{{ t('return-product.decline') }}</dato-button
-    >
-    <dato-button (click)="applyAction(true)">{{
-      t('return-product.accept')
-    }}</dato-button>
-  </div>
-  <ng-template #loader>
-    <span class="dato-spinner-loader lg-loader"></span>
-  </ng-template>
+  <ng-container
+    *ngIf="loading === false && _message.linkedMessages.length === 0"
+  >
+    <div
+      class="mb-10 text-center"
+      [innerHTML]="t('return-product.claiming-return', { name: renterName })"
+    ></div>
+    <div class="actions d-flex align-center">
+      <dato-button
+        class="mr-10"
+        datoType="secondary"
+        (click)="applyAction(false)"
+        >{{ t('decline') }}</dato-button
+      >
+      <dato-button (click)="applyAction(true)">{{ t('accept') }}</dato-button>
+    </div>
+  </ng-container>
+  <span *ngIf="loading" class="dato-spinner-loader lg-loader"></span>
+  <ng-container *ngIf="_message.linkedMessages.length > 0">
+    <div class="width-100 d-flex align-end-center my-10">
+      <div
+        class="speech-bubble client accent-200-background-color p-7 pr-15 primary-600-color"
+      >
+        {{ t('decline') }}
+      </div>
+    </div>
+    <div class="width-100 d-flex align-start-center my-10 dato-simple">
+      <div
+        class="speech-bubble primary-100-background-color p-7 pl-15 yard-rent-response primary-600-color"
+        [innerHTML]="
+          t('yarn-rent-intervene', { renter: _message.productRenter.name })
+        "
+      ></div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="_message.isApproved">
+    <div class="width-100 d-flex align-end-center my-10">
+      <div
+        class="d-flex speech-bubble client accent-200-background-color p-7 pr-15 primary-600-color"
+      >
+        <dato-icon
+          class="mr-10"
+          datoSize="md"
+          datoIcon="checkmark-circle"
+        ></dato-icon>
+        {{ t('accept') }}
+      </div>
+    </div>
+  </ng-container>
 </div>
