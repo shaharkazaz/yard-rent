@@ -11,7 +11,7 @@ const getMailerObject = () => {
             pass: 'mwstchryuovdyjeg'
         }
     })
-}
+};
 
 const getMailerMessage = async to => {
     const html = await Promise.promisify(fs.readFile)(__dirname + '/data/verficationMail.html', 'utf8')
@@ -40,15 +40,15 @@ const getMailerMessage = async to => {
 
         ]
     }
-}
+};
 
 const sendMail = async (to, code) => {
-    const transporter = getMailerObject()
-    const message = await getMailerMessage(to)
-    let { html } = message
+    const transporter = getMailerObject();
+    const message = await getMailerMessage(to);
+    let { html } = message;
     html = html.replace(RegExp(`{{code}}`, 'g'), code);
-    message.html = html
+    message.html = html;
     await transporter.sendMail(message)
-}
+};
 
 module.exports = sendMail;

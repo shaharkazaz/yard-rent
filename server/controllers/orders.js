@@ -19,7 +19,6 @@ const cron = require('node-cron');
     User.findOneAndUpdate({_id: testUser}, {$push: {message: message._id}}).then((result) => {
         console.log(result);
     }).catch(error => {
-        //TODO: error handling
     })
 });*/
 
@@ -127,8 +126,7 @@ cron.schedule('0 0 0 * * *', async () => {
                 }
             }
             if (shouldCharge) {
-                //TODO: remove deposit or remove 10% of the product rewards
-            }
+
         }
 
     }

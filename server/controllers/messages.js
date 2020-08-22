@@ -8,8 +8,6 @@ const Products = require('../model/product');
 
 module.exports = {
     getUserMessages: (req, res) => {
-        // TODO: populate Order - Id, Date, return Date
-        // TODO: populate User - email,name, phone
         const userId = req.params.userId;
         User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).populate(
             {

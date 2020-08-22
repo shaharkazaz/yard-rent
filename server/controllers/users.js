@@ -74,7 +74,6 @@ module.exports = {
                         success: true,
                         message: 'User created',
                         user,
-                        //TODO:how this is working the func getToken need to get id and role but get user ?
                         token: getToken(user)
                     });
                 }).catch(error => {
@@ -137,7 +136,7 @@ module.exports = {
             })
         })
     },
-    //TODO: can a deleted user have a valid token
+
     getUserByToken: (req, res) => {
         const token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, 'yard-rent', (err, decodedToken) => {
