@@ -1,27 +1,29 @@
 const mongoose = require('mongoose');
 const Message = require('../model/message');
 const User = require('../model/user');
-const Order = require('../model/order');
+const {sendDeclineMail} = require('../utils/mailer');
 const Products = require('../model/product');
-
 
 
 module.exports = {
     getUserMessages: (req, res) => {
         const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}, {_id: 0, message: 1}).populate(
+        User.findOne({_id: userId, isDeleted: false}, {_id: 0, message: 1}).populate(
             {
                 path: 'message',
-                options: { sort: { 'date': -1 } },
+                options: {sort: {'date': -1}},
                 populate: [
                     {path: 'linkedMessages'},
                     {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
                     {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
                     {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
-                    {path: 'productToReturn', select: {_id: 1, name: 1, orderDate: 1, orderReturnDate: 1, address: 1,image: 1 }}
+                    {
+                        path: 'productToReturn',
+                        select: {_id: 1, name: 1, orderDate: 1, orderReturnDate: 1, address: 1, image: 1}
+                    }
                 ]
             }
-            ).then((user) => {
+        ).then((user) => {
             res.status(200).json(user.message)
         }).catch((error) => {
             res.status(500).json({
@@ -31,16 +33,19 @@ module.exports = {
     },
     getUserNewMessages: (req, res) => {
         const userId = req.params.userId;
-        User.findOne({_id:userId,isDeleted: false}).sort({date: 'desc'}).populate(
+        User.findOne({_id: userId, isDeleted: false}).sort({date: 'desc'}).populate(
             {
-                path:'message',
-                match: { isOpened: false, isArchived: false },
+                path: 'message',
+                match: {isOpened: false, isArchived: false},
                 populate: [
                     {path: 'linkedMessages'},
                     {path: 'productOwner', select: {name: 1, email: 1, phone: 1}},
                     {path: 'productRenter', select: {name: 1, email: 1, phone: 1}},
                     {path: 'order', select: {_id: 1, date: 1, returnDate: 1}},
-                    {path: 'productToReturn', select: {_id: 1, name: 1, orderDate: 1, orderReturnDate: 1, address: 1,image: 1 }}
+                    {
+                        path: 'productToReturn',
+                        select: {_id: 1, name: 1, orderDate: 1, orderReturnDate: 1, address: 1, image: 1}
+                    }
                 ]
             }).then((user) => {
             res.status(200).json(user.message)
@@ -51,8 +56,8 @@ module.exports = {
         })
     },
     updateIsOpened: (req, res) => {
-        const { isOpened } = req.body;
-        Message.findByIdAndUpdate({_id: req.params.messageId}, { $set: { isOpened : isOpened }}).then((user) => {
+        const {isOpened} = req.body;
+        Message.findByIdAndUpdate({_id: req.params.messageId}, {$set: {isOpened: isOpened}}).then((user) => {
             res.status(200).json(user.message)
         }).catch((error) => {
             res.status(500).json({
@@ -61,8 +66,8 @@ module.exports = {
         })
     },
     updateIsArchived: (req, res) => {
-        const { isArchived } = req.body;
-        Message.findByIdAndUpdate({_id: req.params.messageId}, { $set: { isArchived : isArchived }}).then((user) => {
+        const {isArchived} = req.body;
+        Message.findByIdAndUpdate({_id: req.params.messageId}, {$set: {isArchived: isArchived}}).then((user) => {
             res.status(200).json(user.message)
         }).catch((error) => {
             res.status(500).json({
@@ -76,11 +81,9 @@ module.exports = {
         const messageId = mongoose.Types.ObjectId(message);
 
         Products.findOne({_id: productId}).then(data => {
-            if(data.isRented && data.isInReturnProcess)
-            {
+            if (data.isRented && data.isInReturnProcess) {
                 Message.findOneAndUpdate({_id: messageId}, {$set: {isApproved: isApproved}}).then(() => {
-                    if (isApproved)
-                    {
+                    if (isApproved) {
                         // Release product back to marketplace
                         Products.findOneAndUpdate({_id: productId}, {
                             $set: {
@@ -97,9 +100,7 @@ module.exports = {
                                     error
                                 })
                             })
-                    }
-                    else
-                    {
+                    } else {
                         // Message both renter and owner about return process
                         Products.findOne({_id: productId}).populate({
                             path: 'user'
@@ -120,28 +121,9 @@ module.exports = {
                             await messageToProductOwner.save();
                             // push to linkedMessages - should we push as well to user messages or leave reference in linkedMessages
                             Message.findOneAndUpdate({_id: messageId}, {$push: {linkedMessages: messageToProductOwnerId}}).then().catch(error => {
-                                res.status(500).json({
-                                    error
-                                })
+                                return res.status(500).json({error})
                             });
-
-
-                            // Message to product renter about returning product to owner immediately
-                            const messageToProductRenterId = new mongoose.Types.ObjectId();
-                            const messageToProductRenter = new Message({
-                                _id: messageToProductRenterId,
-                                type: "OwnerDeclinedReturn",
-                                productToReturn: product.id,
-                                productOwner: product.user,
-                                productRenter: product.order.user
-                            });
-                            await messageToProductRenter.save();
-                            User.findOneAndUpdate({_id: product.order.user.name}, {$push: {message: messageToProductRenterId}}).then(() => {
-                            }).catch(error => {
-                                res.status(500).json({
-                                    error
-                                })
-                            });
+                            await sendDeclineMail(product.order.user.email, product.name, product.rewards, product.user.name, product.orderDate);
                             // and only after return OK 200
                             res.status(200).json();
                         }).catch(error => {
@@ -154,9 +136,7 @@ module.exports = {
                         error
                     })
                 })
-            }
-            else
-            {
+            } else {
                 res.status(500).json("Something went wrong")
             }
         }).catch(error => {
