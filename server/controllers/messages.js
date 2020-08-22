@@ -93,13 +93,31 @@ module.exports = {
                                 orderDate: null,
                                 orderReturnDate: null,
                             }
-                        }).then(
-                            res.status(200).json())
-                            .catch((error) => {
-                                res.status(500).json({
-                                    error
-                                })
+                        }).then(async () => {
+                                const message = await Message.findById({_id: messageId}).populate({path: 'linkedMessages'}).populate({
+                                    path: 'productOwner',
+                                    select: {name: 1, email: 1, phone: 1}
+                                }).populate({
+                                    path: 'productRenter',
+                                    select: {name: 1, email: 1, phone: 1}
+                                }).populate({path: 'order', select: {_id: 1, date: 1, returnDate: 1}}).populate({
+                                    path: 'productToReturn',
+                                    select: {
+                                        _id: 1,
+                                        name: 1,
+                                        orderDate: 1,
+                                        orderReturnDate: 1,
+                                        address: 1,
+                                        image: 1
+                                    }
+                                });
+                                res.status(200).json(message)
+                            }
+                        ).catch((error) => {
+                            res.status(500).json({
+                                error
                             })
+                        })
                     } else {
                         // Message both renter and owner about return process
                         Products.findOne({_id: productId}).populate({
@@ -108,7 +126,6 @@ module.exports = {
                             path: 'order',
                             populate: [{path: 'user'}]
                         }).then(async product => {
-                            console.log(product);
                             // Message to product owner in order YardRent support will contact product renter to solve or settle down
                             const messageToProductOwnerId = new mongoose.Types.ObjectId();
                             const messageToProductOwner = new Message({
@@ -120,16 +137,32 @@ module.exports = {
                             });
                             await messageToProductOwner.save();
                             // push to linkedMessages - should we push as well to user messages or leave reference in linkedMessages
-                            Message.findOneAndUpdate({_id: messageId}, {$push: {linkedMessages: messageToProductOwnerId}}).then().catch(error => {
+                            Message.findOneAndUpdate({_id: messageId}, {$push: {linkedMessages: messageToProductOwnerId}}).then(async () => {
+                                const message = await Message.findById({_id: messageId}).populate({path: 'linkedMessages'}).populate({
+                                    path: 'productOwner',
+                                    select: {name: 1, email: 1, phone: 1}
+                                }).populate({
+                                    path: 'productRenter',
+                                    select: {name: 1, email: 1, phone: 1}
+                                }).populate({path: 'order', select: {_id: 1, date: 1, returnDate: 1}}).populate({
+                                    path: 'productToReturn',
+                                    select: {
+                                        _id: 1,
+                                        name: 1,
+                                        orderDate: 1,
+                                        orderReturnDate: 1,
+                                        address: 1,
+                                        image: 1
+                                    }
+                                });
+                                res.status(200).json(message);
+                            }).catch(error => {
                                 return res.status(500).json({error})
                             });
                             await sendDeclineMail(product.order.user.email, product.name, product.rewards, product.user.name, product.orderDate);
-                            // and only after return OK 200
-                            res.status(200).json();
                         }).catch(error => {
-                            res.status(500).json(error)
+                            return res.status(500).json(error)
                         })
-
                     }
                 }).catch(error => {
                     res.status(500).json({
