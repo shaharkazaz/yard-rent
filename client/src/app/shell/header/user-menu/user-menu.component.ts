@@ -28,7 +28,7 @@ export class UserMenuComponent implements OnInit {
   ngOnInit() {
     this.user$ = this.authQuery.select('user').pipe(
       tapOnce(user => {
-        // this.startMessagePolling(user._id);
+        this.startMessagePolling(user._id);
       })
     );
   }
