@@ -74,8 +74,8 @@ module.exports = {
     },
     updateReturnProcess: async (req, res) => {
         const {message, product, isApproved} = req.body;
-        const productId = mongoose.Types.ObjectId(product)
-        const messageId = mongoose.Types.ObjectId(message)
+        const productId = mongoose.Types.ObjectId(product);
+        const messageId = mongoose.Types.ObjectId(message);
 
         Products.findOne({_id: productId}).then(data => {
             if(data.isRented && data.isInReturnProcess)
@@ -119,13 +119,13 @@ module.exports = {
                                 productOwner: product.user,
                                 productRenter: product.order.user,
                             });
-                            await messageToProductOwner.save()
+                            await messageToProductOwner.save();
                             // push to linkedMessages - should we push as well to user messages or leave reference in linkedMessages
                             Message.findOneAndUpdate({_id: messageId}, {$push: {linkedMessages: messageToProductOwnerId}}).then().catch(error => {
                                 res.status(500).json({
                                     error
                                 })
-                            })
+                            });
 
 
                             // Message to product renter about returning product to owner immediately
@@ -137,13 +137,13 @@ module.exports = {
                                 productOwner: product.user,
                                 productRenter: product.order.user
                             });
-                            await messageToProductRenter.save()
+                            await messageToProductRenter.save();
                             User.findOneAndUpdate({_id: product.order.user.name}, {$push: {message: messageToProductRenterId}}).then(() => {
                             }).catch(error => {
                                 res.status(500).json({
                                     error
                                 })
-                            })
+                            });
                             // and only after return OK 200
                             res.status(200).json();
                         }).catch(error => {

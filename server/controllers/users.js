@@ -226,7 +226,17 @@ module.exports = {
             }).populate({
                 path: 'user', select: {name: 1, _id: 0}
             }).then(result => {
-                res.status(200).json(result ? result : []);
+                let myRentedProducts = [];
+                for (let idx in result) myRentedProducts.push({
+                    'isInReturnProcess': result[idx].isInReturnProcess,
+                    'name': result[idx].name,
+                    '_id': result[idx]._id,
+                    'image': result[idx].image,
+                    'orderReturnDate': result[idx].orderReturnDate,
+                    'owner': result[idx].user.name,
+                    'description': result[idx].description
+                });
+                res.status(200).json(myRentedProducts);
                 productIDs = []
             }).catch(error => {
                 res.status(500).json(error)
