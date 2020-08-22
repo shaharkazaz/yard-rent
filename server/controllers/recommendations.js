@@ -12,7 +12,7 @@ const recommender = new ContentBasedRecommender({
     maxSimilarDocuments: 100,
     debug: true
 });
-//TODO: error handling
+
 const getProductPopulated = async productId => {
     return await Recommendation.findById(productId).populate({
         path: 'recommendedProducts',

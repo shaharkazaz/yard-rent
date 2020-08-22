@@ -4,8 +4,6 @@ const mongoose = require('mongoose');
 const ProductsDataSet = require('../model/productsDataSet');
 const Product = require('../model/product');
 
-// TODO: delete the console log what to do with error handling instead maybe make sure that the schema isn't exist before
-// TODO: must check if the schema exist before deleting raise an error
 //TODO: final-ayelet called in : public: delete_user private usage:
 //
 // releaseRentedProducts,releaseDeletedProducts,resetDataSet
@@ -59,7 +57,6 @@ const initialUpdateSchema = () =>{
         numOfNewProducts: 0,
         maxNumOfProductsBeforeUpdate: 15
     });
-    //TODO:add error handling
     common.save();
 };
 const resetRecommendationIfNeeded = () => {

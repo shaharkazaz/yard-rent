@@ -174,7 +174,7 @@ module.exports = {
         }
 
         Products.aggregate(pipeline).then(async products => {
-            const shuffledProducts = await shuffle(products)
+            const shuffledProducts = await shuffle(products);
             res.status(200).json(shuffledProducts)
         }).catch(error => {
             return res.status(500).json({
@@ -183,7 +183,6 @@ module.exports = {
         })
     },
     releaseRentedProducts: (req, res) => {
-        // TODO: set dates to null
         Products.updateMany({isRented: true}, {$set: {isRented: false}}).then(() => {
             clearDataSet();
             res.status(200).json();
@@ -248,8 +247,6 @@ module.exports = {
         })
     },
     releaseRentedProductsByUser: async (req, res) => {
-        // TODO: on each product released -> send message to product owner to verify if product returned
-
         const {products} = req.body;
         const objectIdProducts = products.map(product => mongoose.Types.ObjectId(product));
         Products.find({_id: {$in: objectIdProducts}},{_id: 1, user: 1, name: 1, isInReturnProcess: 1}).populate('user').then(
@@ -272,7 +269,6 @@ module.exports = {
                             User.findOneAndUpdate({_id: product.user}, {$push: {message: messageId}}).then(() => {
                                 res.status(200).json();
                             }).catch(error => {
-                                //TODO: error handling
                                 res.status(500).json(error);
                             })
                         }).catch(error => {

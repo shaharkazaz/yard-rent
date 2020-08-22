@@ -60,8 +60,8 @@ app.use('/categories', categoriesRouter);
 app.use('/subCategories', subCategoriesRouter);
 app.use('/twitter', twitterRouter);
 app.use('/statistics', statisticsRouter);
-app.use('/airPollution', airPollutionRouter)
-app.use('/messages', messagesRouter)
+app.use('/airPollution', airPollutionRouter);
+app.use('/messages', messagesRouter);
 
 
 // catch 404 and forward to error handler
