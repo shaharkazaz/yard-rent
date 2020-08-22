@@ -1,9 +1,13 @@
 :host {
+  height: 100%;
+  overflow: auto;
+  width: 100%;
   align-self: center;
   .image-container {
     margin-left: 10%;
     &.hide-default-content {
-      ::ng-deep footer, ::ng-deep header {
+      ::ng-deep footer,
+      ::ng-deep header {
         display: none !important;
       }
     }

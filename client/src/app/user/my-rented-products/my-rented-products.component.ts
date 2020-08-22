@@ -52,6 +52,11 @@ export class MyRentedProductsComponent implements OnInit {
         type: DatoGridColumnTypes.String
       },
       {
+        headerName: 'rented-products-table.owner',
+        field: 'owner',
+        type: DatoGridColumnTypes.String
+      },
+      {
         headerName: 'cart-table.image',
         field: 'image',
         filter: DatoGridFilterTypes.None,

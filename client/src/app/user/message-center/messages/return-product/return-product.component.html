@@ -18,7 +18,9 @@
     </ng-template>
   </div>
   <ng-container
-    *ngIf="loading === false && _message.linkedMessages.length === 0"
+    *ngIf="
+      !loading && _message.linkedMessages.length === 0 && !_message.isApproved
+    "
   >
     <div
       class="mb-10 text-center"

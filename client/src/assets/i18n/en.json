@@ -159,6 +159,7 @@
   "my-products": "My products",
   "my-rented-products": "My rented products",
   "rented-products-table": {
+    "owner": "Owner",
     "return-date": "Return date",
     "in-return-process": "In Return Process"
   },
