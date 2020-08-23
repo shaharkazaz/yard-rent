@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const getUserId = require('../utils/getUserId');
 const uploadToGCP = require('../utils/uploadToGCP');
 const getCoordinatesByAddress = require('../utils/gpsApi');
-const sendMail = require( '../utils/mailer');
+const {sendMail} = require( '../utils/mailer');
 
 function getToken({_id, role}) {
     return jwt.sign({
@@ -378,6 +378,7 @@ module.exports = {
             await sendMail(email, code);
             res.status(200).json(verification._id)
         } catch (e) {
+	    console.log(e)
             return res.status(500).json({error:e})
         }
 
