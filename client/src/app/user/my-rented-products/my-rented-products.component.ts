@@ -12,6 +12,7 @@ import { RowNode } from 'ag-grid-community';
 import { UserService } from '../user.service';
 
 import { MyRentedProductsService } from './my-rented-products.service';
+import {format} from "date-fns";
 
 @Component({
   selector: 'my-rented-products',
@@ -77,7 +78,8 @@ export class MyRentedProductsComponent implements OnInit {
         headerName: 'rented-products-table.return-date',
         field: 'orderReturnDate',
         type: DatoGridColumnTypes.Date,
-        filter: DatoGridFilterTypes.None
+        filter: DatoGridFilterTypes.None,
+        valueFormatter: ({value}) => format(value, 'MM/DD/YYYY')
       },
       {
         headerName: 'rented-products-table.in-return-process',
