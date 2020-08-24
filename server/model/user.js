@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
     orderId: [{type: mongoose.Schema.Types.ObjectID, ref: 'Order', required: false}],
     isDeleted: {type: Boolean, default: false, required: true},
     message: [{type: mongoose.Schema.Types.ObjectID, ref: 'Message', required: false}],
-    phone: {type: String, required: false, unique: true, match: /^\d{10}$/},
+    phone: {type: String, required: false, match: /^\d{10}$/},
     image: {type: String, required: false},
     rating: {type: Number, required: false, default: 0, min: 0, max: 5},
     favorites: [{type: mongoose.Schema.Types.ObjectID, ref: 'Product', required: false}]
