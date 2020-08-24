@@ -6,7 +6,7 @@ const checkAuth = (role) => {
         // TODO:when changing the user role need to delete the token or relogin
     return [
         (req, res, next) => {
-            const token = req.headers.authorization.split(' ')[1];
+            const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
             jwt.verify(token, 'yard-rent', (err, decodedToken)=> {
                 if (err) {
                     return res.status(401).json({
